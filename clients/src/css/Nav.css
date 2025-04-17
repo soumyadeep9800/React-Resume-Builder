@@ -1,0 +1,103 @@
+/* General Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #292828; */
+    background-color:  #085b5b;
+    /* background-color:#16baba; */
+    /* background-color:#18a4a4; */
+    color: white;
+    padding: 6px 22px;
+    /* position: absolute;
+    top: 10px; */
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 80px;
+  }
+  
+  .nav-links li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 1.3rem;
+    /* transition: background-color .5s ease; */
+    /* text-align: center; */
+  }
+  .nav-links li a:hover {
+    color: rgb(0, 0, 0); 
+  }
+  .dark-mode-toggle{
+    /* text-decoration: none; */
+    margin-right: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+  .dark-mode-toggle:hover{
+    background-color: rgb(202, 237, 237);
+  }
+  .dark-mode-toggle-mobile{
+    /* text-decoration: none; */
+    margin-top: 8px;
+    width: 3rem;
+    border: none;
+    border-radius: 15px;
+    background-color: #ffffff;
+  }
+  /* Mobile Menu */
+  .mobile-menu-icon {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+  }
+  
+  .nav-links-mobile {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: #32d5b7;
+    /* color: black; */
+    width: 150px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 3;
+  }
+  .nav-links-mobile li a:hover{
+    color: rgb(255, 255, 255);
+  }
+  .nav-links-mobile li {
+    margin: 10px 0;
+  }
+  .nav-links-mobile li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 1.3rem;
+  }
+  
+
+  @media screen and (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  
+    .mobile-menu-icon {
+      display: block;
+    }
+  }
+  

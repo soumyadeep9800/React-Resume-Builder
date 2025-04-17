@@ -1,0 +1,97 @@
+.Forget_page_mainbox1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #dee2e6;
+    padding: 5rem;
+}
+.Forget_page_mainbox2{
+    padding: 3rem;
+    background-color: #e9ecef;
+}
+.otp-box_Forget{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border: 1px solid rgb(182, 181, 181);
+    background-color: white;
+    height: 25rem;
+}
+.resend_OTP_Forget_main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.resend_OTP_Forget_button{
+    border: none;
+    background-color: white;
+    color: blue;
+}
+.title_Forget_nextdiv_forget{
+    margin-top: 3rem;
+}
+.title_Forget{
+    text-align: center;
+    font-size: larger;
+    font-weight: bold;
+}
+.OTPINPUT_forget{
+    margin: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+.otp-input{
+    height: 40px;
+    margin-inline: .7rem;
+    font-size: 35px;
+}
+.validate_button_forget{
+    display: flex;
+    margin: 1rem;
+    justify-content: center;
+}
+.validate-btn{
+    padding: 0.3rem;
+}
+.subtitle_Forget{
+    text-align: center;
+}
+@media(max-width: 500px){
+    .Forget_page_mainbox2{
+       padding: 0%;
+    }
+    .otp-box_Forget{
+        padding: 1.5rem;
+        height: 0%;
+    }
+   
+}
+@media(max-width: 385px){
+
+    .otp-box_Forget{
+        padding: 0.8rem;
+    }
+    
+}
+@media(max-width: 350px){
+    .otp-box_Forget{
+        padding: 0.5rem;
+    }
+}
+@media(max-width: 330px){
+    .otp-box_Forget{
+        padding: 0.3rem;
+    }
+    .otp-input{
+        margin-inline: 0.5rem;
+    }
+}
+@media(max-width: 300px){
+    .otp-box_Forget{
+        padding: 0%;
+    }
+    .otp-input{
+        margin-inline: 0.2rem;
+    }
+}

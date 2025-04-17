@@ -1,0 +1,142 @@
+ .back {
+    /* margin: 0;
+    padding: 0; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    /* position: relative; */
+  }
+  
+  .background-image {
+    width: 100vw; /* Ensures the image does not overflow */
+    height: 100vh;
+    object-fit: cover; /* Makes sure image covers the full div */
+  }
+  .content{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    /* gap: 2rem; */
+    position: absolute;
+    align-items: center;
+    border: 2px solid rgb(254, 254, 254);
+    border-radius: 2rem;
+    height: 29rem;
+    width: 23rem;
+  }
+  .EP{
+    /* display: flex;
+    flex-direction: column; */
+    /* gap: 3rem; */
+  }
+  .login{
+    margin-top: 1.2rem;
+  }
+  .Email{
+    display: flex;
+    margin-top: .8rem;
+    flex-direction: column;
+    padding: 1rem;
+    width: 12rem;
+    border: 1px solid white;
+    color: rgb(0, 0, 0);
+    background-image: linear-gradient(to left,rgba(129, 145, 147, 0.7),rgb(196, 198, 198));
+  }
+  .Password{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 12rem;
+    border: 1px solid white;
+    color: rgb(0, 0, 0);
+    background-image: linear-gradient(to left,rgba(129, 145, 147, 0.7),rgb(196, 198, 198));
+  }
+  .Email:focus,.Password:focus{
+    border-color: rgb(84, 169, 255);
+    background: white;
+  }
+  .loginbutton{
+    border: 1px solid white;
+    padding: .8rem;
+    /* background: linear-gradient(to left,  #4bf3ff 10%, transparent); */
+    background-image: linear-gradient(to left,  rgb(84, 169, 255),rgba(139, 225, 246, 0.7));
+    border-radius: 1rem;
+    width: 10rem;
+    font-weight: bold;
+    color: white;
+  }
+  .loginbutton1{
+    display: flex;
+    justify-content: center;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Adds space between input fields */
+  }
+  .or{
+    display: flex;
+    justify-content: center;
+  }
+.forget{
+  display: flex;
+  justify-content: end;
+}
+.google{
+   margin-top: 1rem;
+   border: 1px solid rgb(64, 64, 64);
+   padding: .4rem;
+   border-radius: 1.3rem;
+}
+.google:hover{
+  background-color: #CBCBCB;
+}
+.google_icon_login{
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+}
+  @media (max-width: 400px) {
+    .content {
+      width: 80%;
+      height: auto;
+      padding: 1.5rem;
+    }
+    .Email, .Password{
+      width: 100%;
+    }
+  
+    .loginbutton {
+      width: 8rem;
+    }
+    form{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+    }
+  }
+  @media (max-width: 300px) {
+    .content {
+      width: 95%;
+      height: auto;
+      padding: 1.5rem;
+    }
+  
+    .Email, .Password{
+      width: 90%;
+    }
+  
+    .loginbutton {
+      width: 7rem;
+    }
+    form{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      justify-items: center;
+    }
+  }

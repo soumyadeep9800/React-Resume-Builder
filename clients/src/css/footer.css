@@ -1,0 +1,117 @@
+.f-1{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 1.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color:#425061;
+    padding: .8rem;
+  }
+  .icon1,.icon2,.icon3,.icon4{
+    color:#425061;
+    align-items: center;
+    text-align: center;
+    transform: scale(1);
+    transition: transform .1s ease-out;
+    will-change: transform;
+    transform-origin: center;
+  }
+  .icon1:hover{
+    color: #4267B2;
+    transform: scale(1.2);
+  }
+  .icon2:hover{
+    color: #9230fb;
+    transform: scale(1.2);
+  }
+  .icon3:hover{
+    color: #0A66C2;
+    transform: scale(1.2);
+  }
+  .icon4:hover{
+    color: #1DA1F2;
+    transform: scale(1.2);
+  }
+  .f-11{
+    padding: 5px;
+    margin-top: .2rem;
+    margin-bottom: .2rem;
+    margin-inline:1rem;
+    background-color: white;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20%;
+  }
+
+  .f-2{
+    display: flex;
+    flex-direction: row;
+    /* align-items: ; */
+    
+    background-color: #313b47;
+    color: white;
+  }
+  .f-2left{
+    width: 50%;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .f-2right{
+    width: 50%;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  .f-2left-H,.f-2right-H{
+    font-weight: bolder;
+    font-size: 1rem;
+  }
+  .f-2left-HH ul,.f-2right-HH ul{
+    list-style: none;
+    padding: 0;
+    line-height: 3rem;
+    font-size: .9rem;
+  }
+  .f-2left-HH a,.f-2right-HH a{
+    text-decoration: none;
+    color: white;
+  }
+  .f-2left-HH a:hover,.f-2right-HH a:hover{
+    color: rgb(147, 128, 242);
+    /* color: rgb(194, 184, 242); */
+  }
+
+  /* vckljnseancv */
+  .f-3{
+    color: white;
+    background-color:#1f262e;
+    padding: .4rem;
+  }
+  .copyright{
+   display: flex;
+   justify-content: center;
+   line-height: 2rem;
+  }
+  @media screen and (max-width:500px){
+    .f-11{
+      padding: 0;
+      margin: 0;
+      width: 2.5rem;
+      /* width: 35px; */
+      border-radius: 15%;
+    }
+    .icon1,.icon2,.icon3,.icon4{
+      width: 1.5rem;
+      /* width: 22px; */
+      margin-top: 3.9px;
+    }
+    .f-2left-HH ul,.f-2right-HH ul{
+      line-height: 2.1rem;
+      font-size: .8rem;
+    }
+    .copyright{
+      line-height: 1.4rem;
+      font-size: small;
+     }
+  }
