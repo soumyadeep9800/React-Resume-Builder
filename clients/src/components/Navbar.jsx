@@ -16,18 +16,13 @@ export default function Navbar(props) {
       </li>
       <li>
         <Link to="/premium">Premium</Link>
-      {/* <Link className="nav-link" to="/about">About</Link> */}
       </li>
+      {/* <li>
+      <a href='Contact#about_us'>About Us</a>
+      </li> */}
       <li>
         <Link to="/login">Login</Link>
       </li>
-      <button className={isMobile ? "dark-mode-toggle-mobile" : "dark-mode-toggle"} onClick={()=>{props.toggleMode()}}>
-      {props.mode==='light'? <span>🌙</span> : <span>🌞</span>}
-      </button>
-      {/* <div className={isMobile ? "dark-mode-toggle-mobile" : "dark-mode-toggle"} onClick={()=>{props.toggleMode()}}>
-      <input class='tgl tgl-ios' id='toggle-34' type='checkbox'/>
-      <label class='tgl-btn' for='toggle-34'></label>
-      </div> */}
     </ul>
     <button
       className="mobile-menu-icon"

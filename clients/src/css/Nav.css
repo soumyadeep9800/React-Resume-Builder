@@ -22,17 +22,16 @@
     display: flex;
     list-style: none;
     gap: 80px;
+    margin-right: 3rem;
   }
   
   .nav-links li a {
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 1.3rem;
-    /* transition: background-color .5s ease; */
-    /* text-align: center; */
   }
   .nav-links li a:hover {
-    color: rgb(0, 0, 0); 
+    color: rgb(0, 0, 0);
   }
   .dark-mode-toggle{
     /* text-decoration: none; */

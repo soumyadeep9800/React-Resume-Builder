@@ -1,9 +1,30 @@
-import React from 'react'
-// import myImage from '../images/right.jpg';
+import React, { useEffect, useState ,useRef} from 'react';
 import myImage from '../images/Resume.jpg';
+import ibm from '../images/ibm.png';
+import infosys from '../images/Infosys.png';
+import cognizant from '../images/cognizant.png';
+import google from '../images/googlep.png';
+import microsoft from '../images/microsoft.png';
+import flipkart from '../images/flipkart.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 export default function Index() {
+
+  const [isVisible, setIsVisible] = useState(false);
+  const myDivRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    const currentRef = myDivRef.current;
+    if (currentRef) observer.observe(currentRef);
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, []);
+
+
   return (
     <>
 <div className='index'>
@@ -28,8 +49,8 @@ export default function Index() {
           <div className='left-321'>9%</div>
           <div className='left-322'>better pay with your next job</div>
         </div>
-</div>  
-        </div> 
+</div>
+        </div>
 
 
 <div className='right'>
@@ -65,28 +86,40 @@ export default function Index() {
 </div>
 {/* 3rd */}
 
-<div className='partner-customer'>
+<div ref={myDivRef}  className={`partner-customer ${isVisible ? 'visible' : ''}`}>
   <div className='partners'>
     <div className='partners-h1'>Our Partners</div>
+    <div className='partner-img'>
+      <div className='partner-img1'>
+        <img src={ibm} alt="Description" />
+      </div>
+      <div className='partner-img2'>
+        <img src={infosys} alt="Description" />
+      </div>
+      <div className='partner-img3'>
+        <img src={cognizant} alt="Description" />
+      </div>
+    </div>
   </div>
-
-
-
-
 
 
   <div className='customer'>
     <div className='customers-h1'>Our customer have been hired at</div>
+    <div className='customer-img'>
+      <div className='customer-img1'>
+        <img src={google} alt="Description" />
+      </div>
+      <div className='customer-img2'>
+        <img src={microsoft} alt="Description" />
+      </div>
+      <div className='customer-img3'>
+        <img src={flipkart} alt="Description" />
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
 </>
   )
 }
+
+
