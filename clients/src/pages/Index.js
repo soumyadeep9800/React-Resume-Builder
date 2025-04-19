@@ -31,7 +31,7 @@ export default function Index() {
         <div className='left'>
 
           <div className='left1B'>
-          <div className='left-1'>Your dream job starts with the perfect resume -Build It Here.</div>
+          <div className='left-1'>Land your dream job—create your resume now.</div>
           <div className='frontpage-1st-button'><button className='left-button'>Create new resume  <FontAwesomeIcon icon={faArrowRight}/></button></div>
           </div>
 
@@ -91,13 +91,13 @@ export default function Index() {
     <div className='partners-h1'>Our Partners</div>
     <div className='partner-img'>
       <div className='partner-img1'>
-        <img src={ibm} alt="Description" />
+        <img src={ibm} alt="ibm" />
       </div>
       <div className='partner-img2'>
-        <img src={infosys} alt="Description" />
+        <img src={infosys} alt="infosys" />
       </div>
       <div className='partner-img3'>
-        <img src={cognizant} alt="Description" />
+        <img src={cognizant} alt="cognizant" />
       </div>
     </div>
   </div>
@@ -107,13 +107,13 @@ export default function Index() {
     <div className='customers-h1'>Our customer have been hired at</div>
     <div className='customer-img'>
       <div className='customer-img1'>
-        <img src={google} alt="Description" />
+        <img src={google} alt="google" />
       </div>
       <div className='customer-img2'>
-        <img src={microsoft} alt="Description" />
+        <img src={microsoft} alt="microsoft" />
       </div>
       <div className='customer-img3'>
-        <img src={flipkart} alt="Description" />
+        <img src={flipkart} alt="flipkart" />
       </div>
     </div>
   </div>

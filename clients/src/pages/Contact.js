@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from "react";
+import React, { useEffect} from 'react';
 import { useLocation } from "react-router-dom";
 import photo from '../images/about.jpg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +14,6 @@ export default function Contact() {
                 }
             }
         },[location]);
-
   return (
     <>
     <div className='contact_us_main'>
@@ -72,6 +70,7 @@ export default function Contact() {
     </div>
 
  {/* Have a question about resumes or need more help with your resume?  */}
+ {/* className='From_contact'  */}
 <div className='From_contact'>
 <div className='From_contact_us_heading'>Have a question about resumes or need more help with your resume?</div>
 <div className='From_contact_us_heading2'>Let us know by filling our contact form.</div>
@@ -93,7 +92,8 @@ export default function Contact() {
 </div>
 </div>
 {/* About Us */}
-<div className='About_us' id='about_us'>
+
+<div id='about_us' className='About_us'>
     <div className='About_us_img'><img src={photo} alt='About_us_related' className='About_us_img2'/></div>
     <div className='About_us_contant'>
         <div className='About_us_heading'>About Us</div>
