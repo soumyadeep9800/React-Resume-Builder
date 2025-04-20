@@ -38,8 +38,6 @@ export default function Index() {
           <div className='left-2'>From fresh graduates to seasoned professionals,our resume
           builder helds you create stunning resumes that lead to interviews and offers.</div>
         
-
-
 <div className='left3'>
         <div className='left-31'>
           <div className='left-311'>39%</div>
