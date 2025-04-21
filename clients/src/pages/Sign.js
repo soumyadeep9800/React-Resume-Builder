@@ -12,7 +12,10 @@ export default function Sign() {
             <div className='a3'>
               <form>
                 <div className='e1_head'>
-                <input className='e1' placeholder='&#128231; Enter Your Email' type='emil'/>
+                  <div className='e1_head_newadd'>
+                    <input className='e1' id='e11' placeholder='🧑‍💼 Enter Your Name' type='text'/>
+                    <input className='e1' placeholder='&#128231; Enter Your Email' type='email'/>
+                  </div>
                 <div className='e1_send_otp'><button className='e1_send_otp_button'>Send OTP</button></div>
                 </div>
                 <div className='Sign_OTP'>
