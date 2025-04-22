@@ -33,7 +33,7 @@
     white-space: nowrap;
     overflow: hidden;
     width: 0ch;
-    animation: typing 4s steps(44) infinite alternate-reverse;
+    animation: typing 3.5s steps(44) infinite alternate-reverse;
     cursor: default;
 }
 @keyframes typing {
