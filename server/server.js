@@ -4,6 +4,7 @@ const port=3001;
 const db=require('./db');
 const bodyParser=require('body-parser');
 app.use(bodyParser.json());
+const authRoutes = require('./routes/auth');
 
 const cors = require("cors");
 app.use(cors());
@@ -11,6 +12,8 @@ app.use(cors());
 app.get('/', (req, res) => {
     res.send('Welcome to the homepage!');
   });
+  app.use('/api', authRoutes);
+
 
 
 

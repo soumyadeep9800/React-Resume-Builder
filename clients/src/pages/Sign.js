@@ -12,18 +12,21 @@ export default function Sign() {
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!email) return toast.error('Please fill the email first');
+    if (!gmailRegex.test(email)) return toast.error('Email must be a valid Gmail address');
     try {
       const res=await fetch("http://localhost:3001/api/send-otp",{
         method: "POST",
-        headers: {"content-Type":"application/json"},
+        headers: { "Content-Type": "application/json" },
         body:JSON.stringify({email})
       });
       const data= await res.json();
       toast.success("OTP send Successful! 🎉");
-      alert(data.message);
+      //alert(data.message);
     } catch (err) {
       console.error(err);
-      // alert("Failed to send OTP");
+      //alert("Failed to send OTP");
       toast.error("Failed to send OTP");
     }
   };
