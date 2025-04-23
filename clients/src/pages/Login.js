@@ -6,8 +6,8 @@ import photo2 from '../images/google.png';
 
 
 export default function Login() {
- const[email,setEmail]=useState("");
- const[password,setPassword]=useState("");
+  const[email,setEmail]=useState("");
+  const[password,setPassword]=useState("");
 
 const handelLogin=async (e)=>{
     e.preventDefault();
