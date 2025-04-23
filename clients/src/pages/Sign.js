@@ -79,11 +79,12 @@ export default function Sign() {
 
   const handelSignUp=async (e)=>{
     e.preventDefault();
+    if(!handlePasswordChange({ target: { value: password } })) return;
     try {
       const res= await fetch("http://localhost:3001/api/signup",{
         method: "POST",
         headers: {"Content-Type":"application/json"},
-        body:JSON.stringify({email,otp,password})
+        body:JSON.stringify({name,email,password})
       });
       const data=res.json();
       if(res.ok){
@@ -126,7 +127,7 @@ export default function Sign() {
               <div className='p1_verify'><button className='p1_verify_button' onClick={handleVerifyOtp}>Verify</button></div>
                 </div>
                 <div className='p1_head'>
-                <input className='p1' placeholder='🔒 Set Your Password' type='Password' value={password} onChange={handlePasswordChange}/>
+                <input className='p1' placeholder='🔒 Set Your Password' type='password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
                 </div>
                 <div className='signbutton'>
                   <button className='signbutton2' type='submit'>Sign up</button>
