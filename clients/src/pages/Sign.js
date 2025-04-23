@@ -12,6 +12,7 @@ export default function Sign() {
 
   const handleSendOtp = async (e) => {
     e.preventDefault();
+    if(!name) return toast.error("Please Enter Your Name");
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!email) return toast.error('Please fill the email first');
     if (!gmailRegex.test(email)) return toast.error('Email must be a valid Gmail address');
@@ -21,7 +22,8 @@ export default function Sign() {
         headers: { "Content-Type": "application/json" },
         body:JSON.stringify({email})
       });
-      const data= await res.json();
+      // const data= await res.json();
+      await res.json();
       toast.success("OTP send Successful! 🎉");
       //alert(data.message);
     } catch (err) {
@@ -33,6 +35,11 @@ export default function Sign() {
   
   const handleVerifyOtp= async(e)=>{
     e.preventDefault();
+    if (!email || !otp || !name) {
+      return toast.error('Email , OTP and Name are required');
+    }
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    if (!gmailRegex.test(email)) return toast.error('Email must be a valid Gmail address');
     try {
       const res=await fetch("http://localhost:3001/api/verify-otp",{
         method: "POST",
@@ -40,12 +47,33 @@ export default function Sign() {
         body:JSON.stringify({email,otp})
       });
       const data=await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "OTP Verification failed");
+        return;
+      }
       toast.success("OTP Verified Succesful! 🎉");
-      alert(data.message);
+      //alert(data.message);
     } catch (error) {
       console.error(error);
       //alert("OTP Verification failed");
       toast.error("OTP Verification failed");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  
+    const lengthValid = value.length >= 8;
+    const hasUpper = /[A-Z]/.test(value);
+    const hasLower = /[a-z]/.test(value);
+    const hasNumber = /[0-9]/.test(value);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+  
+    if (value.length > 0 && !lengthValid) {
+      toast.warn('Password must be at least 8 characters');
+    } else if (value.length > 0 && (!hasUpper || !hasLower || !hasNumber || !hasSpecial)) {
+      toast.warn('Password should include uppercase, lowercase, number, and special character');
     }
   };
 
@@ -98,7 +126,7 @@ export default function Sign() {
               <div className='p1_verify'><button className='p1_verify_button' onClick={handleVerifyOtp}>Verify</button></div>
                 </div>
                 <div className='p1_head'>
-                <input className='p1' placeholder='🔒 Set Your Password' type='Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                <input className='p1' placeholder='🔒 Set Your Password' type='Password' value={password} onChange={handlePasswordChange}/>
                 </div>
                 <div className='signbutton'>
                   <button className='signbutton2' type='submit'>Sign up</button>
