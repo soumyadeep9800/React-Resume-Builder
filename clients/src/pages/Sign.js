@@ -9,13 +9,16 @@ export default function Sign() {
   const [name,setName]=useState('');
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
-
+  const [otpClicked, setOtpClicked] = useState(false);
+  const [otpDisabled, setOtpDisabled] = useState(false);
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if(!name) return toast.error("Please Enter Your Name");
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!email) return toast.error('Please fill the email first');
     if (!gmailRegex.test(email)) return toast.error('Email must be a valid Gmail address');
+    setOtpClicked(true);
+    setOtpDisabled(true);
     try {
       const res=await fetch("http://localhost:3001/api/send-otp",{
         method: "POST",
@@ -31,6 +34,10 @@ export default function Sign() {
       //alert("Failed to send OTP");
       toast.error("Failed to send OTP");
     }
+    setTimeout(() => {
+      setOtpClicked(false);
+      setOtpDisabled(false);
+    }, 2500);
   };
   
   const handleVerifyOtp= async(e)=>{
@@ -51,7 +58,7 @@ export default function Sign() {
         toast.error(data.message || "OTP Verification failed");
         return;
       }
-      toast.success("OTP Verified Succesful! 🎉");
+      toast.success("OTP Verified Successful! 🎉");
       //alert(data.message);
     } catch (error) {
       console.error(error);
@@ -59,34 +66,38 @@ export default function Sign() {
       toast.error("OTP Verification failed");
     }
   };
-
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
   
+  const isPasswordValid = (value) => {
     const lengthValid = value.length >= 8;
     const hasUpper = /[A-Z]/.test(value);
     const hasLower = /[a-z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
     const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(value);
   
-    if (value.length > 0 && !lengthValid) {
-      toast.warn('Password must be at least 8 characters');
-    } else if (value.length > 0 && (!hasUpper || !hasLower || !hasNumber || !hasSpecial)) {
-      toast.warn('Password should include uppercase, lowercase, number, and special character');
-    }
+    return lengthValid && hasUpper && hasLower && hasNumber && hasSpecial;
   };
 
   const handelSignUp=async (e)=>{
     e.preventDefault();
-    if(!handlePasswordChange({ target: { value: password } })) return;
+    if (!name || !email || !password || !otp) {
+      toast.error("All fields are required");
+      return;
+    }
+    if(otp.length!==4){
+      toast.error("OTP must be 4 digit!");
+      return;
+    }
+    if (!isPasswordValid(password)) {
+      toast.error("Password must be at least 8 characters and include uppercase, lowercase, number, and special character");
+      return;
+    }
     try {
       const res= await fetch("http://localhost:3001/api/signup",{
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body:JSON.stringify({name,email,password})
       });
-      const data=res.json();
+      const data=await res.json();
       if(res.ok){
         toast.success("Signup successful! 🎉");
       }else{
@@ -98,7 +109,7 @@ export default function Sign() {
       //alert("Signup failed");
     }
   }
-  
+
     return (
         <div className='a1'>
           <div className='a2'>
@@ -110,7 +121,7 @@ export default function Sign() {
                     <input className='e1' id='e11' placeholder='🧑‍💼 Enter Your Name' type='text' autoComplete='name' value={name} onChange={(e)=>setName(e.target.value)}/>
                     <input className='e1' placeholder='&#128231; Enter Your Email' type='email' autoComplete='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                   </div>
-                <div className='e1_send_otp'><button className='e1_send_otp_button' onClick={handleSendOtp}>Send OTP</button></div>
+                <div className='e1_send_otp'><button className={`e1_send_otp_button ${otpClicked ? 'clicked' : ''}`} disabled={otpDisabled} onClick={handleSendOtp}>{otpDisabled ? 'Wait...' : 'Send OTP'}</button></div>
                 </div>
                 <div className='Sign_OTP'>
               <div className='Sign_OTP2'>

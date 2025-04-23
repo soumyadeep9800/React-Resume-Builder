@@ -1,7 +1,7 @@
 const express=require('express');
 const nodemailer=require('nodemailer');
 const router=express.Router();
-const {jwtAuthMiddleware,generateToken}=require('../jwt');
+const {generateToken}=require('../jwt');
 const User=require('../models/userModel');
 require('dotenv').config();
 const otpStore=new Map(); //temporary in-memory storage
@@ -69,6 +69,24 @@ router.post('/signup', async (req, res) => {
     } catch (err) {
         console.error('Signup error:', err);
         res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.post('/login', async(req,res)=>{
+    const {email,password}=req.body;
+    try {
+        const user=await User.findOne({email:email});
+        if(!user || !(await user.comparePassword(password))){
+            return res.status(401).json({error:'invalid username or password'});
+        }
+        const payload={
+            id:user.id
+        }
+        const token=generateToken(payload);
+        res.status(200).json({token});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error:'internal server error'});
     }
 });
 

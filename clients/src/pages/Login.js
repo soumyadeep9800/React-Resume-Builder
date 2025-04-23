@@ -9,31 +9,40 @@ export default function Login() {
  const[email,setEmail]=useState("");
  const[password,setPassword]=useState("");
 
- const handleSubmit = (e) => {
-  e.preventDefault(); // Prevents page reload
-
-  // Dummy validation (Replace with actual authentication logic)
-  if (!email || !password) {
-    toast.warn("Please fill in all fields! ⚠️");
-  } else if (email === "soumyadeepghosh9800@gmail.com" && password === "12345") {
-    toast.success("Login Successful! 🎉");
-  } else {
-    toast.error("Invalid Email or Password! ❌");
+const handelLogin=async (e)=>{
+    e.preventDefault();
+    if(!email || !password) return toast.error('All fields are required');
+    try {
+          const res= await fetch("http://localhost:3001/api/login",{
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body:JSON.stringify({email,password})
+          });
+          // const data=await res.json();
+          if(res.ok){
+            toast.success("Login successful! 🎉");
+          }else{
+            toast.error("invalid email or password! ❌");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Login failed");
+          //alert("Signup failed");
+        }
   }
-};
   return (
     <div className='back'>
       <div className='content'>
           <div className='login'><h2>Login</h2></div>
           <div className='EP'>
-          <form onSubmit={handleSubmit}>
+          <form>
             <input className='Email' placeholder='&#128231; Enter Your Email' type='Email'  value={email}
             onChange={(e) => setEmail(e.target.value)}/>
             <input className='Password' placeholder='🔒 Enter Your Password' type='Password' value={password}
             onChange={(e) => setPassword(e.target.value)}/>
             <div className='forget'><Link to="/Forget">Forget Password?</Link></div>
             <div className='loginbutton1'>
-            <button type='submit'  className='loginbutton'>Login</button> 
+            <button type='submit'  className='loginbutton' onClick={handelLogin}>Login</button>
             </div>
           </form>
           </div>

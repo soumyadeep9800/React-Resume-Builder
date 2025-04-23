@@ -98,7 +98,10 @@
   font-size: medium;
 }
 .e1_send_otp_button:hover,.p1_verify_button:hover{
-  color: rgb(34, 148, 148);
+  color: rgb(25, 107, 126);
+}
+.e1_send_otp_button.clicked {
+  color: #4caf50;
 }
 .otp-input2{
   margin-bottom: 0.4rem;
