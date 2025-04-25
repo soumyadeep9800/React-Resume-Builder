@@ -30,9 +30,6 @@ app.get('/', (req, res) => {
   // console.log("✅ forgetRoutes mounted at /forget");
 
 
-
-
-
 app.listen(port,()=>{
     console.log(`server is running at http://localhost:${port}`);
 })
