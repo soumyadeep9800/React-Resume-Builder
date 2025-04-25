@@ -7,7 +7,6 @@ export default function OTP() {
   const [otp,setOtp]=useState("");
   const location = useLocation();
   const email = location.state?.email;
-  
   function maskEmail(email) {
     const [local, domain] = email.split('@');
     if (local.length <= 2) {
@@ -33,7 +32,7 @@ export default function OTP() {
         const data = await res.json();
         if (res.ok) {
           toast.success("OTP Verified Successful! 🎉");
-          navigate('/Newpassword');
+          navigate('/Newpassword',{ state: { email } });
         }else{
           toast.error(data.message || "OTP Verification failed");
           navigate('/Forget');

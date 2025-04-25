@@ -4,6 +4,7 @@ const router=express.Router();
 const {generateToken}=require('../jwt');
 const User=require('../models/userModel');
 const Otp=require('../models/otpModel');
+const bcrypt = require('bcrypt');
 require('dotenv').config();
 const transporter=nodemailer.createTransport({
     service:'gmail',
@@ -59,7 +60,7 @@ router.post('/send-otp',async(req,res)=>{
 
 router.post('/verify-otp', async(req,res)=>{
     const {email,otp}=req.body;
-    console.log(`Verifying OTP for ${email} with OTP: ${otp}`);
+    // console.log(`Verifying OTP for ${email} with OTP: ${otp}`);
     try {
         const record = await Otp.findOne({ email });
 
@@ -112,5 +113,22 @@ router.post('/login', async(req,res)=>{
     }
 });
 
+router.put('/update-password',async(req,res)=>{
+    const {email, newPassword}=req.body;
+    try {
+        const user =await User.findOne({email:email});
+        if(!user) return res.status(400).json({message:'User not found'});
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await User.findOneAndUpdate({ email },{ password: hashedPassword },{
+            new: true,
+            runValidators: true
+            }
+        );
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error('Failed to update password:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 module.exports = router;
