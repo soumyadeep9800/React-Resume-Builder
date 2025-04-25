@@ -7,15 +7,23 @@ export default function OTP() {
   const [otp,setOtp]=useState("");
   const location = useLocation();
   const email = location.state?.email;
-
+  
+  function maskEmail(email) {
+    const [local, domain] = email.split('@');
+    if (local.length <= 2) {
+      return `${local[0]}****@${domain}`;
+    }
+    const first = local[0];
+    const last = local[local.length - 1];
+    return `${first}****${last}@${domain}`;
+  }
+  const maskedEmail = email ? maskEmail(email) : '';
+  
     const handleVerifyOtp= async(e)=>{
       e.preventDefault();
       if (!otp) {
         return toast.error('OTP  are required');
       }
-      console.log('Email:', email);
-      // const requestBody = { email, otp };
-      // console.log('Request Body:', requestBody);
       try {
         const res=await fetch("http://localhost:3001/api/verify-otp",{
           method: "POST",
@@ -23,12 +31,11 @@ export default function OTP() {
           body:JSON.stringify({ email, otp })
         });
         const data = await res.json();
-        console.log('Response from backend:', data);
         if (res.ok) {
           toast.success("OTP Verified Successful! 🎉");
           navigate('/Newpassword');
         }else{
-          toast.error("OTP Verification failed");
+          toast.error(data.message || "OTP Verification failed");
           navigate('/Forget');
         }
       } catch (error) {
@@ -63,7 +70,7 @@ export default function OTP() {
     <div className="otp-box_Forget">
       <div className='title_Forget'>Please enter the One-Time Password to verify your account</div>
       <div className='title_Forget_nextdiv_forget'>
-      <div className="subtitle_Forget">A One-Time Password has been sent to your Soumyadeepghosh***@gmail.com</div>
+      <div className="subtitle_Forget">A One-Time Password has been sent to your<p className='subtitle_Forget_email'>{maskedEmail}</p></div>
       <div className='OTPINPUT_forget'><OTPInput
         value={otp}
         onChange={(otp)=>setOtp(otp)}

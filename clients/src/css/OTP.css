@@ -52,20 +52,27 @@
     justify-content: center;
 }
 .validate-btn{
-    padding: 0.3rem;
+    color: rgb(9, 79, 79);
+    padding: 0.4rem;
+}
+.validate-btn:hover{
+    background-color: rgb(207, 243, 240);
+    cursor: pointer;
 }
 .subtitle_Forget{
     text-align: center;
 }
+.subtitle_Forget_email{
+    color: rgb(4, 141, 141);
+}
 @media(max-width: 500px){
     .Forget_page_mainbox2{
-       padding: 0%;
+        padding: 0%;
     }
     .otp-box_Forget{
         padding: 1.5rem;
         height: 0%;
     }
-   
 }
 @media(max-width: 385px){
 
