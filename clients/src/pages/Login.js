@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { toast } from 'react-toastify';
 import photo from '../images/back.jpg';
 import photo2 from '../images/google.png';
 
 
 export default function Login() {
+  const navigate=useNavigate();
   const[email,setEmail]=useState("");
   const[password,setPassword]=useState("");
 
@@ -21,6 +22,7 @@ const handelLogin=async (e)=>{
           // const data=await res.json();
           if(res.ok){
             toast.success("Login successful! 🎉");
+            navigate('/');
           }else{
             toast.error("invalid email or password! ❌");
           }

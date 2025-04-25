@@ -3,11 +3,19 @@ const app=express();
 const port=3001;
 const db=require('./db');
 const bodyParser=require('body-parser');
-app.use(bodyParser.json());
+
 
 
 const cors = require("cors");
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: ['GET', 'POST', 'PUT'],
+  credentials: true, // If using cookies or auth headers
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.send('Welcome to the homepage!');
@@ -17,10 +25,9 @@ app.get('/', (req, res) => {
   const authRoutes = require('./routes/auth');
   app.use('/api', authRoutes);
 
-
-
-
-
+  const forgetRoutes = require('./routes/reset');
+  app.use('/forget', forgetRoutes);
+  // console.log("✅ forgetRoutes mounted at /forget");
 
 
 

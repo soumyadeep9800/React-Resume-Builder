@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { toast } from 'react-toastify';
 import photo from '../images/abcd.jpg';
 import photo2 from '../images/google.png';
 import OTPInput from "react-otp-input";
 export default function Sign() {
+  const navigate = useNavigate();
   const [otp,setOtp]=useState("");
   const [name,setName]=useState('');
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
   const [otpClicked, setOtpClicked] = useState(false);
   const [otpDisabled, setOtpDisabled] = useState(false);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
+
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if(!name) return toast.error("Please Enter Your Name");
@@ -20,24 +23,31 @@ export default function Sign() {
     setOtpClicked(true);
     setOtpDisabled(true);
     try {
-      const res=await fetch("http://localhost:3001/api/send-otp",{
+        const res=await fetch("http://localhost:3001/api/send-otp",{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body:JSON.stringify({email})
       });
       // const data= await res.json();
       await res.json();
-      toast.success("OTP send Successful! 🎉");
-      //alert(data.message);
+      if(res.ok){
+        toast.success("OTP send Successful! 🎉");
+      }else if(res.status===400){
+        toast.error('Email already use enter new email');
+      }else{
+        toast.error('Failed to send OTP');
+      }
+      if(res.status===401){
+        toast.error('invalid email address');
+      }
     } catch (err) {
       console.error(err);
-      //alert("Failed to send OTP");
       toast.error("Failed to send OTP");
     }
     setTimeout(() => {
       setOtpClicked(false);
       setOtpDisabled(false);
-    }, 2500);
+    }, 2000);
   };
   
   const handleVerifyOtp= async(e)=>{
@@ -59,6 +69,7 @@ export default function Sign() {
         return;
       }
       toast.success("OTP Verified Successful! 🎉");
+      setIsOtpVerified(true);
       //alert(data.message);
     } catch (error) {
       console.error(error);
@@ -87,6 +98,10 @@ export default function Sign() {
       toast.error("OTP must be 4 digit!");
       return;
     }
+    if (!isOtpVerified) {
+      toast.error("Please verify OTP before signing up!");
+      return;
+    }
     if (!isPasswordValid(password)) {
       toast.error("Password must be at least 8 characters and include uppercase, lowercase, number, and special character");
       return;
@@ -100,6 +115,7 @@ export default function Sign() {
       const data=await res.json();
       if(res.ok){
         toast.success("Signup successful! 🎉");
+        navigate('/');
       }else{
         alert(data.message);
       }
