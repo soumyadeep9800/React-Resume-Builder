@@ -27,7 +27,9 @@ app.get('/', (req, res) => {
 
   const forgetRoutes = require('./routes/reset');
   app.use('/forget', forgetRoutes);
-  // console.log("✅ forgetRoutes mounted at /forget");
+  
+  const googleAuth =require('./routes/googleAuth');
+  app.use('/api', googleAuth);
 
 
 app.listen(port,()=>{

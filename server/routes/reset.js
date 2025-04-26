@@ -27,13 +27,6 @@ router.post('/send', async (req, res) => {
           { otp, createdAt: new Date() },
           { upsert: true, new: true }
   );
-  
-  // const mailOptions = {
-  //   from: process.env.EMAIL_USER,
-  //   to: email,
-  //   subject: 'Your OTP for Resume-Builder',
-  //   text: `Hi ${findEmail.name},\n\nYour OTP is: ${otp}. It is valid for 1 minute.\n\n- Soumyadeep Ghosh`,
-  // };
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,

@@ -17,6 +17,15 @@ const userSchema=new mongoose.Schema({
         type:String,
         require:true
     },
+    picture: {
+        type: String,
+        default: null,
+    },
+    signupMethod: {
+        type: String,
+        enum: ['manual', 'google'],
+        default: 'manual',
+    },
     createdAt:{
         type:Date,
         default:Date.now

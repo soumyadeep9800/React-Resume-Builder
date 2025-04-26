@@ -1,4 +1,4 @@
- .back {
+  .back {
     /* margin: 0;
     padding: 0; */
     width: 100%;
@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; 
+    overflow: hidden;
     /* position: relative; */
   }
   
@@ -86,14 +86,11 @@
   justify-content: end;
 }
 .google{
-   margin-top: 1rem;
-   border: 1px solid rgb(64, 64, 64);
-   padding: .4rem;
-   border-radius: 1.3rem;
+  margin-top: 1rem;
+  padding: .4rem;
+  border-radius: 1.3rem;
 }
-.google:hover{
-  background-color: #CBCBCB;
-}
+
 .google_icon_login{
   display: flex;
   height: 2rem;
