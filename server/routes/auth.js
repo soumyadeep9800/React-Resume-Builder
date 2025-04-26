@@ -82,12 +82,16 @@ router.post('/signup', async (req, res) => {
         return res.status(400).json({ message: 'All fields are required' });
     }
     try {
+        const checkUser= await User.findOne({email:email});
+        if(checkUser) return res.status(400).json({message:'Email already registered. Please login.'});
+
         const newUser = new User({ name, email, password });
-        const saveUser=await newUser.save();
         const payload={
-            id:saveUser.id
+            id:newUser.id
         }
         const token = generateToken(payload);
+        newUser.devices.push({ token });
+        await newUser.save();
         res.json({ message: 'Signup successful', token });
     } catch (err) {
         console.error('Signup error:', err);
@@ -99,17 +103,25 @@ router.post('/login', async(req,res)=>{
     const {email,password}=req.body;
     try {
         const user=await User.findOne({email:email});
+        if (!user.password && user) {
+            return res.status(402).json({message: 'Please login using Google Sign-In' });
+        }
         if(!user || !(await user.comparePassword(password))){
-            return res.status(401).json({error:'invalid username or password'});
+            return res.status(401).json({message:'invalid username or password'});
+        }
+        if (user.devices.length >= 2) {
+            return res.status(403).json({ message: 'Login limit exceeded. Please logout from another device first.' });
         }
         const payload={
             id:user.id
         }
         const token=generateToken(payload);
+        user.devices.push({token});
+        await user.save();
         res.status(200).json({token});
     } catch (error) {
         console.log(error);
-        res.status(500).json({error:'internal server error'});
+        res.status(500).json({message:'internal server error'});
     }
 });
 

@@ -68,6 +68,11 @@
     font-weight: bold;
     color: white;
   }
+  .loginbutton:hover{
+    color: rgb(39, 118, 118);
+    background-image: none;
+    background-color: rgb(168, 208, 244);
+  }
   .loginbutton1{
     display: flex;
     justify-content: center;

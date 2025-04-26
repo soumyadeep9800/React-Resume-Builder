@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import photo from "../images/abcd.jpg";
-// import photo2 from "../images/google.png";
 import OTPInput from "react-otp-input";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
@@ -31,17 +30,13 @@ export default function Sign() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      // const data= await res.json();
-      await res.json();
+      const data= await res.json();
       if (res.ok) {
         toast.success("OTP send Successful! 🎉");
       } else if (res.status === 400) {
-        toast.error("Email already use enter new email");
+        toast.error("Email already registered. Please login.");
       } else {
-        toast.error("Failed to send OTP");
-      }
-      if (res.status === 401) {
-        toast.error("invalid email address");
+        toast.error(data.message);
       }
     } catch (err) {
       console.error(err);

@@ -25,7 +25,7 @@ export default function Login() {
         toast.success("Login successful! 🎉");
         navigate("/");
       } else {
-        toast.error("invalid email or password! ❌");
+        toast.error(data.message);
       }
     } catch (error) {
       console.error(error);

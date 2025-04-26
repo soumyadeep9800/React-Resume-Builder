@@ -26,11 +26,18 @@ const userSchema=new mongoose.Schema({
         enum: ['manual', 'google'],
         default: 'manual',
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    }
-});
+    devices: [
+        {
+            token: {
+            type: String,
+            },
+            createdAt: {
+            type: Date,
+            default: Date.now,
+            },
+        },
+    ],
+},{ timestamps: true });
 
 userSchema.pre('save' ,async function(next){
     const user =this;
