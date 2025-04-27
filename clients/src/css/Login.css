@@ -24,13 +24,8 @@
     align-items: center;
     border: 2px solid rgb(254, 254, 254);
     border-radius: 2rem;
-    height: 29rem;
+    height: 29.5rem;
     width: 23rem;
-  }
-  .EP{
-    /* display: flex;
-    flex-direction: column; */
-    /* gap: 3rem; */
   }
   .login{
     margin-top: 1.2rem;

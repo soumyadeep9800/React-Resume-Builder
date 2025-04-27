@@ -1,7 +1,7 @@
 const express=require('express');
 const nodemailer=require('nodemailer');
 const router=express.Router();
-const {generateToken}=require('../jwt');
+const {generateToken, jwtAuthMiddleware}=require('../jwt');
 const User=require('../models/userModel');
 const Otp=require('../models/otpModel');
 const bcrypt = require('bcrypt');
@@ -140,6 +140,21 @@ router.put('/update-password',async(req,res)=>{
     } catch (error) {
         console.error('Failed to update password:', error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.post('/logout', jwtAuthMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+        //Remove the device token from the user's devices array (logout action)
+        user.devices = user.devices.filter(device => device.token !== req.headers.authorization.split(" ")[1]);
+        await user.save(); // Save the updated user
+        res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({ message: 'Server error during logout' });
     }
 });
 

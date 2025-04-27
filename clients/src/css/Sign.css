@@ -43,9 +43,9 @@
   justify-content: center;
   align-items: center;
 }
- #e11{
+#e11{
   margin-bottom: 1.2rem;
- }
+}
 .e1:focus, .p1:focus {
   border-color: rgb(84, 169, 255);
   background: white;

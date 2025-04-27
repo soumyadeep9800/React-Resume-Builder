@@ -9,7 +9,6 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const handelLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) return toast.error("All fields are required");
@@ -97,10 +96,12 @@ export default function Login() {
                   throw new Error(data.message || "Google Sign-In failed!");
                 }
                 const { token } = data;
-                // Save token to localStorage
+                
                 localStorage.setItem("token", token);
-                toast.success("Google Sign-In successful!");
+                localStorage.setItem('photoURL', decoded.picture);
                 navigate("/");
+                //toast.success("Google Sign-In successful!");
+                window.location.reload();
               } catch (error) {
                 console.error("Google sign-in error:", error.message);
                 toast.error(error.message || "Google Sign-In failed!");

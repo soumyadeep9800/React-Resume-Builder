@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const jwtAuthMiddleware=(req,res,next)=>{
     const authheader=req.headers.authorization;
-    if(!authheader) return res.status(404).json({error:'unauthorized'});
+    if(!authheader) return res.status(401).json({error:'unauthorized'});
     try {
         const token=authheader.split(" ")[1];
         const decode=jwt.verify(token,process.env.JWT_SECRET);

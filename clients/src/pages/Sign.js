@@ -14,7 +14,6 @@ export default function Sign() {
   const [otpClicked, setOtpClicked] = useState(false);
   const [otpDisabled, setOtpDisabled] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
-
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!name) return toast.error("Please Enter Your Name");
@@ -174,7 +173,6 @@ export default function Sign() {
                   value={otp}
                   onChange={setOtp}
                   isInputNum
-                  shouldAutoFocus
                   inputStyle="otp-input2"
                   renderSeparator={<span>-</span>}
                   renderInput={(props) => <input {...props} />}
@@ -229,8 +227,11 @@ export default function Sign() {
                 );
                 const data = await res.json();
                 if (res.ok) {
-                  toast.success("Google Sign-In successful!");
+                  localStorage.setItem('token', credentialResponse.credential); // the JWT token
+                  localStorage.setItem('photoURL', decoded.picture);
                   navigate("/");
+                  //toast.success("Google Sign-In successful!");
+                  window.location.reload();
                 } else {
                   toast.error(data.message || "Something went wrong");
                 }

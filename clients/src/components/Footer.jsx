@@ -1,8 +1,48 @@
 import React from 'react'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faInstagram, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { toast } from "react-toastify";
 export default function Footer() {
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        toast.warning('You already logged out!');
+        return;
+      }
+      const response = await fetch('http://localhost:3001/api/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        // Clear localStorage and update UI
+        localStorage.removeItem('token');
+        localStorage.removeItem('photoURL');
+        toast.success('Log Out Successfully!');
+        window.location.reload();
+        window.scrollTo(0, 0);
+      } else {
+        console.error('Logout failed:', data.message);
+        // Optionally still clear localStorage if token invalid
+        localStorage.removeItem('token');
+        localStorage.removeItem('photoURL');
+        window.location.reload();
+        window.scrollTo(0, 0);
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Still clear localStorage on error
+      localStorage.removeItem('token');
+      localStorage.removeItem('photoURL');
+      window.location.reload();
+      window.scrollTo(0, 0);
+    }
+  };
   return (
     <div className='footer'>
       <div className='f-1'>
@@ -20,7 +60,6 @@ export default function Footer() {
       </a></div>
       </div>
 
-
       <div className='f-2'>
             <div className='f-2left'>
               <div className='f-2left-H'>Company Support</div>
@@ -36,7 +75,7 @@ export default function Footer() {
                     <a href='#privacypolicy'>Privacy Policy</a>
                   </li>
                   <li>
-                    <a href='#cookiepolicy'>Cookie Policy</a>
+                    <button onClick={handleLogout} className='footer_logout_button'>Log Out</button>
                   </li>
                 </ul>
               </div>

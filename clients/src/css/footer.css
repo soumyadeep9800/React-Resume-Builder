@@ -89,9 +89,14 @@
     padding: .4rem;
   }
   .copyright{
-   display: flex;
-   justify-content: center;
-   line-height: 2rem;
+    display: flex;
+    justify-content: center;
+    line-height: 2rem;
+  }
+  .footer_logout_button{
+    border: none;
+    color: white;
+    background-color: #313b47;
   }
   @media screen and (max-width:500px){
     .f-11{
