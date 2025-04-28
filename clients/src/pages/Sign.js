@@ -5,6 +5,17 @@ import photo from "../images/abcd.jpg";
 import OTPInput from "react-otp-input";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+
+// export function handleTokenExpiration(token, navigate){
+//   const decoded = jwtDecode(token);
+//   const expirationTime = decoded.exp * 1000 - Date.now();
+//   setTimeout(() => {
+//     localStorage.removeItem("token");
+//     toast.info("Session expired. Please login again.");
+//     navigate("/login");
+//   }, expirationTime);
+// };
+
 export default function Sign() {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
@@ -14,6 +25,7 @@ export default function Sign() {
   const [otpClicked, setOtpClicked] = useState(false);
   const [otpDisabled, setOtpDisabled] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!name) return toast.error("Please Enter Your Name");
@@ -29,7 +41,7 @@ export default function Sign() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      const data= await res.json();
+      const data = await res.json();
       if (res.ok) {
         toast.success("OTP send Successful! 🎉");
       } else if (res.status === 400) {
@@ -86,7 +98,7 @@ export default function Sign() {
     return lengthValid && hasUpper && hasLower && hasNumber && hasSpecial;
   };
 
-  const handelSignUp = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     if (!name || !email || !password || !otp) {
       toast.error("All fields are required");
@@ -114,7 +126,8 @@ export default function Sign() {
       });
       const data = await res.json();
       if (res.ok) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
+        //handleTokenExpiration(data.token,navigate);
         toast.success("Signup successful! 🎉");
         navigate("/");
       } else {
@@ -134,7 +147,7 @@ export default function Sign() {
           <h2>Sign Up</h2>
         </div>
         <div className="a3">
-          <form onSubmit={handelSignUp}>
+          <form onSubmit={handleSignUp}>
             <div className="e1_head">
               <div className="e1_head_newadd">
                 <input
@@ -210,14 +223,16 @@ export default function Sign() {
                 <Link to="#google"><img src={photo2} alt='google_icon' className='google_icon_login'/></Link>
             </div> */}
         <div className="google">
-        <GoogleLogin
+          <GoogleLogin
             onSuccess={async (credentialResponse) => {
               const decoded = jwtDecode(credentialResponse.credential);
               // console.log(decoded); // {name, email, picture, etc.}
               try {
-                const res = await fetch("http://localhost:3001/api/google-signup",{
+                const res = await fetch(
+                  "http://localhost:3001/api/google-signup",
+                  {
                     method: "POST",
-                    headers: {"Content-Type": "application/json",},
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                       name: decoded.name,
                       email: decoded.email,
@@ -227,10 +242,11 @@ export default function Sign() {
                 );
                 const data = await res.json();
                 if (res.ok) {
-                  localStorage.setItem('token', credentialResponse.credential); // the JWT token
-                  localStorage.setItem('photoURL', decoded.picture);
+                  localStorage.setItem("token", credentialResponse.credential); // the JWT token
+                  localStorage.setItem("photoURL", decoded.picture);
+                  //const decodedToken = jwtDecode(credentialResponse.credential);
+                  //handleTokenExpiration(decodedToken,navigate);
                   navigate("/");
-                  //toast.success("Google Sign-In successful!");
                   window.location.reload();
                 } else {
                   toast.error(data.message || "Something went wrong");

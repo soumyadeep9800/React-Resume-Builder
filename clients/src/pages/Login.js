@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import photo from "../images/back.jpg";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-
+// import { handleTokenExpiration } from './Sign';
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,6 +21,7 @@ export default function Login() {
       const data=await res.json();
       if (res.ok) {
         localStorage.setItem('token', data.token);
+        //handleTokenExpiration(data.token,navigate);
         toast.success("Login successful! 🎉");
         navigate("/");
       } else {
@@ -99,6 +100,7 @@ export default function Login() {
                 
                 localStorage.setItem("token", token);
                 localStorage.setItem('photoURL', decoded.picture);
+                //handleTokenExpiration(token,navigate);
                 navigate("/");
                 //toast.success("Google Sign-In successful!");
                 window.location.reload();
