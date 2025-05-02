@@ -6,6 +6,12 @@ import cognizant from '../images/cognizant.png';
 import google from '../images/googlep.png';
 import microsoft from '../images/microsoft.png';
 import flipkart from '../images/flipkart.png';
+import template1 from '../images/template1.webp';
+import template2 from '../images/template2.webp';
+import template3 from '../images/template3.webp';
+import template4 from '../images/template4.webp';
+import template5 from '../images/template5.webp';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 export default function Index() {
@@ -86,11 +92,30 @@ export default function Index() {
 {/* 3rd */}
 
 <div className='show_Template'>
-  
+<h2 className='template-header'>Choose Your Resume Template</h2>
+  <div className='template-gallery'>
+    <div className='template-card'>
+      <img src={template1} alt='Template 1' className='template-thumb' />
+      <button className='template-btn'>Use Template</button>
+    </div>
+    <div className='template-card'>
+      <img src={template2} alt='Template 2' className='template-thumb' />
+      <button className='template-btn'>Use Template</button>
+    </div>
+    <div className='template-card'>
+      <img src={template3} alt='Template 3' className='template-thumb' />
+      <button className='template-btn'>Use Template</button>
+    </div>
+    <div className='template-card'>
+      <img src={template4} alt='Template 3' className='template-thumb' />
+      <button className='template-btn'>Use Template</button>
+    </div>
+    <div className='template-card'>
+      <img src={template5} alt='Template 3' className='template-thumb' />
+      <button className='template-btn'>Use Template</button>
+    </div>
+  </div>
 </div>
-
-
-
 
 
 {/* 4rd */}
