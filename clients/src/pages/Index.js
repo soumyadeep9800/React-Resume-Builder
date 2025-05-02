@@ -82,7 +82,18 @@ export default function Index() {
     </div>
   </div>
 </div>
+
 {/* 3rd */}
+
+<div className='show_Template'>
+  
+</div>
+
+
+
+
+
+{/* 4rd */}
 
 <div ref={myDivRef}  className={`partner-customer ${isVisible ? 'visible' : ''}`}>
   <div className='partners'>

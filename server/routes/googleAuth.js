@@ -4,7 +4,6 @@ const {generateToken}=require('../jwt');
 const User=require('../models/userModel');
 require('dotenv').config();
 
-
 router.post("/google-signup", async (req, res) => {
     const { name, email, picture } = req.body;
     if (!email) {
@@ -17,7 +16,9 @@ router.post("/google-signup", async (req, res) => {
         user = new User({name,email,picture,signupMethod: "google",});
         const payload = { id: user.id };
         const token = generateToken(payload);
-        user.devices.push({ token });
+
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        user.devices.push({ token,ip });
         await user.save();
         res.json({ message: 'Google signup/login successful', token });
     } catch (err) {

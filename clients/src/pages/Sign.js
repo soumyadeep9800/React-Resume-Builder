@@ -130,6 +130,7 @@ export default function Sign() {
         //handleTokenExpiration(data.token,navigate);
         toast.success("Signup successful! 🎉");
         navigate("/");
+        window.location.reload();
       } else {
         alert(data.message);
       }

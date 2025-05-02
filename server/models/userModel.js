@@ -29,13 +29,16 @@ const userSchema=new mongoose.Schema({
     devices: [
         {
             token: {
-            type: String,
+                type: String,
+            },
+            ip: {
+                type: String,
             },
             createdAt: {
-            type: Date,
-            default: Date.now,
+                type: Date,
+                default: Date.now,
             },
-        },
+            },
     ],
 },{ timestamps: true });
 

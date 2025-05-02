@@ -24,6 +24,7 @@ export default function Login() {
         //handleTokenExpiration(data.token,navigate);
         toast.success("Login successful! 🎉");
         navigate("/");
+        window.location.reload();
       } else {
         toast.error(data.message);
       }
