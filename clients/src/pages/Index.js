@@ -11,7 +11,7 @@ import template2 from '../images/template2.webp';
 import template3 from '../images/template3.webp';
 import template4 from '../images/template4.webp';
 import template5 from '../images/template5.webp';
-
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 export default function Index() {
@@ -30,6 +30,22 @@ export default function Index() {
     };
   }, []);
 
+  const templateMap = {
+    template1: '/editor/template1',
+    template2: '/editor/template2',
+    template3: '/editor/template3',
+    template4: '/editor/template4',
+    template5: '/editor/template5',
+  };
+  
+  const navigate = useNavigate();
+
+  const handleUseTemplate = (templateId) => {
+  const path = templateMap[templateId];
+  if (path) {
+    navigate(path);
+  }
+  };
 
   return (
     <>
@@ -38,11 +54,11 @@ export default function Index() {
 
           <div className='left1B'>
           <div className='left-1'>Land your dream job—create your resume now.</div>
-          <div className='frontpage-1st-button'><button className='left-button'>Create new resume  <FontAwesomeIcon icon={faArrowRight}/></button></div>
+          <div className='frontpage-1st-button'><button className='left-button' onClick={() => navigate('../editor/template1')}>Create new resume  <FontAwesomeIcon icon={faArrowRight}/></button></div>
           </div>
 
           <div className='left-2'>From fresh graduates to seasoned professionals,our resume
-          builder helds you create stunning resumes that lead to interviews and offers.</div>
+          builder helps you create stunning resumes that lead to interviews and offers.</div>
         
 <div className='left3'>
         <div className='left-31'>
@@ -73,12 +89,12 @@ export default function Index() {
     <div className='love-1'>
       <div className='love-1H'><h3>Powerful Resume Builder</h3>
       </div>
-      <p>Build your resume effortlessly with an intuitive and user-frendly interface.</p>
+      <p>Build your resume effortlessly with an intuitive and user-friendly interface.</p>
     </div>
 
     <div className='love-2'>
-      <div className='love-2H'><h3>Professionals And ATS Frendly Templates</h3></div>
-      <p>Choose from a variety of modern and ATS-frendly templates designed to impress recruiters.</p>
+      <div className='love-2H'><h3>Professionals And ATS Friendly Templates</h3></div>
+      <p>Choose from a variety of modern and ATS-friendly templates designed to impress recruiters.</p>
       <button className='love-button12'>Create new resume <FontAwesomeIcon icon={faArrowRight}/></button>
     </div>
   
@@ -96,23 +112,23 @@ export default function Index() {
   <div className='template-gallery'>
     <div className='template-card'>
       <img src={template1} alt='Template 1' className='template-thumb' />
-      <button className='template-btn'>Use Template</button>
+      <button className='template-btn' onClick={()=>handleUseTemplate('template1')}>Use Template</button>
     </div>
     <div className='template-card'>
       <img src={template2} alt='Template 2' className='template-thumb' />
-      <button className='template-btn'>Use Template</button>
+      <button className='template-btn' onClick={()=>handleUseTemplate('template2')}>Use Template</button>
     </div>
     <div className='template-card'>
       <img src={template3} alt='Template 3' className='template-thumb' />
-      <button className='template-btn'>Use Template</button>
+      <button className='template-btn' onClick={()=>handleUseTemplate('template3')}>Use Template</button>
     </div>
     <div className='template-card'>
-      <img src={template4} alt='Template 3' className='template-thumb' />
-      <button className='template-btn'>Use Template</button>
+      <img src={template4} alt='Template 4' className='template-thumb' />
+      <button className='template-btn' onClick={()=>handleUseTemplate('template4')}>Use Template</button>
     </div>
     <div className='template-card'>
-      <img src={template5} alt='Template 3' className='template-thumb' />
-      <button className='template-btn'>Use Template</button>
+      <img src={template5} alt='Template 5' className='template-thumb' />
+      <button className='template-btn' onClick={()=>handleUseTemplate('template5')}>Use Template</button>
     </div>
   </div>
 </div>

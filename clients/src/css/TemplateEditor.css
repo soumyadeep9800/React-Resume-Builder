@@ -1,0 +1,40 @@
+.editor-page {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 40px;
+    background: linear-gradient(135deg, #f5e6ff, #ffe6fa);
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .form-section, .preview-section {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    padding: 24px;
+    flex: 1;
+  }
+  
+.input_edit{
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input_edit:focus {
+    border-color: #a855f7;
+    outline: none;
+  }
+  
+.editor_h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #9333ea;
+  }
+  

@@ -143,7 +143,7 @@ router.put('/update-password',async(req,res)=>{
     }
 });
 
-router.post('/logout', jwtAuthMiddleware, async (req, res) => {
+router.post('/logout',jwtAuthMiddleware,async (req, res) => {
     try {
         const userId = req.user.id;
         const user = await User.findById(userId);

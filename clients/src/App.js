@@ -12,6 +12,7 @@ import Forget from "./pages/Forget";
 import OTP from "./pages/OTP";
 import Newpassword from "./pages/Newpassword";
 import Contact from "./pages/Contact";
+import TemplateEditor from './pages/TemplateEditor';
 
 import './css/footer.css';
 import './css/Index.css';
@@ -23,6 +24,7 @@ import './css/Forget.css';
 import './css/OTP.css';
 import './css/Newpassword.css';
 import './css/Contact.css';
+import './css/TemplateEditor.css'
 
 import {BrowserRouter as Router,Routes,Route}from "react-router-dom";
 
@@ -42,6 +44,7 @@ function App() {
     <Route path='/Forget' element={<Forget/>}/>
     <Route path='/OTP' element={<OTP/>}/>
     <Route path='/Newpassword' element={<Newpassword/>}/>
+    <Route path="/editor/:templateId" element={<TemplateEditor />} />
   </Routes>
   <Footer/>
 </Router>

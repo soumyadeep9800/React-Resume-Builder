@@ -12,17 +12,6 @@
   width: 60%;
   flex-wrap: wrap;
 }
-/* .left-1 {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    color: #062222;
-    font-size: 2rem;
-    font-weight: bold;
-    cursor: default;
-} */
 .left-1 {
   display: inline-block;
   font-family: monospace;
