@@ -31,6 +31,9 @@ app.get('/', (req, res) => {
   const googleAuth =require('./routes/googleAuth');
   app.use('/api', googleAuth);
 
+  const sendMessage =require('./routes/contact');
+  app.use('/api', sendMessage);
+
 
 app.listen(port,()=>{
     console.log(`server is running at http://localhost:${port}`);

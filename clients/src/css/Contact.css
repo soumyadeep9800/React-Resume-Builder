@@ -200,13 +200,13 @@
     height: 3.8rem;
     width: 22rem;
     font-size: 1.5rem;
-} 
+}
 .From_contact_your_name2::placeholder,.From_contact_your_email2::placeholder{
     font-size: 1.2rem;
 }
 .From_contact_your_email2{
     margin-top: 1.5rem;
-} 
+}
 
 .From_contact_your_button{
     margin-top: 2rem;
