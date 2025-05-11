@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 import { useLocation } from "react-router-dom";
 import bb from "../images/bb.png";
 const FAQItem = ({ question, answer }) => (
@@ -44,7 +44,6 @@ const FAQSection = () => {
         "For increased security, readability, and overall visual aspect, all the documents are saved as PDFs - which is a format that looks the same on all devices.",
     },
   ];
-
   return (
     <div className="faq-section" id="faq">
       <h2 className="faq-header">Frequently Asked Questions</h2>
@@ -58,19 +57,6 @@ const FAQSection = () => {
 };
 
 export default function Premium() {
-  const checkboxes = document.querySelectorAll(".custom-checkbox");
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", function () {
-      if (this.checked) {
-        // Uncheck all other checkboxes
-        checkboxes.forEach((cb) => {
-          if (cb !== this) {
-            cb.checked = false;
-          }
-        });
-      }
-    });
-  });
   // for faq scroll
   const location=useLocation();
   useEffect(()=>{
@@ -81,6 +67,11 @@ export default function Premium() {
       }
     }
   },[location]);
+
+  const [selectedPlan, setSelectedPlan] = useState(""); // 'year', 'quarter', or 'month'
+  const handleCheckboxChange = (plan) => {
+    setSelectedPlan(plan === selectedPlan ? "" : plan); // toggle logic
+  };
   return (
     <>
       <div className="premium">
@@ -121,6 +112,8 @@ export default function Premium() {
                     type="checkbox"
                     name="customCheckbox"
                     class="custom-checkbox"
+                    checked={selectedPlan === "year"}
+                    onChange={() => handleCheckboxChange("year")}
                   />
                   <svg viewBox="0 0 35.6 35.6">
                     <circle
@@ -151,6 +144,8 @@ export default function Premium() {
                     type="checkbox"
                     name="customCheckbox"
                     class="custom-checkbox"
+                    checked={selectedPlan === "quarter"}
+                    onChange={() => handleCheckboxChange("quarter")}
                   />
                   <svg viewBox="0 0 35.6 35.6">
                     <circle
@@ -185,7 +180,9 @@ export default function Premium() {
                     type="checkbox"
                     name="customCheckbox"
                     class="custom-checkbox"
-                     id="third"
+                    id="third"
+                    checked={selectedPlan === "month"}
+                    onChange={() => handleCheckboxChange("month")}
                   />
                   <svg viewBox="0 0 35.6 35.6">
                     <circle
