@@ -10,14 +10,18 @@ export default function TemplateEditor() {
     const { templateId } = useParams();
 
   // Common form data
-    const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    education: '',
-    experience: '',
-    skills: '',
-    });
+  const [formData, setFormData] = useState({
+  name: '',
+  title: '',
+  summary: '',
+  experience: '',
+  education: '',
+  skills: '',
+  phone: '',
+  email: '',
+  address: ''
+});
+
 
     const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,11 +50,15 @@ const renderTemplate = () => {
         <div className="form-section">
         <h2 className='editor_h2'>Fill Your Resume Details</h2>
         <input className='input_edit' type="text" name="name" placeholder="Full Name" onChange={handleChange} />
-        <input className='input_edit' type="email" name="email" placeholder="Email" onChange={handleChange} />
+        <input className='input_edit' type="text" name="title" placeholder="Job Title (e.g. Software Engineer)" onChange={handleChange} />
+        <textarea className='input_edit' name="summary" placeholder="Professional Summary" onChange={handleChange}></textarea>
+        <textarea className='input_edit' name="experience" placeholder="Work Experience" onChange={handleChange}></textarea>
+        <textarea className='input_edit' name="education" placeholder="Education Details" onChange={handleChange}></textarea>
+        <textarea className='input_edit' name="skills" placeholder="Skills (comma-separated)" onChange={handleChange}></textarea>
         <input className='input_edit' type="tel" name="phone" placeholder="Phone Number" onChange={handleChange} />
-        <textarea className='input_edit' name="education" placeholder="Education" onChange={handleChange}></textarea>
-        <textarea className='input_edit' name="experience" placeholder="Experience" onChange={handleChange}></textarea>
-        <textarea className='input_edit' name="skills" placeholder="Skills" onChange={handleChange}></textarea>
+        <input className='input_edit' type="email" name="email" placeholder="Email Address" onChange={handleChange} />
+        <input className='input_edit' type="text" name="address" placeholder="Full Address" onChange={handleChange} />
+
         </div>
 
       <div className="preview-section">

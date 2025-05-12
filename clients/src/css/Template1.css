@@ -1,0 +1,127 @@
+/* Template1.css */
+
+.resume-template {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #000;
+  background-color: #fff;
+  line-height: 1.6;
+  border: 1px solid #ccc;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: #333;
+  gap: 2px;
+}
+
+.contact svg {
+  margin-right: 6px;
+}
+
+.divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 4px solid black;
+  width: 100%;
+}
+
+section {
+  margin-bottom: 28px;
+}
+
+section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+section h2 svg {
+  margin-right: 8px;
+}
+
+.location-date {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.job {
+  margin-bottom: 24px;
+}
+
+.job p {
+  margin: 4px 0;
+}
+
+.job ul {
+  margin: 8px 0 0 16px;
+  padding-left: 16px;
+}
+
+.job ul li {
+  list-style-type: disc;
+  margin-bottom: 6px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill {
+  background-color: #eee;
+  color: #000;
+  font-size: 0.85rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+ul li {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  .resume-template {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .skills {
+    gap: 6px;
+  }
+
+  .skill {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+}
