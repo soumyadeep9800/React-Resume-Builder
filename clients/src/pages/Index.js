@@ -16,17 +16,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 export default function Index() {
 
-  const [isVisible, setIsVisible] = useState(false);
-  const myDivRef = useRef(null);
+const templateRef = useRef(null);
+const partnerRef = useRef(null);
+const [templateVisible, setTemplateVisible] = useState(false);
+const [partnerVisible, setPartnerVisible] = useState(false);
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
+    const observer1 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTemplateVisible(true); // do not reset to false
+        }
+      },
+      { threshold: 0.1 }
+    );
+    const currentTemplateRef = templateRef.current;
+    if (currentTemplateRef) observer1.observe(currentTemplateRef);
+
+    return () => {
+      if (currentTemplateRef) observer1.unobserve(currentTemplateRef);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer2 = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setPartnerVisible(true);
+        }
+      },
       { threshold: 0.2 }
     );
-    const currentRef = myDivRef.current;
-    if (currentRef) observer.observe(currentRef);
+    const currentPartnerRef = partnerRef.current;
+    if (currentPartnerRef) observer2.observe(currentPartnerRef);
+
     return () => {
-      if (currentRef) observer.unobserve(currentRef);
+      if (currentPartnerRef) observer2.unobserve(currentPartnerRef);
     };
   }, []);
 
@@ -106,8 +131,7 @@ export default function Index() {
 </div>
 
 {/* 3rd */}
-
-<div className='show_Template'>
+<div ref={templateRef} className={`show_Template ${templateVisible ? 'visible' : ''}`}>
 <h2 className='template-header'>Choose Your Resume Template</h2>
   <div className='template-gallery'>
     <div className='template-card'>
@@ -136,7 +160,7 @@ export default function Index() {
 
 {/* 4rd */}
 
-<div ref={myDivRef}  className={`partner-customer ${isVisible ? 'visible' : ''}`}>
+<div ref={partnerRef} className={`partner-customer ${partnerVisible ? 'visible' : ''}`}>
   <div className='partners'>
     <div className='partners-h1'>Our Partners</div>
     <div className='partner-img'>
