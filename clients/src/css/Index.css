@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: linear-gradient(to left, #e7f6f7 100%, transparent);
+  /* background: linear-gradient(to left, #e7f6f7 100%, transparent); */
 }
 .left {
   display: flex;
@@ -501,20 +501,9 @@
     gap: 1rem;
   }
 }
+
+
 /* 3rd */
-/* .partner-customer {
-  display: flex;
-  justify-content: center;
-  gap: 10rem;
-  margin-top: 0.5rem;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-.partner-customer.visible {
-  opacity: 1;
-  transform: translateY(0);
-} */
 .show_Template{
   opacity: 0;
   transform: translateY(50px);

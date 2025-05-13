@@ -64,7 +64,7 @@ export default function Template1({ data }) {
 
   return (
     <div className="resume-template">
-      <div className="header">
+      <div className="headerxyz">
         <h1>{resume.name}</h1>
         <div className="contact">
           <p><FaEnvelope /> {resume.email}</p>
@@ -75,20 +75,20 @@ export default function Template1({ data }) {
 
       <hr className="divider" />
 
-      <section>
+      <section className="section_template1">
         <h2><FaUser /> Summary</h2>
         <p>{resume.summary}</p>
       </section>
 
-      <section>
+      <section className="section_template1">
         <h2><FaGraduationCap /> Education</h2>
         <p><strong>{resume.education.school}</strong></p>
         <p>{resume.education.degree}</p>
         <p className="location-date">{resume.education.date} <i>{resume.education.location}</i></p>
       </section>
 
-      <section>
-        <h2><FaBriefcase /> Experience</h2>
+      <section className="section_template1">
+        <h2 className='section_template1_h2'><FaBriefcase /> Experience</h2>
         {resume.experience.map((job, index) => (
           <div key={index} className="job">
             <p><strong>{job.company}</strong></p>
@@ -103,8 +103,8 @@ export default function Template1({ data }) {
         ))}
       </section>
 
-      <section>
-        <h2><FaTools /> Skills</h2>
+      <section className="section_template1">
+        <h2 className='section_template1_h2'><FaTools /> Skills</h2>
         <div className="skills">
           {resume.skills.map((skill, index) => (
             <span className="skill" key={index}>{skill}</span>
@@ -112,8 +112,8 @@ export default function Template1({ data }) {
         </div>
       </section>
 
-      <section>
-        <h2><FaAward /> Awards</h2>
+      <section className="section_template1">
+        <h2 className='section_template1_h2'><FaAward /> Awards</h2>
         <ul>
           {resume.awards.map((award, index) => (
             <li key={index}>{award}</li>

@@ -2,7 +2,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0e3442;
+    /* background-color: #0e3442; */
+    background-color: #022d53;
     color: white;
     padding: 8px 22px;
   }
