@@ -23,6 +23,13 @@ export default function Template1Inputs({ formData, setFormData }) {
     setFormData({ ...formData, experience: updated });
   };
 
+  const addEducation = () => {
+    setFormData({
+      ...formData,
+      education: [...formData.education, { university: '', department: '', cgpa: '' }]
+    });
+  };
+
   const addExperience = () => {
     setFormData({
       ...formData,
@@ -68,27 +75,28 @@ export default function Template1Inputs({ formData, setFormData }) {
 
   return (
     <div>
-      <input className="input_edit123" type="text" name="name" placeholder="Full Name" onChange={handleChange} />
-      <input className="input_edit123" type="email" name="email" placeholder="Email" onChange={handleChange} />
-      <input className="input_edit123" type="tel" name="phone" placeholder="Phone Number" onChange={handleChange} />
-      <input className="input_edit123" type="text" name="address" placeholder="Address" onChange={handleChange} />
-      <textarea className="input_edit123" name="summary" placeholder="Professional Summary" onChange={handleChange} />
+      <input className="input_edit123" type="text" name="name" placeholder="Full Name" onChange={handleChange} value={formData.name} />
+      <input className="input_edit123" type="email" name="email" placeholder="Email" onChange={handleChange} value={formData.email} />
+      <input className="input_edit123" type="tel" name="phone" placeholder="Phone Number" onChange={handleChange} value={formData.phone} />
+      <input className="input_edit123" type="text" name="address" placeholder="Address" onChange={handleChange} value={formData.address} />
+      <textarea className="input_edit123" name="summary" placeholder="Professional Summary" onChange={handleChange} value={formData.summary} />
 
       <h3 className="h3_editor">Education</h3>
       {formData.education.map((edu, idx) => (
         <div key={idx}>
-          <input className="input_edit123" placeholder="University" onChange={(e) => handleEducationChange(idx, 'university', e.target.value)} />
-          <input className="input_edit123" placeholder="Department" onChange={(e) => handleEducationChange(idx, 'department', e.target.value)} />
-          <input className="input_edit123" placeholder="CGPA" onChange={(e) => handleEducationChange(idx, 'cgpa', e.target.value)} />
+          <input className="input_edit123" placeholder="University" value={edu.university} onChange={(e) => handleEducationChange(idx, 'university', e.target.value)} />
+          <input className="input_edit123" placeholder="Department" value={edu.department} onChange={(e) => handleEducationChange(idx, 'department', e.target.value)} />
+          <input className="input_edit123" placeholder="CGPA" value={edu.cgpa} onChange={(e) => handleEducationChange(idx, 'cgpa', e.target.value)} />
         </div>
       ))}
+      <button className="btn_edit" onClick={addEducation}>Add Education</button>
 
       <h3 className="h3_editor">Experience</h3>
       {formData.experience.map((exp, idx) => (
         <div key={idx}>
-          <input className="input_edit123" placeholder="Role" onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)} />
-          <input className="input_edit123" placeholder="Company" onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)} />
-          <input className="input_edit123" placeholder="Duration" onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)} />
+          <input className="input_edit123" placeholder="Role" value={exp.role} onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)} />
+          <input className="input_edit123" placeholder="Company" value={exp.company} onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)} />
+          <input className="input_edit123" placeholder="Duration" value={exp.duration} onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)} />
         </div>
       ))}
       <button className="btn_edit" onClick={addExperience}>Add Experience</button>

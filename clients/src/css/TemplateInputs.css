@@ -92,7 +92,7 @@
 .h3_editor {
   margin-top: 20px;
   font-size: 18px;
-  color: #2c5282;
+  color: #4c8ddd;
   border-bottom: 1px solid #e2e8f0;
   padding-bottom: 5px;
 }
@@ -106,7 +106,7 @@
 .preview-section123::-webkit-scrollbar-thumb:hover {
   background-color: #718096;
 }
-@media (min-width: 1300px) {
+/* @media (max-width: 1300px) {
   .editor-page {
     flex-direction: row;
     justify-content: space-between;
@@ -117,4 +117,4 @@
     margin-left: 0rem;
     padding: 0px;
   }
-}
+} */

@@ -8,19 +8,16 @@
   line-height: 1.3;
   border: 1px solid #ccc;
 }
-
 .headerxyz {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
-
 .headerxyz h1 {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 0.2em;
 }
-
 .contact {
   display: flex;
   flex-direction: column;
@@ -28,22 +25,18 @@
   color: #333;
   gap: 1px;
 }
-
 .contact svg {
   margin-right: 4px;
 }
-
 .divider {
   margin: 16px 0;
   border: none;
   border-top: 2px solid black;
   width: 100%;
 }
-
 .section_template1 {
   margin-bottom: 10px;
 }
-
 .section_template1 h2 {
   font-size: 1rem;
   font-weight: 600;
@@ -52,43 +45,35 @@
   margin-bottom: 6px;
   color: #000;
 }
-
 .section_template1 h2 svg {
   margin-right: 6px;
 }
-
 .location-date {
   font-style: italic;
   font-size: 0.75rem;
   color: #666;
 }
-
 .job {
   margin-bottom: 12px;
 }
-
 .job p {
   margin: 2px 0;
   font-size: 0.85rem;
 }
-
 .job ul {
   margin: 4px 0 0 16px;
   padding-left: 16px;
 }
-
 .job ul li {
   list-style-type: disc;
   margin-bottom: 4px;
   font-size: 0.8rem;
 }
-
 .skills {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
-
 .skill {
   background-color: #eee;
   color: #000;
@@ -97,31 +82,39 @@
   border-radius: 14px;
   border: 1px solid #ccc;
 }
-
 ul {
   padding-left: 16px;
 }
-
 ul li {
   margin-bottom: 4px;
   font-size: 0.8rem;
 }
-
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+  .resume-template_main_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .resume-template {
     padding: 16px;
+    line-height: 1;
+    max-width: 450px;
+    margin: 0;
   }
-
+  .headerxyz{
+    gap: 0px;
+  }
+  .contact{
+    gap: 0px;
+  }
   .headerxyz h1 {
-    font-size: 1.6rem;
+    font-size: 1rem;
   }
-
   .skills {
     gap: 4px;
   }
-
   .skill {
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     padding: 2px 6px;
   }
 }
