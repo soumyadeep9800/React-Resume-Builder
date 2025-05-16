@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from "react-toastify";
 
 const predefinedSkills = [
   'JavaScript', 'React', 'Node.js', 'HTML', 'CSS',
@@ -12,22 +13,22 @@ export default function Template1Inputs({ formData, setFormData }) {
   };
 
   const handleEducationChange = (index, field, value) => {
+    console.log(`Updating education[${index}].${field} = ${value}`);  // debug log
     const updated = [...formData.education];
     updated[index][field] = value;
     setFormData({ ...formData, education: updated });
   };
 
-  const handleExperienceChange = (index, field, value) => {
-    const updated = [...formData.experience];
-    updated[index][field] = value;
-    setFormData({ ...formData, experience: updated });
-  };
-
   const addEducation = () => {
-    setFormData({
-      ...formData,
-      education: [...formData.education, { university: '', department: '', cgpa: '' }]
-    });
+    const last = formData.education[formData.education.length - 1];
+    if (last.university && last.department && last.cgpa) {
+      setFormData({
+        ...formData,
+        education: [...formData.education, { university: '', department: '', cgpa: '' }]
+      });
+    } else {
+      toast.error("Please fill all fields before adding another education entry.");
+    }
   };
 
   const addExperience = () => {
@@ -36,6 +37,13 @@ export default function Template1Inputs({ formData, setFormData }) {
       experience: [...formData.experience, { role: '', company: '', duration: '' }]
     });
   };
+
+const handleExperienceChange = (index, field, value) => {
+  console.log(`Updating experience[${index}].${field} = ${value}`);
+  const updated = [...formData.experience];
+  updated[index][field] = value;
+  setFormData({ ...formData, experience: updated });
+};
 
   const addAward = () => {
     setFormData({ ...formData, awards: [...formData.awards, ''] });
@@ -84,9 +92,24 @@ export default function Template1Inputs({ formData, setFormData }) {
       <h3 className="h3_editor">Education</h3>
       {formData.education.map((edu, idx) => (
         <div key={idx}>
-          <input className="input_edit123" placeholder="University" value={edu.university} onChange={(e) => handleEducationChange(idx, 'university', e.target.value)} />
-          <input className="input_edit123" placeholder="Department" value={edu.department} onChange={(e) => handleEducationChange(idx, 'department', e.target.value)} />
-          <input className="input_edit123" placeholder="CGPA" value={edu.cgpa} onChange={(e) => handleEducationChange(idx, 'cgpa', e.target.value)} />
+          <input
+            className="input_edit123"
+            placeholder="University"
+            value={edu.university}
+            onChange={(e) => handleEducationChange(idx, 'university', e.target.value)}
+          />
+          <input
+            className="input_edit123"
+            placeholder="Department"
+            value={edu.department}
+            onChange={(e) => handleEducationChange(idx, 'department', e.target.value)}
+          />
+          <input
+            className="input_edit123"
+            placeholder="CGPA"
+            value={edu.cgpa || ''}  // fallback to empty string
+            onChange={(e) => handleEducationChange(idx, 'cgpa', e.target.value)}
+          />
         </div>
       ))}
       <button className="btn_edit" onClick={addEducation}>Add Education</button>
@@ -94,9 +117,30 @@ export default function Template1Inputs({ formData, setFormData }) {
       <h3 className="h3_editor">Experience</h3>
       {formData.experience.map((exp, idx) => (
         <div key={idx}>
-          <input className="input_edit123" placeholder="Role" value={exp.role} onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)} />
-          <input className="input_edit123" placeholder="Company" value={exp.company} onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)} />
-          <input className="input_edit123" placeholder="Duration" value={exp.duration} onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)} />
+          <input
+            className="input_edit123"
+            placeholder="Role"
+            value={exp.role}
+            onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)}
+          />
+          <input
+            className="input_edit123"
+            placeholder="Company"
+            value={exp.company}
+            onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)}
+          />
+          <input
+            className="input_edit123"
+            placeholder="Duration"
+            value={exp.duration}
+            onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)}
+          />
+          <input
+          className="input_edit123"
+          placeholder="What did you do during this period?"
+          value={exp.durationDescription || ""}
+          onChange={(e) => handleExperienceChange(idx, 'durationDescription', e.target.value)}
+    />
         </div>
       ))}
       <button className="btn_edit" onClick={addExperience}>Add Experience</button>

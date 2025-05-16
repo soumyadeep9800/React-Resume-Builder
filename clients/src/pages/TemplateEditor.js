@@ -23,7 +23,7 @@ export default function TemplateEditor() {
     address: '',
     summary: '',
     education: [{ university: '', department: '', cgpa: '' }],
-    experience: [{ role: '', company: '', duration: '' }],
+    experience: [{ role: '', company: '', duration: '' ,durationDescription: ''}],
     skills: [],
     removedSkills: [],
     customSkill: '',
@@ -50,7 +50,7 @@ export default function TemplateEditor() {
   const renderTemplate = () => {
     switch (templateId) {
       case 'template1':
-        return <Template1 data={formData} />; // ✅ fixed
+        return <Template1 data={formData} />;
       case 'template2':
         return <Template2 data={formData} />;
       case 'template3':
