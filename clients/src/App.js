@@ -24,8 +24,9 @@ import './css/Forget.css';
 import './css/OTP.css';
 import './css/Newpassword.css';
 import './css/Contact.css';
-import './css/TemplateEditor.css';
+import './css/TemplateInputs.css';
 import './css/Template1.css';
+import './css/TemplateEditor.css';
 
 import {BrowserRouter as Router,Routes,Route}from "react-router-dom";
 
