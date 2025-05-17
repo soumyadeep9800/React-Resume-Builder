@@ -59,24 +59,6 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
-.skill-btn {
-  padding: 8px 14px;
-  background-color: #e2e8f0;
-  border: none;
-  border-radius: 20px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #2d3748;
-}
-.skill-btn:hover {
-  background-color: #cbd5e0;
-}
-.skill-btn.selected {
-  background-color: #3182ce;
-  color: white;
-  font-weight: bold;
-}
 .preview-section123 {
   background-color: #ffffff;
   padding: 30px;
@@ -96,6 +78,40 @@
   border-bottom: 1px solid #e2e8f0;
   padding-bottom: 5px;
 }
+
+.button_For_addBullet{
+  padding: 10px 12px;
+  background: linear-gradient(to right, #3182ce, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button_For_addBullet:hover{
+  background: linear-gradient(to right, #2563eb, #1e40af);
+  transform: translateY(-1px);
+}
+.button_For_removeBullet {
+  padding: 8px 8px;
+  background: linear-gradient(to right, #ce3131, #eb2525);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 2.6rem;
+  margin-top: .85rem;
+}
+.button_For_removeBullet:hover {
+  background: linear-gradient(to right, #eb2525, #af1e1e);
+  transform: translateY(-1px);
+}
+
 .preview-section123::-webkit-scrollbar {
   width: 8px;
 }
@@ -106,15 +122,23 @@
 .preview-section123::-webkit-scrollbar-thumb:hover {
   background-color: #718096;
 }
-/* @media (max-width: 1300px) {
-  .editor-page {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  .preview-section123{
-    margin-top: 0rem;
-    margin-left: 0rem;
-    padding: 0px;
-  }
-} */
+
+/* skills css */
+.predefined-skill-btn {
+  background-color: #e0e0e0;
+  border: 1px solid #bbb;
+  padding: 6px 12px;
+  margin: 4px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.predefined-skill-btn:hover {
+  background-color: #d5d5d5;
+}
+.predefined-skill-btn.selected {
+  background-color: #4caf50;
+  color: white;
+  border-color: #388e3c;
+}

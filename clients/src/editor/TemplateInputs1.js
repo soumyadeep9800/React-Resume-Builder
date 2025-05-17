@@ -190,10 +190,10 @@ const removeBullet = (expIndex, bulletIndex) => {
           value={bullet}
           onChange={(e) => handleBulletChange(idx, bIdx, e.target.value)}
         />
-        <button type="button" onClick={() => removeBullet(idx, bIdx)}>Remove</button>
+        <button type="button" className='button_For_removeBullet' onClick={() => removeBullet(idx, bIdx)}>Remove</button>
       </div>
     ))}
-    <button type="button" onClick={() => addBullet(idx)}>Add Bullet</button>
+    <button type="button" className='button_For_addBullet' onClick={() => addBullet(idx)}>Add Bullet</button>
   </div>
 ))}
       <button className="btn_edit" onClick={addExperience}>Add Experience</button>
@@ -204,7 +204,7 @@ const removeBullet = (expIndex, bulletIndex) => {
           !formData.removedSkills.includes(skill) && (
             <button
               key={skill}
-              className={`skill-btn_edit ${formData.skills.includes(skill) ? 'selected' : ''}`}
+              className={`skill-btn_edit predefined-skill-btn ${formData.skills.includes(skill) ? 'selected' : ''}`}
               onClick={() => handleSkillToggle(skill)}
             >
               {skill}
