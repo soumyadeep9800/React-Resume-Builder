@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 import Template1 from '../template/template1';
 import Template2 from '../template/template2';
@@ -15,7 +17,7 @@ import Template5Inputs from '../editor/TemplateInputs5';
 
 export default function TemplateEditor() {
   const { templateId } = useParams();
-
+  const [isGenerating, setIsGenerating] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -29,7 +31,22 @@ export default function TemplateEditor() {
     customSkill: '',
     awards: [],
   });
+  
+  const pdfRef = useRef();
 
+  const generatePDF = async () => {
+  setIsGenerating(true);
+  const element = pdfRef.current;
+  const canvas = await html2canvas(element, { scale: 2 });
+  const data = canvas.toDataURL('image/png');
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  pdf.save(`${formData.name || 'resume'}.pdf`);
+  setIsGenerating(false);
+  };
+  
   const renderInputs = () => {
     switch (templateId) {
       case 'template1':
@@ -73,7 +90,12 @@ export default function TemplateEditor() {
 
       <div className="preview-sectionxyzxyz">
         <h2 className="editor_h2">Live Preview</h2>
-        {renderTemplate()}
+        <div ref={pdfRef}>  {/* 👈 Wrap the rendered template */}
+          {renderTemplate()}
+        </div>
+        <button className="btn_edit" onClick={generatePDF} disabled={isGenerating}>
+        {isGenerating ? 'Generating...' : 'Download PDF'}
+        </button>
       </div>
     </div>
   );
