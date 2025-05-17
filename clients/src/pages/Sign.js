@@ -235,18 +235,14 @@ export default function Sign() {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                      name: decoded.name,
-                      email: decoded.email,
-                      picture: decoded.picture,
+                    idToken: credentialResponse.credential, // send the actual Google ID token
                     }),
                   }
                 );
                 const data = await res.json();
                 if (res.ok) {
-                  localStorage.setItem("token", credentialResponse.credential); // the JWT token
+                  localStorage.setItem("token", data.token); // the JWT token
                   localStorage.setItem("photoURL", decoded.picture);
-                  //const decodedToken = jwtDecode(credentialResponse.credential);
-                  //handleTokenExpiration(decodedToken,navigate);
                   navigate("/");
                   window.location.reload();
                 } else {

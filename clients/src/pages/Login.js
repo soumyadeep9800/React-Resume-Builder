@@ -82,15 +82,14 @@ export default function Login() {
         <div className="google">
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
-              const decoded = jwtDecode(credentialResponse.credential);
+              const idToken = credentialResponse.credential;
+              const decoded = jwtDecode(idToken);
               // console.log(decoded); // { name, email, picture, ... }
               try {
                 const response = await fetch("http://localhost:3001/api/google-signin",{
                     method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email: decoded.email }),
+                    headers: {"Content-Type": "application/json",},
+                    body: JSON.stringify({ idToken }),
                   }
                 );
                 const data = await response.json();
@@ -101,7 +100,6 @@ export default function Login() {
                 
                 localStorage.setItem("token", token);
                 localStorage.setItem('photoURL', decoded.picture);
-                //handleTokenExpiration(token,navigate);
                 navigate("/");
                 //toast.success("Google Sign-In successful!");
                 window.location.reload();

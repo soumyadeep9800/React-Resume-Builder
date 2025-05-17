@@ -4,18 +4,20 @@ const bcrypt=require('bcrypt');
 const userSchema=new mongoose.Schema({
     name:{
         type:String,
-        require:true,
+        required:true,
         trim:true
     },
     email:{
         type:String,
-        require:true,
+        required:true,
         unique:true,
-        lowerCase:true
+        lowercase: true
     },
-    password:{
-        type:String,
-        require:true
+    password: {
+    type: String,
+    required: function () {
+        return this.signupMethod === 'email';
+    }
     },
     picture: {
         type: String,
