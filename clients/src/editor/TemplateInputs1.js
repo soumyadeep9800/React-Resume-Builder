@@ -32,19 +32,60 @@ export default function Template1Inputs({ formData, setFormData }) {
   };
 
   const addExperience = () => {
-    setFormData({
-      ...formData,
-      experience: [...formData.experience, { role: '', company: '', duration: '' }]
-    });
+    setFormData(prevData => ({
+      ...prevData,
+      experience: [
+        ...prevData.experience,
+        {
+          role: '',
+          company: '',
+          duration: '',
+          location: 'San Francisco, California', // default fixed location
+          bullets: [''], // start with one empty bullet item for input
+        },
+      ],
+    }));
   };
 
-const handleExperienceChange = (index, field, value) => {
-  console.log(`Updating experience[${index}].${field} = ${value}`);
-  const updated = [...formData.experience];
-  updated[index][field] = value;
-  setFormData({ ...formData, experience: updated });
-};
+  // Handler to update experience fields (example for company name)
+  const handleExperienceChange = (index, field, value) => {
+    const newExperience = [...formData.experience];
+    newExperience[index][field] = value;
+    setFormData(prevData => ({
+      ...prevData,
+      experience: newExperience,
+    }));
+  };
 
+  // Handler to update bullets array inside experience
+  const handleBulletChange = (expIndex, bulletIndex, value) => {
+    const newExperience = [...formData.experience];
+    const bullets = [...(newExperience[expIndex].bullets || [])];
+    bullets[bulletIndex] = value;
+    newExperience[expIndex].bullets = bullets;
+    setFormData(prevData => ({
+      ...prevData,
+      experience: newExperience,
+    }));
+  };
+
+  // Add bullet point inside experience
+  const addBullet = (expIndex) => {
+    const newExperience = [...formData.experience];
+    newExperience[expIndex].bullets = [...(newExperience[expIndex].bullets || []), ''];
+    setFormData(prevData => ({
+      ...prevData,
+      experience: newExperience,
+    }));
+  };
+
+const removeBullet = (expIndex, bulletIndex) => {
+  const updated = [...formData.experience];
+  if (updated[expIndex].bullets.length > 1) {
+    updated[expIndex].bullets.splice(bulletIndex, 1);
+    setFormData({ ...formData, experience: updated });
+  }
+};
   const addAward = () => {
     setFormData({ ...formData, awards: [...formData.awards, ''] });
   };
@@ -116,33 +157,45 @@ const handleExperienceChange = (index, field, value) => {
 
       <h3 className="h3_editor">Experience</h3>
       {formData.experience.map((exp, idx) => (
-        <div key={idx}>
-          <input
-            className="input_edit123"
-            placeholder="Role"
-            value={exp.role}
-            onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)}
-          />
-          <input
-            className="input_edit123"
-            placeholder="Company"
-            value={exp.company}
-            onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)}
-          />
-          <input
-            className="input_edit123"
-            placeholder="Duration"
-            value={exp.duration}
-            onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)}
-          />
-          <input
-          className="input_edit123"
-          placeholder="What did you do during this period?"
-          value={exp.durationDescription || ""}
-          onChange={(e) => handleExperienceChange(idx, 'durationDescription', e.target.value)}
+  <div key={idx}>
+    <input
+      className="input_edit123"
+      placeholder="Company"
+      value={exp.company}
+      onChange={(e) => handleExperienceChange(idx, 'company', e.target.value)}
     />
-        </div>
-      ))}
+    <input
+      className="input_edit123"
+      placeholder="Role"
+      value={exp.role}
+      onChange={(e) => handleExperienceChange(idx, 'role', e.target.value)}
+    />
+    <input
+      className="input_edit123"
+      placeholder="Duration"
+      value={exp.duration}
+      onChange={(e) => handleExperienceChange(idx, 'duration', e.target.value)}
+    />
+    <input
+      className="input_edit123"
+      placeholder="Location"
+      value={exp.location}
+      onChange={(e) => handleExperienceChange(idx, 'location', e.target.value)}
+    />
+    {exp.bullets.map((bullet, bIdx) => (
+      <div key={bIdx} style={{ display: 'flex', gap: '8px', marginBottom: '6px' }}>
+        <input
+          className="input_edit123"
+          placeholder={`Bullet point ${bIdx + 1}`}
+          value={bullet}
+          onChange={(e) => handleBulletChange(idx, bIdx, e.target.value)}
+        />
+        <button type="button" onClick={() => removeBullet(idx, bIdx)}>Remove</button>
+      </div>
+    ))}
+    <button type="button" onClick={() => addBullet(idx)}>Add Bullet</button>
+  </div>
+))}
       <button className="btn_edit" onClick={addExperience}>Add Experience</button>
 
       <h3 className="h3_editor">Skills</h3>

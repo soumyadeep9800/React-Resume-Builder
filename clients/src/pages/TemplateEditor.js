@@ -23,7 +23,7 @@ export default function TemplateEditor() {
     address: '',
     summary: '',
     education: [{ university: '', department: '', cgpa: '' }],
-    experience: [{ role: '', company: '', duration: '' ,durationDescription: ''}],
+    experience: [{ role: '', company: '', duration: '' ,location: '',bullets: [''],}],
     skills: [],
     removedSkills: [],
     customSkill: '',

@@ -1,22 +1,38 @@
-import React from 'react';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaUser, FaGraduationCap, FaBriefcase, FaTools, FaAward } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaUser,
+  FaGraduationCap,
+  FaBriefcase,
+  FaTools,
+  FaAward
+} from 'react-icons/fa';
+
+// Helper to check if a value is non-empty, otherwise return a default
+const fallback = (value, defaultVal) =>
+  value && value.trim() !== '' ? value : defaultVal;
+
+// Helper to check if array is empty or contains only empty strings
+const isEmptyArray = (arr) =>
+  !arr || arr.length === 0 || arr.every(item => !item || (typeof item === 'string' && item.trim() === ''));
 
 export default function Template1({ data }) {
-  // Helper to check if array is empty or all empty strings
-  const isEmptyArray = (arr) => !arr || arr.length === 0 || arr.every(item => !item || (typeof item === 'string' && item.trim() === ''));
-
-  // Use user data if present, otherwise fallback to defaults
   const resume = {
-    name: data?.name?.trim() || 'Jennifer Brown',
-    email: data?.email?.trim() || 'jennifer.brown@resumegemini.com',
-    phone: data?.phone?.trim() || '+1 (555) 555-555, +1 (123) 456-789',
-    location: data?.address?.trim() || 'Dallas, TX, 75201',
-    summary:
-      data?.summary?.trim() ||
-      `Highly motivated and result-oriented Software Development Manager with over 10 years of experience...`,
-    
+    name: fallback(data?.name, 'Jennifer Brown'),
+    email: fallback(data?.email, 'jennifer.brown@resumegemini.com'),
+    phone: fallback(data?.phone, '+1 (555) 555-555, +1 (123) 456-789'),
+    location: fallback(data?.address, 'Dallas, TX, 75201'),
+    summary: fallback(data?.summary, 'Highly motivated and result-oriented Software Development Manager with over 10 years of experience...'),
+
     education: !isEmptyArray(data?.education)
-      ? data.education
+      ? data.education.map((edu) => ({
+          university: fallback(edu.university, 'The University of Chicago'),
+          department: fallback(edu.department, 'MS - Computer Science'),
+          cgpa: fallback(edu.cgpa, '9.0'),
+          date: fallback(edu.date, 'Jun 2012'),
+          location: fallback(edu.location, 'San Francisco, California'),
+        }))
       : [
           {
             university: 'The University of Chicago',
@@ -28,17 +44,23 @@ export default function Template1({ data }) {
         ],
 
     experience: !isEmptyArray(data?.experience)
-      ? data.experience.map((exp) => ({
-          company: exp.company || 'Accenture Services',
-          title: exp.role || 'Software Development Manager',
-          date: exp.duration || 'Jun 2018 - Jan 2024',
-          location: 'San Francisco, California',
-          bullets: [
-            'Delivered critical $5 million project on time and within budget...',
-            'Successfully led a cross-functional team...',
-            'Identified and implemented cloud cost-saving strategies...',
-          ],
-        }))
+      ? data.experience.map((exp) => {
+          const location = fallback(exp.location, 'San Francisco, California');
+          const bullets = !isEmptyArray(exp.bullets)
+            ? exp.bullets
+            : [
+                'Delivered critical $5 million project on time and within budget...',
+                'Successfully led a cross-functional team...',
+                'Identified and implemented cloud cost-saving strategies...',
+              ];
+          return {
+            company: fallback(exp.company, 'Accenture Services'),
+            title: fallback(exp.role, 'Software Development Manager'),
+            date: fallback(exp.duration, 'Jun 2018 - Jan 2024'),
+            location,
+            bullets,
+          };
+        })
       : [
           {
             company: 'Accenture Services',
@@ -109,9 +131,11 @@ export default function Template1({ data }) {
           <h2><FaGraduationCap /> Education</h2>
           {resume.education.map((edu, idx) => (
             <div key={idx}>
-              <p><strong>{edu.university || 'University Name'}</strong></p>
-              <p>{edu.department || 'Degree, CGPA'}</p>
-              <p className="location-date">{edu.date || ''} <i>{edu.location || ''}</i></p>
+              <p><strong>{edu.university}</strong></p>
+              <p>{edu.department}, CGPA: {edu.cgpa}</p>
+              <p className="location-date">
+                {edu.date} <i>{edu.location}</i>
+              </p>
             </div>
           ))}
         </section>
@@ -124,7 +148,9 @@ export default function Template1({ data }) {
               <p>{job.title}</p>
               <p>{job.date} <i>{job.location}</i></p>
               <ul>
-                {job.bullets && job.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}
+                {job.bullets.map((bullet, i) => (
+                  <li key={i}>{bullet}</li>
+                ))}
               </ul>
             </div>
           ))}
