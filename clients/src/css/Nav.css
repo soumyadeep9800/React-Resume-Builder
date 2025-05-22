@@ -1,109 +1,132 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background-color: #0e3442; */
-    background-color: #022d53;
-    color: white;
-    padding: 8px 22px;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #022d53;
+  color: white;
+  padding: 8px 22px;
+  position: relative;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 80px;
+  margin-right: 3rem;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.nav-links li a:hover {
+  color: rgb(187, 248, 189);
+}
+
+/* Mobile Icon */
+.mobile-menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  z-index: 1001;
+}
+
+/* Wrapper for Animation */
+.nav-menu-wrapper {
+  position: absolute;
+  top: 108%; /* just below the navbar */
+  right: 10px;
+  width: 170px;
+  height: 230px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease-in-out;
+  background-color: #32d5b7;
+  border-radius: 5px;
+  z-index: 999;
+}
+
+.nav-menu-wrapper.open {
+  max-height: 400px; /* adjust as needed */
+}
+
+/* Mobile Menu Items */
+.nav-links-mobile {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-links-mobile li {
+  margin: 10px 0;
+}
+
+.nav-links-mobile li a {
+  color: black;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.nav-links-mobile li a:hover {
+  color: white;
+}
+
+/* User photo in dropdown */
+.user-photo {
+  width: 30px;
+  height: 30px;
+  border-radius: 10%;
+  object-fit: cover;
+}
+
+.user-photo-container {
+  margin-top: 6px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.logout-button {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(58, 142, 202);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.user-photo-container:hover .logout-button {
+  display: block;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
   .nav-links {
-    display: flex;
-    list-style: none;
-    gap: 80px;
-    margin-right: 3rem;
-  }
-  
-  .nav-links li a {
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    font-size: 1.3rem;
-  }
-  .nav-links li a:hover {
-    color: rgb(202, 187, 248);
+    display: none;
   }
 
-  /* Mobile Menu */
   .mobile-menu-icon {
-    display: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: white;
-  }
-  
-  .nav-links-mobile {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    position: absolute;
-    top: 50px;
-    right: 10px;
-    background-color: #32d5b7;
-    /* color: black; */
-    width: 150px;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 3;
-  }
-  .nav-links-mobile li a:hover{
-    color: rgb(255, 255, 255);
-  }
-  .nav-links-mobile li {
-    margin: 10px 0;
-  }
-  .nav-links-mobile li a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    font-size: 1.3rem;
-  }
-  .user-photo {
-    width: 30px;
-    height: 30px;
-    border-radius: 10%;
-    object-fit: cover;
-  }
-
-  .user-photo-container {
-    position: relative;
-    display: inline-block;
-    text-align: center; /* Center align contents inside */
-  }
-  
-  .logout-button {
-    display: none;
-    position: absolute;
-    top: 100%; /* Push slightly below the photo */
-    left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
-    background-color: rgb(58, 142, 202);
-    color: rgb(255, 255, 255);
-    border: none;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 8px;
-    font-size: 16px;
-    white-space: nowrap;
-    z-index: 10;
-  }
-
-  .user-photo-container:hover .logout-button {
     display: block;
   }
-  
-  @media screen and (max-width: 768px) {
-    .nav-links {
-      display: none;
-    }
-  
-    .mobile-menu-icon {
-      display: block;
-    }
-  }
+}
