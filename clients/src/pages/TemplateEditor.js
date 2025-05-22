@@ -148,7 +148,8 @@ export default function TemplateEditor() {
   };
 
   return (
-    <div className="template-editor-container">
+<>
+  <div className="template-editor-container">
       <div className="form-sectionxyzxyz">
         <h2 className="editor_h2">Fill Your Resume Details</h2>
         {renderInputs()}
@@ -159,10 +160,14 @@ export default function TemplateEditor() {
         <div ref={pdfRef} className="resume-container">  {/* 👈 Wrap the rendered template */}
           {renderTemplate()}
         </div>
-        <button className="btn_edit" onClick={generatePDF} disabled={isGenerating}>
-        {isGenerating ? 'Generating...' : 'Download PDF'}
-        </button>
       </div>
+  </div>
+
+    <div className='pdf_button_parent'>
+          <button className="pdf_button" onClick={generatePDF} disabled={isGenerating}>
+              {isGenerating ? 'Generating...' : 'Download PDF'}
+          </button>
     </div>
+</>
   );
 }

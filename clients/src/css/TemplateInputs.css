@@ -1,5 +1,5 @@
 .input_edit123 {
-  width: 90%;
+  width: 95%;
   padding: 14px 18px;
   margin: 12px 0;
   border: 1px solid #cbd5e0;
@@ -100,8 +100,8 @@
   border-color: #388e3c;
 }
 
-@media (max-width: 1300px) {
-  .input_edit123{
-    width: 100%;
+@media (max-width: 550px) {
+  .input_edit123 {
+    width: 90%;
   }
 }

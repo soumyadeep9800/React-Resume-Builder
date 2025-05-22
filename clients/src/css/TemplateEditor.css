@@ -1,10 +1,10 @@
 .template-editor-container{
     display: flex;
-    /* justify-content: space-between; */
-    /* align-items: center; */
+    justify-content: center;
+    align-items: center;
     padding: 2rem;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 3.5rem;
 }
 .form-sectionxyzxyz{
     width: 45%;
@@ -12,44 +12,50 @@
 .preview-sectionxyzxyz{
     width: 45%;
 }
-.resume-container {
+/* .resume-container {
     background: white;
     color: black;
-    width: 794px; /* A4 width in px @ 96dpi */
-    min-height: 1123px; /* A4 height in px @ 96dpi */
+    width: 794px;
+    min-height: 1123px;
     margin: 0 auto;
-}
+} */
 .editor_h2{
     color: rgb(147, 97, 222);
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 300;
 }
+.pdf_button_parent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pdf_button{
+    margin-bottom: 1.5rem;
+    background-color: rgb(35, 164, 55);
+    color: rgb(255, 255, 255);
+    font-size: large;
+    font-weight:400;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem;
+}
+.pdf_button:hover{
+    background-color: rgb(45, 124, 71);
+}
 @media (max-width: 1300px) {
-.template-editor-container{
-    flex-direction: column;
-}
-.form-sectionxyzxyz{
-    width: 90%;
-}
-.preview-sectionxyzxyz{
-    width: 80%;
-}
+    .pdf_button{
+        margin-bottom: 2rem;
+    }
+    .template-editor-container{
+        gap: 0.2rem;
+        flex-direction: column;
+    }
+    .form-sectionxyzxyz{
+        width: 100%;
+    }
+    .preview-sectionxyzxyz{
+        width: 100%;
+    }
 }
 
-@media (max-width: 600px) {
-.form-sectionxyzxyz{
-    width: 90%;
-}
-.preview-sectionxyzxyz{
-    width: 90%;
-}
-}
-@media (max-width: 500px) {
-.form-sectionxyzxyz{
-    width: 90%;
-}
-.preview-sectionxyzxyz{
-    width: 108%;
-}
-}
