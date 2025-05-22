@@ -1,6 +1,6 @@
 .template-editor-container{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* align-items: center; */
     padding: 2rem;
     flex-wrap: wrap;
@@ -12,19 +12,25 @@
 .preview-sectionxyzxyz{
     width: 45%;
 }
+.resume-container {
+    background: white;
+    color: black;
+    width: 794px; /* A4 width in px @ 96dpi */
+    min-height: 1123px; /* A4 height in px @ 96dpi */
+    margin: 0 auto;
+}
 .editor_h2{
     color: rgb(147, 97, 222);
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 300;
 }
-
 @media (max-width: 1300px) {
 .template-editor-container{
     flex-direction: column;
 }
 .form-sectionxyzxyz{
-    width: 80%;
+    width: 90%;
 }
 .preview-sectionxyzxyz{
     width: 80%;

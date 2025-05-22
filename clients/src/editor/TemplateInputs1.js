@@ -136,6 +136,8 @@ export default function Template1Inputs({ formData, setFormData }) {
               <input className="input_edit123" placeholder="University" value={edu.university} onChange={(e) => handleEducationChange(idx, 'university', e.target.value)} />
               <input className="input_edit123" placeholder="Department" value={edu.department} onChange={(e) => handleEducationChange(idx, 'department', e.target.value)} />
               <input className="input_edit123" placeholder="CGPA" value={edu.cgpa || ''} onChange={(e) => handleEducationChange(idx, 'cgpa', e.target.value)} />
+              <input className="input_edit123" placeholder="Date (e.g. 2021 - 2025)" value={edu.date || ''} onChange={(e) => handleEducationChange(idx, 'date', e.target.value)}/>
+              <input className="input_edit123" placeholder="Location" value={edu.location || ''} onChange={(e) => handleEducationChange(idx, 'location', e.target.value)}/>
             </div>
           ))}
           <button className="btn_edit" onClick={addEducation}>Add Education</button>
