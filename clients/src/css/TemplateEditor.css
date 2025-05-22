@@ -1,61 +1,81 @@
-.template-editor-container{
+.template-editor-container {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
     flex-wrap: wrap;
-    gap: 3.5rem;
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
 }
-.form-sectionxyzxyz{
-    width: 45%;
+
+.form-sectionxyzxyz {
+    width: 48%;
 }
-.preview-sectionxyzxyz{
-    width: 45%;
+.preview-sectionxyzxyz {
+    width: 48%;
 }
-/* .resume-container {
+
+.resume-container {
     background: white;
     color: black;
-    width: 794px;
-    min-height: 1123px;
+    width: 700px;
+    min-height: auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    overflow: hidden;
     margin: 0 auto;
-} */
-.editor_h2{
+    box-sizing: border-box;
+}
+
+.pdf-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.editor_h2 {
     color: rgb(147, 97, 222);
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 300;
 }
-.pdf_button_parent{
+
+.pdf_button_parent {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.pdf_button{
-    margin-bottom: 1.5rem;
-    background-color: rgb(35, 164, 55);
-    color: rgb(255, 255, 255);
-    font-size: large;
-    font-weight:400;
-    border: none;
-    border-radius: 10px;
-    padding: 0.7rem;
-}
-.pdf_button:hover{
-    background-color: rgb(45, 124, 71);
-}
-@media (max-width: 1300px) {
-    .pdf_button{
-        margin-bottom: 2rem;
-    }
-    .template-editor-container{
-        gap: 0.2rem;
-        flex-direction: column;
-    }
-    .form-sectionxyzxyz{
-        width: 100%;
-    }
-    .preview-sectionxyzxyz{
-        width: 100%;
-    }
+    margin-top: 2rem;
 }
 
+.pdf_button {
+    background-color: rgb(35, 164, 55);
+    color: white;
+    font-size: large;
+    font-weight: 400;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.pdf_button:hover {
+    background-color: rgb(45, 124, 71);
+}
+
+@media (max-width: 1300px) {
+    .template-editor-container {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .form-sectionxyzxyz,
+    .preview-sectionxyzxyz {
+        width: 100%;
+    }
+
+    .resume-container {
+        width: 65%;
+    }
+}

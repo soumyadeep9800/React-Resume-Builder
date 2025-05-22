@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 
 import Template1 from '../template/template1';
 import Template2 from '../template/template2';
@@ -16,6 +18,7 @@ import Template4Inputs from '../editor/TemplateInputs4';
 import Template5Inputs from '../editor/TemplateInputs5';
 
 export default function TemplateEditor() {
+  const [forExport, setForExport] = useState(false);
   const { templateId } = useParams();
   const [isGenerating, setIsGenerating] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,84 +37,49 @@ export default function TemplateEditor() {
   
   const pdfRef = useRef();
 
-  const generatePDF = async () => {
-  setIsGenerating(true);
 
+
+const generatePDF = async () => {
   const element = pdfRef.current;
-  const canvas = await html2canvas(element, { scale: 2, useCORS: true });
-  const imgData = canvas.toDataURL('image/png');
+  if (!element) return;
 
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const pdfWidth = pdf.internal.pageSize.getWidth();
-  const pdfHeight = pdf.internal.pageSize.getHeight();
+  setForExport(true); // Apply export-related styling
+  await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM updates
 
-  const imgWidth = canvas.width;
-  const imgHeight = canvas.height;
-  const ratio = pdfWidth / imgWidth;
-  const pageHeightInCanvas = pdfHeight / ratio;
+  // Reset height to auto so content can expand naturally
+  element.style.height = 'auto';
 
-  let renderedHeight = 0;
+  // Measure content height
+  const contentHeight = element.scrollHeight;
+  const A4HeightPx = 1123; // A4 height approx at 96dpi
 
-  while (renderedHeight < imgHeight) {
-    const canvasPage = document.createElement('canvas');
-    canvasPage.width = imgWidth;
-    canvasPage.height = Math.min(pageHeightInCanvas, imgHeight - renderedHeight);
-
-    const ctx = canvasPage.getContext('2d');
-    ctx.drawImage(
-      canvas,
-      0,
-      renderedHeight,
-      imgWidth,
-      canvasPage.height,
-      0,
-      0,
-      imgWidth,
-      canvasPage.height
-    );
-
-    const pageData = canvasPage.toDataURL('image/png');
-    if (renderedHeight > 0) pdf.addPage();
-    pdf.addImage(pageData, 'PNG', 0, 0, pdfWidth, (canvasPage.height * pdfWidth) / imgWidth);
-
-    renderedHeight += canvasPage.height;
+  // Center content vertically if it fits in one page
+  if (contentHeight < A4HeightPx) {
+    element.classList.add('pdf-centered'); // Add centering class
   }
 
-  pdf.save(`${formData.name || 'resume'}.pdf`);
+  const opt = {
+    margin: 0,
+    filename: 'resume.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
+  };
+
+  setIsGenerating(true);
+  await html2pdf().set(opt).from(element).save();
   setIsGenerating(false);
+
+  // Cleanup styles after PDF is generated
+  element.style.height = '';
+  element.classList.remove('pdf-centered');
+  setForExport(false);
+
+  toast.success("PDF generated and downloaded!");
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-//   const generatePDF = async () => {
-//   setIsGenerating(true);
-//   const element = pdfRef.current;
-//   const canvas = await html2canvas(element, { scale: 2 });
-//   const imgData = canvas.toDataURL('image/png');
-//   const pdf = new jsPDF('p', 'mm', 'a4');
-//   const pdfWidth = pdf.internal.pageSize.getWidth();
-//   const pdfHeight = pdf.internal.pageSize.getHeight();
-//   // height in pixels corresponding to one pdf page height (maintain aspect ratio)
-//   const pageHeightPx = (canvas.width * pdfHeight) / pdfWidth;
-//   let heightLeft = canvas.height;
-//   let position = 0;
-
-//   while (heightLeft > 0) {
-//     pdf.addImage(
-//       imgData,
-//       'PNG',
-//       0,
-//       position ? -position : 0,
-//       pdfWidth,
-//       (canvas.height * pdfWidth) / canvas.width
-//     );
-//     heightLeft -= pageHeightPx;
-//     position += pageHeightPx;
-//     if (heightLeft > 0) {
-//       pdf.addPage();
-//     }
-//   }
-//   pdf.save(`${formData.name || 'resume'}.pdf`);
-//   setIsGenerating(false);
-// };
 
   const renderInputs = () => {
     switch (templateId) {
@@ -157,9 +125,9 @@ export default function TemplateEditor() {
 
       <div className="preview-sectionxyzxyz">
         <h2 className="editor_h2">Live Preview</h2>
-        <div ref={pdfRef} className="resume-container">  {/* 👈 Wrap the rendered template */}
-          {renderTemplate()}
-        </div>
+      <div ref={pdfRef} className={`resume-container ${forExport ? 'pdf-fixed' : ''}`}>
+        {renderTemplate()}
+      </div>
       </div>
   </div>
 
