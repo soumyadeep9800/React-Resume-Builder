@@ -105,3 +105,9 @@
     width: 90%;
   }
 }
+/* @media (max-width: 450px) {
+  .input_edit123 {
+    width: 80%;
+    margin-right: 3rem;
+  }
+} */
