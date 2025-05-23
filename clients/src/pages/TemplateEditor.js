@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { toast } from "react-toastify";
 import { useParams } from 'react-router-dom';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import html2pdf from 'html2pdf.js';
 
 import Template1 from '../template/template1';
@@ -18,6 +16,7 @@ import Template4Inputs from '../editor/TemplateInputs4';
 import Template5Inputs from '../editor/TemplateInputs5';
 
 export default function TemplateEditor() {
+
   const [forExport, setForExport] = useState(false);
   const { templateId } = useParams();
   const [isGenerating, setIsGenerating] = useState(false);
@@ -36,8 +35,6 @@ export default function TemplateEditor() {
   });
   
   const pdfRef = useRef();
-
-
 
 const generatePDF = async () => {
   const element = pdfRef.current;
@@ -122,11 +119,10 @@ const generatePDF = async () => {
         <h2 className="editor_h2">Fill Your Resume Details</h2>
         {renderInputs()}
       </div>
-
       <div className="preview-sectionxyzxyz">
         <h2 className="editor_h2">Live Preview</h2>
       <div ref={pdfRef} className={`resume-container ${forExport ? 'pdf-fixed' : ''}`}>
-        {renderTemplate()}
+          {renderTemplate()}
       </div>
       </div>
   </div>
@@ -139,3 +135,4 @@ const generatePDF = async () => {
 </>
   );
 }
+
