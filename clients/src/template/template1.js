@@ -17,7 +17,7 @@ const fallback = (value, defaultVal) =>
 const isEmptyArray = (arr) =>
   !arr || arr.length === 0 || arr.every(item => !item || (typeof item === 'string' && item.trim() === ''));
 
-export default function Template1({ data }) {
+export default function Template1({ data, fullScale = false }) {
   const resume = {
     name: fallback(data?.name, 'Jennifer Brown'),
     email: fallback(data?.email, 'jennifer.brown@resumegemini.com'),
@@ -109,8 +109,10 @@ export default function Template1({ data }) {
   };
 
   return (
-    <div className="resume-template_main_div">
-      <div className="resume-template">
+    // <div className="resume-template_main_div">
+    //   <div className="resume-template">
+    <div className={`resume-template_main_div ${fullScale ? 'full-scale' : 'small-scale'}`}>
+      <div className={`resume-template ${fullScale ? 'full-scale' : 'small-scale'}`}>
         <div className="headerxyz">
           <h1>{resume.name}</h1>
           <div className="contact">

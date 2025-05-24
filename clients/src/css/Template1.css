@@ -1,21 +1,18 @@
-/* Wrapper that defines the fixed size box (like a preview card) */
-.resume-template_main_div {
+/* Small preview card style */
+.resume-template_main_div.small-scale {
   width: 345px;
   height: 475px;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
-  background: #f5f5f5;
   border: 1px solid #999;
   margin: auto;
-  /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); */
 }
-
-/* The resume content, scaled down to fit inside */
-.resume-template {
-  transform: scale(0.55); /* Scale to fit the 345x475 box */
+.resume-template.small-scale {
+  transform: scale(0.55);
   transform-origin: top left;
-  width: 625px; /* Original full-size width */
-  height: 900px; /* Original full-size height */
+  width: 625px;
+  height: 900px;
   padding: 15px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #000;
@@ -26,7 +23,28 @@
   top: 0;
   left: 0;
 }
+/* Full page preview style */
+.resume-template_main_div.full-scale {
+  width: 794px;  /* A4 width at 96dpi */
+  height: 1123px; /* A4 height */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background: white;
+  border: none;
+  margin: 0 auto;
+  position: relative;
+}
 
+.resume-template.full-scale {
+  transform: none;
+  position: relative;
+  width: 794px;
+  height: auto;
+  padding: 40px;
+  box-sizing: border-box;
+  background: white;
+  color: black;
+}
 /* Header and contact */
 .headerxyz h1 {
   font-size: 1.8rem;
