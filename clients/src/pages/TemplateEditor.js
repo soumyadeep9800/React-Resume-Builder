@@ -17,7 +17,6 @@ import Template5Inputs from '../editor/TemplateInputs5';
 
 export default function TemplateEditor() {
 
-  const [forExport, setForExport] = useState(false);
   const { templateId } = useParams();
   const [isGenerating, setIsGenerating] = useState(false);
   const [formData, setFormData] = useState({
@@ -40,21 +39,10 @@ const generatePDF = async () => {
   const element = pdfRef.current;
   if (!element) return;
 
-  setForExport(true); // Apply export-related styling
   await new Promise(resolve => setTimeout(resolve, 100)); // Wait for DOM updates
 
   // Reset height to auto so content can expand naturally
   element.style.height = 'auto';
-
-  // Measure content height
-  const contentHeight = element.scrollHeight;
-  const A4HeightPx = 1123; // A4 height approx at 96dpi
-
-  // Center content vertically if it fits in one page
-  if (contentHeight < A4HeightPx) {
-    element.classList.add('pdf-centered'); // Add centering class
-  }
-
   const opt = {
     margin: 0,
     filename: 'resume.pdf',
@@ -67,11 +55,6 @@ const generatePDF = async () => {
   setIsGenerating(true);
   await html2pdf().set(opt).from(element).save();
   setIsGenerating(false);
-
-  // Cleanup styles after PDF is generated
-  element.style.height = '';
-  element.classList.remove('pdf-centered');
-  setForExport(false);
 
   toast.success("PDF generated and downloaded!");
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -113,7 +96,7 @@ const generatePDF = async () => {
   };
 
   return (
-<>
+
   <div className="template-editor-container">
       <div className="form-sectionxyzxyz">
         <h2 className="editor_h2">Fill Your Resume Details</h2>
@@ -121,18 +104,17 @@ const generatePDF = async () => {
       </div>
       <div className="preview-sectionxyzxyz">
         <h2 className="editor_h2">Live Preview</h2>
-      <div ref={pdfRef} className={`resume-container ${forExport ? 'pdf-fixed' : ''}`}>
-          {renderTemplate()}
-      </div>
-      </div>
-  </div>
-
-    <div className='pdf_button_parent'>
+        <div ref={pdfRef} className="resume-container">
+            {renderTemplate()}
+        </div>
+        <div className='pdf_button_parent'>
           <button className="pdf_button" onClick={generatePDF} disabled={isGenerating}>
               {isGenerating ? 'Generating...' : 'Download PDF'}
           </button>
-    </div>
-</>
+        </div>
+      </div>
+  </div>
+
   );
 }
 

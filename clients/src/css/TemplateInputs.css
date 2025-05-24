@@ -80,7 +80,7 @@
   transform: translateY(-1px);
 }
 
-/* skills css */
+
 .predefined-skill-btn {
   background-color: #e0e0e0;
   border: 1px solid #bbb;
@@ -105,9 +105,8 @@
     width: 90%;
   }
 }
-/* @media (max-width: 450px) {
+@media (max-width: 450px) {
   .input_edit123 {
-    width: 80%;
-    margin-right: 3rem;
+    width: 88%;
   }
-} */
+}
