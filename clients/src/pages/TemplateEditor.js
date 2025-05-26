@@ -19,7 +19,7 @@ export default function TemplateEditor() {
   const { templateId } = useParams();
   const [isGenerating, setIsGenerating] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const pdfRef = useRef();
+  const pdfRef = useRef(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -35,29 +35,36 @@ export default function TemplateEditor() {
     awards: [],
   });
 
-  const generatePDF = async () => {
-    const element = pdfRef.current;
-    if (!element) return;
 
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    element.style.height = 'auto';
-    const opt = {
-      margin: 0,
-      filename: 'resume.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-    };
-
-    setIsGenerating(true);
-    await html2pdf().set(opt).from(element).save();
-    setIsGenerating(false);
-
-    toast.success("PDF generated and downloaded!");
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+const generatePDF = async () => {
+  const element = pdfRef.current;
+  if (!element) return;
+  setIsGenerating(true);
+  const opt = {
+    margin:       [0, 0, 20, 0],
+    filename:     'resume.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  {
+      scale: 2,
+      useCORS: true,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
   };
+
+  try {
+    await new Promise(resolve => setTimeout(resolve, 500)); // wait for layout/render
+    await html2pdf().set(opt).from(element).save();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    toast.success("PDF generated and downloaded!");
+  } catch (err) {
+    toast.error("PDF generation failed.");
+  }
+  setIsGenerating(false);
+};
 
   const renderInputs = () => {
     switch (templateId) {
@@ -92,12 +99,12 @@ export default function TemplateEditor() {
 
       <div className="preview-sectionxyzxyz">
         <h2 className="editor_h2">Live Preview</h2>
-        <div ref={pdfRef} className="resume-container">
+        <div className="resume-container">
           {renderTemplate()}
         </div>
 
         <div className='pdf_button_parent'>
-          <button className="pdf_button" onClick={generatePDF} disabled={isGenerating}>
+          <button className="pdf_button" onClick={() => generatePDF()} disabled={isGenerating}>
             {isGenerating ? 'Generating...' : 'Download PDF'}
           </button>
           <button className="view_button" onClick={() => setShowPreview(true)}>
@@ -122,6 +129,13 @@ export default function TemplateEditor() {
       </div>
     </div>
     )}
+    {/* Hidden full-size preview for PDF */}
+    {/* <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}> */}
+    <div style={{ visibility: 'hidden', position: 'fixed', top: 0, left: 0, zIndex: -1 }}>
+        <div ref={pdfRef} className="a4-preview">
+          {renderTemplate(true)}
+        </div>
+    </div>
     </div>
   );
 }

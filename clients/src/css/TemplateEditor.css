@@ -92,15 +92,16 @@
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
 
-/* A4 paper size: 794px × 1123px at 96dpi */
+/* A4 paper size: 794px * 1123px at 96dpi */
 .a4-preview {
-  width: 794px;
-  height: 1123px;
+  width: 210mm;
   background: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  overflow: hidden;
+  margin-bottom: 100px;
+  overflow: visible;
   position: relative;
+  /* page-break-inside: avoid;
+  break-inside: avoid; */
 }
 
 .modal-overlay {
@@ -141,6 +142,7 @@
     display:block;
   }
 }
+
 @media (max-width: 450px) {
   .template-editor-container {
     padding: 0;
@@ -151,5 +153,12 @@
   }
   .preview-sectionxyzxyz {
     padding: 10px;
+  }
+    .pdf_button_parent {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .view_button {
+    margin-left: 0;
   }
 }
