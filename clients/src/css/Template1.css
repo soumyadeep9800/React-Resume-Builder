@@ -143,8 +143,8 @@ ul li {
 }
 
 
-@media (max-width: 450px) {
-  .resume-template_main_div {
-    width: 315px;
-}
+@media (max-width: 400px) {
+  .resume-template_main_div.small-scale {
+    width: 330px;
+  }
 }
