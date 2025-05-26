@@ -68,6 +68,7 @@ const [partnerVisible, setPartnerVisible] = useState(false);
   const handleUseTemplate = (templateId) => {
   const path = templateMap[templateId];
   if (path) {
+    window.scrollTo({ top: 0 });
     navigate(path);
   }
   };

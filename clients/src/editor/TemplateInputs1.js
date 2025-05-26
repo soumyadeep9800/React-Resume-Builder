@@ -32,6 +32,8 @@ export default function Template1Inputs({ formData, setFormData }) {
   };
 
   const addExperience = () => {
+  const last = formData.experience[formData.experience.length - 1];
+  if (last.role && last.company && last.duration) {
     setFormData(prevData => ({
       ...prevData,
       experience: [
@@ -45,7 +47,10 @@ export default function Template1Inputs({ formData, setFormData }) {
         },
       ],
     }));
-  };
+  } else {
+    toast.error("Please fill all fields before adding another experience entry.");
+  }
+};
 
   const handleExperienceChange = (index, field, value) => {
     const newExperience = [...formData.experience];
@@ -191,8 +196,8 @@ export default function Template1Inputs({ formData, setFormData }) {
 
       {/* Navigation Buttons */}
       <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
-        {step > 1 && <button className="btn_edit" onClick={() => setStep(step - 1)}>← Previous</button>}
-        {step < 2 && <button className="btn_edit" onClick={() => setStep(step + 1)}>Next →</button>}
+        {step > 1 && (<button className="btn_edit" onClick={() => {setStep(step - 1); window.scrollTo({ top: 0});}}>← Previous</button>)}
+        {step < 2 && (<button className="btn_edit" onClick={() => {setStep(step + 1); window.scrollTo({top:0});}}>Next →</button>)}
       </div>
     </div>
   );

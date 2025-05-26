@@ -43,7 +43,7 @@ const generatePDF = async () => {
   const opt = {
     margin:       [0, 0, 20, 0],
     filename:     'resume.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
+    image:        { type: 'jpeg', quality: 1 },
     html2canvas:  {
       scale: 2,
       useCORS: true,
@@ -130,7 +130,6 @@ const generatePDF = async () => {
     </div>
     )}
     {/* Hidden full-size preview for PDF */}
-    {/* <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}> */}
     <div style={{ visibility: 'hidden', position: 'fixed', top: 0, left: 0, zIndex: -1 }}>
         <div ref={pdfRef} className="a4-preview">
           {renderTemplate(true)}
