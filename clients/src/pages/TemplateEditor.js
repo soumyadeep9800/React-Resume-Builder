@@ -107,8 +107,15 @@ const generatePDF = async () => {
           <button className="pdf_button" onClick={() => generatePDF()} disabled={isGenerating}>
             {isGenerating ? 'Generating...' : 'Download PDF'}
           </button>
-          <button className="view_button" onClick={() => setShowPreview(true)}>
-            🔍 View
+          <button className="view_button" onClick={() => {
+            if (window.innerWidth < 900) {
+            toast.info("Switch to desktop view to see a better preview.");
+            setShowPreview(true);
+            } else {
+            setShowPreview(true);
+            }
+          }}>
+          🔍 View
           </button>
         </div>
       </div>
