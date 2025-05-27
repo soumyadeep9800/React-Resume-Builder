@@ -79,17 +79,13 @@
   background: linear-gradient(to right, #eb2525, #af1e1e);
   transform: translateY(-1px);
 }
-
-
 .predefined-skill-btn {
-  background-color: #e0e0e0;
-  border: 1px solid #bbb;
-  padding: 6px 12px;
-  margin: 4px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background: #f0f8ff;
+    border: 1px solid #007bff;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .predefined-skill-btn:hover {
   background-color: #d5d5d5;

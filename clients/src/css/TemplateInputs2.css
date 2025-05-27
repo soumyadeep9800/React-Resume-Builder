@@ -1,0 +1,81 @@
+.input_template2 {
+    width: 90%;
+    padding: 14px 18px;
+    margin: 12px 0;
+    border: 1px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: #f9f9f9;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btn_template2 {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.section-header-blue {
+    color: #007bff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.skill-btn-template2 {
+    background: #f0f8ff;
+    border: 1px solid #007bff;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.skill-btn-template2:hover {
+    background-color: #d5d5d5;
+}
+
+.skill-btn-template2.selected {
+    background-color: #4caf50;
+    color: white;
+    border-color: #388e3c;
+}
+
+.btn_add_bullet,.btn_template2{
+    padding: 10px 12px;
+    background: linear-gradient(to right, #3182ce, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn_add_bullet:hover,.btn_template2:hover{
+    background: linear-gradient(to right, #2563eb, #1e40af);
+    transform: translateY(-1px);
+}
+/* remove button */
+.btn_remove_bullet{
+    padding: 8px 8px;
+    background: linear-gradient(to right, #ce3131, #eb2525);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 2.6rem;
+    margin-top: .85rem;
+}
+.btn_remove_bullet:hover{
+    background: linear-gradient(to right, #eb2525, #af1e1e);
+    transform: translateY(-1px);
+}
