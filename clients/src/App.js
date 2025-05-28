@@ -24,11 +24,17 @@ import './css/Forget.css';
 import './css/OTP.css';
 import './css/Newpassword.css';
 import './css/Contact.css';
+import './css/TemplateEditor.css';
 import './css/Template1.css';
 import './css/Template2.css';
+import './css/Template3.css';
+import './css/Template4.css';
+import './css/Template5.css';
 import './css/TemplateInputs.css';
 import './css/TemplateInputs2.css';
-import './css/TemplateEditor.css';
+import './css/TemplateInputs3.css';
+import './css/TemplateInputs4.css';
+import './css/TemplateInputs5.css';
 
 import {BrowserRouter as Router,Routes,Route}from "react-router-dom";
 

@@ -54,7 +54,6 @@ const generatePDF = async () => {
     },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
   };
-
   try {
     await new Promise(resolve => setTimeout(resolve, 500)); // wait for layout/render
     await html2pdf().set(opt).from(element).save();
@@ -79,7 +78,6 @@ const generatePDF = async () => {
 
   const renderTemplate = (fullScale = false) => {
     const props = { data: formData, fullScale };
-
     switch (templateId) {
       case 'template1': return <Template1 {...props} />;
       case 'template2': return <Template2 {...props} />;
