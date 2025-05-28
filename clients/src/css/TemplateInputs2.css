@@ -1,5 +1,5 @@
 .input_template2 {
-    width: 90%;
+    width: 94%;
     padding: 14px 18px;
     margin: 12px 0;
     border: 1px solid #cbd5e0;
@@ -78,4 +78,21 @@
 .btn_remove_bullet:hover{
     background: linear-gradient(to right, #eb2525, #af1e1e);
     transform: translateY(-1px);
+}
+
+
+@media (max-width: 600px) {
+    .input_template2 {
+        width: 92%;
+    }
+}
+@media (max-width: 400px) {
+    .input_template2 {
+        width: 90%;
+    }
+}
+@media (max-width: 380px) {
+    .input_template2 {
+        width: 88%;
+    }
 }
