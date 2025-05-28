@@ -43,7 +43,7 @@
   font-weight: 500;
   padding: 10px 12px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-block: 10px;
 }
 .btn_add_bullet:hover {
   background: linear-gradient(to right, #0d9488, #0f766e);
