@@ -1,0 +1,84 @@
+.input_template3 {
+  width: 94%;
+  padding: 14px 18px;
+  margin: 12px 0;
+  border: 1px solid #b2dfdb;
+  border-radius: 10px;
+  font-size: 15px;
+  background-color: #f0fdfa;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btn_template3 {
+  background: linear-gradient(to right, #14b8a6, #0d9488);
+  color: white;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn_template3:hover {
+  background: linear-gradient(to right, #0d9488, #0f766e);
+  transform: translateY(-1px);
+}
+
+.section-header-teal {
+  color: #0d9488;
+  font-weight: bold;
+  border-bottom: 2px solid #0d9488;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.btn_add_bullet {
+  background: linear-gradient(to right, #14b8a6, #0d9488);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 12px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.btn_add_bullet:hover {
+  background: linear-gradient(to right, #0d9488, #0f766e);
+}
+
+.btn_remove_bullet {
+  padding: 8px 8px;
+  background: linear-gradient(to right, #ce3131, #eb2525);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 2.6rem;
+  margin-top: .85rem;
+}
+.btn_remove_bullet:hover {
+  background: linear-gradient(to right, #eb2525, #af1e1e);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .input_template3 {
+    width: 92%;
+  }
+}
+@media (max-width: 400px) {
+  .input_template3 {
+    width: 90%;
+  }
+}
+@media (max-width: 380px) {
+  .input_template3 {
+    width: 88%;
+  }
+}

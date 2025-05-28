@@ -1,0 +1,103 @@
+/* .container {
+  font-family: "Segoe UI", sans-serif;
+  padding: 24px;
+  color: #333;
+  background: #fff;
+  line-height: 1.6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #0db2ac;
+  padding-bottom: 12px;
+}
+
+.title {
+  color: #0db2ac;
+  font-size: 1.2rem;
+  margin: 4px 0;
+}
+
+.contact p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.summary {
+  margin: 16px 0;
+  font-size: 1rem;
+}
+
+.divider {
+  border-top: 2px solid #0db2ac;
+  margin: 16px 0;
+}
+
+.sectionTitle {
+  color: #0db2ac;
+  border-bottom: 1px solid #ccc;
+  margin-top: 24px;
+  padding-bottom: 4px;
+}
+
+.educationItem {
+  margin-top: 12px;
+}
+
+.subtext {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.tag {
+  display: inline-block;
+  background: #e1f7f6;
+  color: #0db2ac;
+  font-size: 0.8rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+.timeline {
+  border-left: 2px dotted #0db2ac;
+  padding-left: 16px;
+  margin-top: 12px;
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timelineDot {
+  width: 12px;
+  height: 12px;
+  background: #0db2ac;
+  border-radius: 50%;
+  position: absolute;
+  left: -19px;
+  top: 5px;
+}
+
+.timelineContent {
+  margin-left: 8px;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.skillTag {
+  background-color: #0db2ac;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+} */

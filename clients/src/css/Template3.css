@@ -1,0 +1,146 @@
+.template3_main_div.small-scale {
+  width: 355px;
+  height: 475px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #999;
+  position: relative;
+  margin: auto;
+}
+
+.template3.small-scale {
+  transform: scale(0.55);
+  transform-origin: top left;
+  width: 625px;
+  height: auto;
+  padding: 15px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: white;
+  color: #000;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.template3_main_div.full-scale {
+  width: 794px;
+  height: auto;
+  background: white;
+  border: none;
+  margin: 0 auto;
+  position: relative;
+}
+
+.template3.full-scale {
+  transform: none;
+  padding: 40px;
+  width: 794px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.template3-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.template3-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.template3-header h2 {
+  font-size: 1.1rem;
+  background-color: #326fd1;
+  color: white;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  margin-top: 4px;
+}
+
+.template3-contact {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.8rem;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  color: #333;
+}
+
+.template3-contact svg {
+  margin-right: 4px;
+}
+
+.summary {
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+.template3-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #326fd1;
+  border-bottom: 2px solid #326fd1;
+  padding-bottom: 2px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.edu-entry, .exp-entry {
+  margin-bottom: 10px;
+}
+
+.edu-meta, .exp-meta {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+}
+
+.exp-entry ul {
+  padding-left: 18px;
+  margin-top: 4px;
+}
+
+.exp-entry ul li {
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+ul li {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.language-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.lang-badge {
+  border: 1px solid #999;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background-color: #f0f0f0;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 370px) {
+  .template3_main_div.small-scale {
+    width: 333px;
+  }
+
+  .template3.small-scale {
+    transform: scale(0.54);
+  }
+}

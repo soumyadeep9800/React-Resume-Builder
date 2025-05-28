@@ -33,6 +33,8 @@ export default function TemplateEditor() {
     removedSkills: [],
     customSkill: '',
     awards: [],
+    certifications: [],
+    languages: [],
   });
 
 
