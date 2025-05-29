@@ -34,6 +34,9 @@ app.get('/', (req, res) => {
   const sendMessage =require('./routes/contact');
   app.use('/api', sendMessage);
 
+  const paymentRoutes=require('./routes/payment');
+  app.use('/api',paymentRoutes);
+
 
 app.listen(port,()=>{
     console.log(`server is running at http://localhost:${port}`);
