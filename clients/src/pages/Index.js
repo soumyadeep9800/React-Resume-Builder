@@ -121,7 +121,7 @@ const [partnerVisible, setPartnerVisible] = useState(false);
     <div className='love-2'>
       <div className='love-2H'><h3>Professionals And ATS Friendly Templates</h3></div>
       <p>Choose from a variety of modern and ATS-friendly templates designed to impress recruiters.</p>
-      <button className='love-button12'>Create new resume <FontAwesomeIcon icon={faArrowRight}/></button>
+      <button className='love-button12' onClick={() => navigate('../editor/template1')}>Create new resume <FontAwesomeIcon icon={faArrowRight}/></button>
     </div>
   
     <div className='love-3'>

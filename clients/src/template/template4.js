@@ -1,139 +1,158 @@
-// import React from "react";
-// import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaGraduationCap,
+  FaBriefcase,
+  FaAward,
+  FaWrench
+} from "react-icons/fa";
 
-// const fallback = (value, defaultVal) => (value?.trim() ? value : defaultVal);
-// const isEmptyArray = (arr) =>
-//   !arr || arr.length === 0 || arr.every((item) => !item || (typeof item === "string" && item.trim() === ""));
+const fallback = (value, defaultVal) =>
+  value && value.trim() !== "" ? value : defaultVal;
 
-// export default function Template4({ data }) {
-//   const resume = {
-//     name: fallback(data?.name, "Mary Garcia"),
-//     title: fallback(data?.title, "Software Development Manager"),
-//     phone: fallback(data?.phone, "+1 (555) 555-555, +1 (123) 456-789"),
-//     email: fallback(data?.email, "mary.garcia@resumegemini.com"),
-//     address: fallback(data?.address, "Houston, TX, 77001"),
-//     summary: fallback(
-//       data?.summary,
-//       "Highly motivated and result-oriented Software Development Manager with over 10 years of experience in the full software development lifecycle (SDLC). Proven track record of designing and building highly scalable, secure, and performant software systems."
-//     ),
-//     education: !isEmptyArray(data?.education)
-//       ? data.education
-//       : [
-//           {
-//             university: "The University of Chicago",
-//             department: "MS - Computer Science, CGPA: 9.0",
-//             location: "San Francisco, California",
-//             date: "Jun 2012",
-//           },
-//         ],
-//     experience: !isEmptyArray(data?.experience)
-//       ? data.experience
-//       : [
-//           {
-//             company: "Accenture Services",
-//             role: "Software Development Manager",
-//             location: "San Francisco, California",
-//             duration: "Jun 2018 - Jan 2024",
-//             bullets: [
-//               "Delivered critical $5 million project on time and within budget, exceeding stakeholder expectations.",
-//               "Successfully led a cross-functional team of developers, designers, and stakeholders.",
-//               "Identified and implemented cloud cost-saving strategies, saving $50,000 annually.",
-//               "Migrated legacy project to event-driven architecture, improving throughput by 50%.",
-//             ],
-//           },
-//           {
-//             company: "PieSoft Technologies",
-//             role: "Senior Software Development Engineer",
-//             location: "San Jose, California",
-//             duration: "Aug 2012 - May 2018",
-//             bullets: [
-//               "Optimized performance of core applications by 50%.",
-//               "Mentored junior developers and improved code quality through reviews.",
-//               "Reduced project costs by switching to open-source solutions.",
-//             ],
-//           },
-//         ],
-//     skills: !isEmptyArray(data?.skills)
-//       ? data.skills
-//       : [
-//           "Agile PLM", "Apache Solr", "Apache Maven", "Apache Hadoop", "NoSQL",
-//           "PostgreSQL", "Oracle Java", "PHP", "Apache Cassandra", "Apache Pig",
-//           "Python", "LAMP Stack",
-//         ],
-//     awards: !isEmptyArray(data?.awards)
-//       ? data.awards
-//       : [
-//           "CEO's Choice Award, 2023",
-//           "Excellence in Customer Partnership Award, 2021",
-//         ],
-//   };
+const isEmptyArray = (arr) =>
+  !arr || arr.length === 0 || arr.every((item) => !item || (typeof item === "string" && item.trim() === ""));
 
-//   return (
-//     <div className={styles.container}>
-//       <div className={styles.header}>
-//         <div>
-//           <h1>{resume.name}</h1>
-//           <p className={styles.title}>{resume.title}</p>
-//         </div>
-//         <div className={styles.contact}>
-//           <p><FaPhone /> {resume.phone}</p>
-//           <p><FaEnvelope /> {resume.email}</p>
-//           <p><FaMapMarkerAlt /> {resume.address}</p>
-//         </div>
-//       </div>
+export default function Template4({ data, fullScale = false }) {
+  const resume = {
+  name: fallback(data?.name, "Michael Johnson"),
+  title: fallback(data?.title, "Software Development Manager"),
+  email: fallback(data?.email, "michael.johnson@resumegemini.com"),
+  phone: fallback(data?.phone, "+1 (555) 555-555, +1 (123) 456-789"),
+  location: fallback(data?.address, "New York, NY, 10001"),
+  summary: fallback(
+    data?.summary,
+    "Dynamic and detail-oriented Software Development Manager with over 10 years of experience in managing full software development life cycles, leading cross-functional teams, and delivering enterprise-grade applications. Proven track record in agile project management, cloud architecture, and team mentorship."
+  ),
+  education: !isEmptyArray(data?.education)
+    ? data.education.map((edu) => ({
+        university: fallback(edu.university, "Boston University"),
+        department: fallback(edu.department, "B.A. in Marketing & Strategy"),
+        cgpa: fallback(edu.cgpa, "8.5"),
+        date: fallback(edu.date, "May 2012"),
+        location: fallback(edu.location, "Boston, MA"),
+      }))
+    : [
+        {
+          university: "Boston University",
+          department: "B.A. in Marketing & Strategy",
+          cgpa: "8.5",
+          date: "May 2012",
+          location: "Boston, MA",
+        },
+        {
+          university: "Columbia University",
+          department: "M.S. in Computer Science",
+          cgpa: "9.1",
+          date: "May 2014",
+          location: "New York, NY",
+        },
+      ],
+  experience: !isEmptyArray(data?.experience)
+    ? data.experience.map((exp) => ({
+        company: fallback(exp.company, "Accenture Services"),
+        title: fallback(exp.role, "Software Development Manager"),
+        date: fallback(exp.duration, "Jun 2018 - Jan 2024"),
+        location: fallback(exp.location, "San Francisco, CA"),
+        bullets: !isEmptyArray(exp.bullets)
+          ? exp.bullets
+          : [
+              "Led a team of 12 software engineers across multiple projects.",
+              "Migrated legacy applications to microservices architecture.",
+              "Improved CI/CD pipelines using Jenkins and GitHub Actions.",
+            ],
+      }))
+    : [
+        {
+          company: "Accenture Services",
+          title: "Software Development Manager",
+          date: "Jun 2018 – Jan 2024",
+          location: "San Francisco, CA",
+          bullets: [
+            "Led a team of 12 engineers in agile sprints and quarterly releases.",
+            "Oversaw cloud transformation for enterprise clients using AWS.",
+            "Mentored junior developers and implemented peer review culture.",
+          ],
+        },
+      ],
+  skills: !isEmptyArray(data?.skills)
+    ? data.skills
+    : [
+        "JavaScript", "React", "Node.js", "Python", "AWS", "Docker", "Kubernetes",
+        "Git", "CI/CD", "MongoDB", "SQL", "Agile", "Scrum", "JIRA"
+      ],
+  awards: !isEmptyArray(data?.awards)
+    ? data.awards
+    : [
+        "Employee of the Year - Accenture, 2023",
+        "Top Innovator Award - Infosys, 2022",
+        "Best Team Lead - TCS, 2021",
+        "Dean’s List - Columbia University, 2014",
+      ],
+};
 
-//       <p className={styles.summary}>{resume.summary}</p>
-//       <hr className={styles.divider} />
+  return (
+    <div className={`template4_main_div ${fullScale ? "full-scale" : "small-scale"}`}>
+      <div className={`template4 ${fullScale ? "full-scale" : "small-scale"}`}>
+        <div className="template4-header">
+          <h1>{resume.name}</h1>
+          <h2>{resume.title}</h2>
+          <div className="template4-contact">
+            <span><FaMapMarkerAlt /> {resume.location}</span>
+            <span><FaPhone /> {resume.phone}</span>
+            <span><FaEnvelope /> {resume.email}</span>
+          </div>
+        </div>
 
-//       <section>
-//         <h2 className={styles.sectionTitle}>🎓 Education</h2>
-//         {resume.education.map((edu, i) => (
-//           <div key={i} className={styles.educationItem}>
-//             <p><strong>{edu.university}</strong> — {edu.department}</p>
-//             <p className={styles.subtext}>{edu.location}</p>
-//             <span className={styles.tag}>{edu.date}</span>
-//           </div>
-//         ))}
-//       </section>
+        <p className="summary">{resume.summary}</p>
 
-//       <section>
-//         <h2 className={styles.sectionTitle}>💼 Experience</h2>
-//         <div className={styles.timeline}>
-//           {resume.experience.map((exp, i) => (
-//             <div key={i} className={styles.timelineItem}>
-//               <div className={styles.timelineDot} />
-//               <div className={styles.timelineContent}>
-//                 <p><strong>{exp.company}</strong> — {exp.role}</p>
-//                 <p className={styles.subtext}>{exp.location}</p>
-//                 <ul>
-//                   {exp.bullets.map((b, j) => (
-//                     <li key={j}>{b}</li>
-//                   ))}
-//                 </ul>
-//                 <span className={styles.tag}>{exp.duration}</span>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
+        <section>
+          <h3 className="template4-section-title"><FaGraduationCap /> Education</h3>
+          {resume.education.map((edu, i) => (
+            <div key={i} className="edu-entry">
+              <p><strong>{edu.university}</strong></p>
+              <p>{edu.department}, CGPA: {edu.cgpa}</p>
+              <p className="edu-meta"><i>{edu.date} | {edu.location}</i></p>
+            </div>
+          ))}
+        </section>
 
-//       <section>
-//         <h2 className={styles.sectionTitle}>🧠 Skills</h2>
-//         <div className={styles.skills}>
-//           {resume.skills.map((skill, i) => (
-//             <span key={i} className={styles.skillTag}>{skill}</span>
-//           ))}
-//         </div>
-//       </section>
+        <section>
+          <h3 className="template4-section-title"><FaBriefcase /> Experience</h3>
+          <div className="timeline">
+            {resume.experience.map((exp, i) => (
+              <div key={i} className="timeline-item">
+                <div className="timeline-dot" />
+                <div className="timeline-content">
+                  <p><strong>{exp.company}</strong></p>
+                  <p>{exp.title}</p>
+                  <p className="exp-meta"><i>{exp.date} | {exp.location}</i></p>
+                  <ul>
+                    {exp.bullets.map((b, idx) => <li key={idx}>{b}</li>)}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
-//       <section>
-//         <h2 className={styles.sectionTitle}>🏆 Awards</h2>
-//         <ul>
-//           {resume.awards.map((award, i) => (
-//             <li key={i}>{award}</li>
-//           ))}
-//         </ul>
-//       </section>
-//     </div>
-//   );
-// }
+        <section>
+          <h3 className="template4-section-title"><FaWrench /> Skills</h3>
+          <div className="skill-tags">
+            {resume.skills.map((skill, i) => (
+              <span key={i} className="skill-tag">{skill}</span>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h3 className="template4-section-title"><FaAward /> Awards</h3>
+          <ul>
+            {resume.awards.map((a, i) => <li key={i}>{a}</li>)}
+          </ul>
+        </section>
+      </div>
+    </div>
+  );
+}

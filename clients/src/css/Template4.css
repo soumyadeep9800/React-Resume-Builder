@@ -1,103 +1,171 @@
-/* .container {
-  font-family: "Segoe UI", sans-serif;
-  padding: 24px;
-  color: #333;
-  background: #fff;
-  line-height: 1.6;
+.template4_main_div.small-scale {
+  width: 355px;
+  height: 475px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #999;
+  position: relative;
+  margin: auto;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 2px solid #0db2ac;
-  padding-bottom: 12px;
+.template4.small-scale {
+  transform: scale(0.55);
+  transform-origin: top left;
+  width: 625px;
+  height: auto;
+  padding: 15px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: white;
+  color: #000;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.title {
-  color: #0db2ac;
-  font-size: 1.2rem;
-  margin: 4px 0;
+.template4_main_div.full-scale {
+  width: 794px;
+  height: auto;
+  background: white;
+  border: none;
+  margin: 0 auto;
+  position: relative;
 }
 
-.contact p {
-  margin: 2px 0;
-  font-size: 0.9rem;
-  color: #555;
+.template4.full-scale {
+  transform: none;
+  padding: 40px;
+  width: 794px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
-.summary {
-  margin: 16px 0;
-  font-size: 1rem;
+.template4-header {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.divider {
-  border-top: 2px solid #0db2ac;
-  margin: 16px 0;
+.template4-header h1 {
+  font-size: 2rem;
+  margin: 0;
 }
 
-.sectionTitle {
-  color: #0db2ac;
-  border-bottom: 1px solid #ccc;
-  margin-top: 24px;
-  padding-bottom: 4px;
-}
-
-.educationItem {
-  margin-top: 12px;
-}
-
-.subtext {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.tag {
+.template4-header h2 {
+  font-size: 1.1rem;
+  background-color: #20b2aa;
+  color: white;
   display: inline-block;
-  background: #e1f7f6;
-  color: #0db2ac;
-  font-size: 0.8rem;
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 4px 12px;
+  border-radius: 14px;
   margin-top: 4px;
 }
 
+.template4-contact {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.8rem;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  color: #333;
+}
+
+.template4-contact svg {
+  margin-right: 4px;
+}
+
+.summary {
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+.template4-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #20b2aa;
+  border-bottom: 2px solid #20b2aa;
+  padding-bottom: 2px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.edu-entry, .timeline-item {
+  margin-bottom: 12px;
+}
+
+.edu-meta, .exp-meta {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+}
+
 .timeline {
-  border-left: 2px dotted #0db2ac;
+  border-left: 2px dotted #20b2aa;
+  margin-left: 10px;
   padding-left: 16px;
-  margin-top: 12px;
-}
-
-.timelineItem {
   position: relative;
-  margin-bottom: 20px;
 }
 
-.timelineDot {
-  width: 12px;
-  height: 12px;
-  background: #0db2ac;
+.timeline-item {
+  position: relative;
+}
+
+.timeline-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #20b2aa;
   border-radius: 50%;
   position: absolute;
-  left: -19px;
-  top: 5px;
+  left: -16px;
+  top: 4px;
 }
 
-.timelineContent {
-  margin-left: 8px;
+.timeline-content ul {
+  padding-left: 18px;
+  margin-top: 4px;
 }
 
-.skills {
+.timeline-content ul li {
+  margin-bottom: 4px;
+  font-size: 0.85rem;
+}
+
+.skill-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
-.skillTag {
-  background-color: #0db2ac;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 999px;
+.skill-tag {
+  border: 1px solid #20b2aa;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background-color: #e6f9f8;
+  font-size: 0.75rem;
+  color: #008b8b;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+ul li {
   font-size: 0.85rem;
-} */
+  margin-bottom: 4px;
+}
+
+@media (max-width: 370px) {
+  .template4_main_div.small-scale {
+    width: 333px;
+  }
+
+  .template4.small-scale {
+    transform: scale(0.54);
+  }
+}

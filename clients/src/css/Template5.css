@@ -1,0 +1,140 @@
+.template5_main_div.small-scale {
+  width: 355px;
+  height: 475px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px solid #999;
+  position: relative;
+  margin: auto;
+}
+
+.template5.small-scale {
+  transform: scale(0.55);
+  transform-origin: top left;
+  width: 625px;
+  height: auto;
+  padding: 15px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background: white;
+  color: #000;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.template5_main_div.full-scale {
+  width: 794px;
+  height: auto;
+  background: white;
+  border: none;
+  margin: 0 auto;
+  position: relative;
+}
+
+.template5.full-scale {
+  transform: none;
+  padding: 40px;
+  width: 794px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #000;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.template5-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.template5-header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.template5-header h2 {
+  font-size: 1.1rem;
+  background-color: #28a745; /* green */
+  color: white;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 14px;
+  margin-top: 4px;
+}
+
+.template5-contact {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 0.8rem;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  color: #333;
+}
+
+.template5-contact svg {
+  margin-right: 4px;
+}
+
+.summary-section {
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+.green-bar {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #28a745; /* green */
+  border-bottom: 2px solid #28a745;
+  padding-bottom: 2px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.edu-entry, .exp-entry {
+  margin-bottom: 12px;
+}
+
+.edu-meta, .exp-meta {
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.skill-tag {
+  border: 1px solid #28a745;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background-color: #e6f9e6; /* light green */
+  font-size: 0.75rem;
+  color: #006400; /* darker green */
+}
+
+ul {
+  padding-left: 18px;
+}
+
+ul li {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 370px) {
+  .template5_main_div.small-scale {
+    width: 333px;
+  }
+
+  .template5.small-scale {
+    transform: scale(0.54);
+  }
+}
