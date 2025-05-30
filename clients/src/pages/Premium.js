@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useEffect , useState } from "react";
+import { toast } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import bb from "../images/bb.png";
 const FAQItem = ({ question, answer }) => (
@@ -206,7 +207,15 @@ export default function Premium() {
                 </div>
               </div>
             </div>
-            <div className="pr-3">
+            <div className="pr-3"
+            onClick={() => {
+            if (selectedPlan) {
+            window.open("https://rzp.io/rzp/hxetkvT", "_blank");
+            } else {
+            toast.warning("Please select a plan before proceeding.");
+            }
+            }}
+            >
               Upgrade Now
               <div className="prr-3">
                 <FontAwesomeIcon icon={faArrowRight} />
