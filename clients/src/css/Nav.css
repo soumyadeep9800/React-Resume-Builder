@@ -48,7 +48,7 @@
   top: 108%; /* just below the navbar */
   right: 10px;
   width: 170px;
-  height: 230px;
+  height: 210px;
   overflow: hidden;
   max-height: 0;
   transition: max-height 0.3s ease-in-out;

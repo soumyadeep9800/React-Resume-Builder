@@ -144,8 +144,8 @@ export default function Template3Inputs({ formData, setFormData }) {
       )}
 
       <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
-        {step > 1 && <button className="btn_template3" onClick={() => { setStep(step - 1); window.scrollTo({ top: 0 }); }}>← Previous</button>}
-        {step < 2 && <button className="btn_template3" onClick={() => { setStep(step + 1); window.scrollTo({ top: 0 }); }}>Next →</button>}
+        {step > 1 && (<button className="btn_edit" onClick={() => {setStep(step - 1); window.scrollTo({ top: 0, behavior: 'smooth'});}}>← Previous</button>)}
+        {step < 2 && (<button className="btn_edit" onClick={() => {setStep(step + 1); window.scrollTo({ top: 0, behavior: 'smooth'});;}}>Next →</button>)}
       </div>
     </div>
   );
