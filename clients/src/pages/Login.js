@@ -9,11 +9,12 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
   const handelLogin = async (e) => {
     e.preventDefault();
     if (!email || !password) return toast.error("All fields are required");
     try {
-      const res = await fetch("http://localhost:3001/api/login", {
+      const res = await fetch(`${API_BASE}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -86,7 +87,7 @@ export default function Login() {
               const decoded = jwtDecode(idToken);
               // console.log(decoded); // { name, email, picture, ... }
               try {
-                const response = await fetch("http://localhost:3001/api/google-signin",{
+                const response = await fetch(`${API_BASE}/api/google-signin`,{
                     method: "POST",
                     headers: {"Content-Type": "application/json",},
                     body: JSON.stringify({ idToken }),

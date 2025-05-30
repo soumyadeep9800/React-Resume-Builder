@@ -8,7 +8,7 @@ export default function Forget() {
   const [otpClicked, setOtpClicked] = useState(false);
   const [otpDisabled, setOtpDisabled] = useState(false);
   const navigate = useNavigate();
-
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
   const handleSendOtp = async (e) => {
     e.preventDefault();
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
@@ -19,7 +19,7 @@ export default function Forget() {
     setOtpDisabled(true);
 
     try {
-      const res = await fetch("http://localhost:3001/forget/send", {
+      const res = await fetch(`${API_BASE}/forget/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

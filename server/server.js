@@ -7,7 +7,7 @@ const port=process.env.PORT;
 
 const cors = require("cors");
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: ["https://resume-builder-vin5.onrender.com", "http://localhost:3000"],
   methods: ['GET', 'POST', 'PUT'],
   credentials: true, // If using cookies or auth headers
 };

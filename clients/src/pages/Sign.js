@@ -6,16 +6,6 @@ import OTPInput from "react-otp-input";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-// export function handleTokenExpiration(token, navigate){
-//   const decoded = jwtDecode(token);
-//   const expirationTime = decoded.exp * 1000 - Date.now();
-//   setTimeout(() => {
-//     localStorage.removeItem("token");
-//     toast.info("Session expired. Please login again.");
-//     navigate("/login");
-//   }, expirationTime);
-// };
-
 export default function Sign() {
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
@@ -25,7 +15,7 @@ export default function Sign() {
   const [otpClicked, setOtpClicked] = useState(false);
   const [otpDisabled, setOtpDisabled] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
-
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
   const handleSendOtp = async (e) => {
     e.preventDefault();
     if (!name) return toast.error("Please Enter Your Name");
@@ -36,7 +26,7 @@ export default function Sign() {
     setOtpClicked(true);
     setOtpDisabled(true);
     try {
-      const res = await fetch("http://localhost:3001/api/send-otp", {
+      const res = await fetch(`${API_BASE}/api/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -68,7 +58,7 @@ export default function Sign() {
     if (!gmailRegex.test(email))
       return toast.error("Email must be a valid Gmail address");
     try {
-      const res = await fetch("http://localhost:3001/api/verify-otp", {
+      const res = await fetch(`${API_BASE}/api/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -119,7 +109,7 @@ export default function Sign() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:3001/api/signup", {
+      const res = await fetch(`${API_BASE}/api/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
@@ -230,7 +220,7 @@ export default function Sign() {
               // console.log(decoded); // {name, email, picture, etc.}
               try {
                 const res = await fetch(
-                  "http://localhost:3001/api/google-signup",
+                  `${API_BASE}/api/google-signup`,
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

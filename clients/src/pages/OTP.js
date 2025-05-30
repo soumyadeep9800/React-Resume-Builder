@@ -17,14 +17,14 @@ export default function OTP() {
     return `${first}****${last}@${domain}`;
   }
   const maskedEmail = email ? maskEmail(email) : '';
-  
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
     const handleVerifyOtp= async(e)=>{
       e.preventDefault();
       if (!otp) {
         return toast.error('OTP  are required');
       }
       try {
-        const res=await fetch("http://localhost:3001/api/verify-otp",{
+        const res=await fetch(`${API_BASE}/api/verify-otp`,{
           method: "POST",
           headers: {"Content-Type":"application/json"},
           body:JSON.stringify({ email, otp })
@@ -46,7 +46,7 @@ export default function OTP() {
 
     const handleResendOtp = async () => {
       try {
-        const res = await fetch("http://localhost:3001/forget/send", {
+        const res = await fetch(`${API_BASE}/forget/send`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),  // Ensure the email is passed

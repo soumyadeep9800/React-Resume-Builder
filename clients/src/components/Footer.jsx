@@ -11,7 +11,7 @@ export default function Footer() {
         toast.warning('You already logged out!');
         return;
       }
-      const response = await fetch('http://localhost:3001/api/logout', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

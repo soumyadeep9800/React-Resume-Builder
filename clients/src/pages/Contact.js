@@ -26,7 +26,8 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email && !name && !message) return toast.error("Fill all the fields");
@@ -38,7 +39,7 @@ export default function Contact() {
     if (!message) return toast.error("Fill your query!");
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:3001/api/send-message", {
+      const res = await fetch(`${API_BASE}/api/send-message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, message }),

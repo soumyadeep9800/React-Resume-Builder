@@ -9,7 +9,7 @@ export default function Newpassword() {
 
   const [newPassword,setNewPassword]=useState("");
   const [confirmNewpassword,setConfirmNewPassword]=useState("");
-  
+  const API_BASE=process.env.REACT_APP_API_BASE_URL;
   const handleUpdatePassword= async(e)=>{
         e.preventDefault();
         if(!newPassword || !confirmNewpassword) return toast.warning('All fields are required');
@@ -17,7 +17,7 @@ export default function Newpassword() {
           return toast.error('Passwords do not match');
         }
         try {
-          const res=await fetch("http://localhost:3001/api/update-password",{
+          const res=await fetch(`${API_BASE}/api/update-password`,{
             method: "PUT",
             headers: {"Content-Type":"application/json"},
             body:JSON.stringify({ email , newPassword})
