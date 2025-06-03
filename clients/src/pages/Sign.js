@@ -31,6 +31,7 @@ export default function Sign() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+      console.log("base",API_BASE)
       const data = await res.json();
       if (res.ok) {
         toast.success("OTP send Successful! 🎉");
