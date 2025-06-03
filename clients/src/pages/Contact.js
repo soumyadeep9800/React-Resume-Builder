@@ -44,6 +44,7 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, message }),
       });
+      console.log("base",API_BASE)
       const data = await res.json();
       if (res.ok) {
         toast.success("Message sent successfully! 🎉" || data.message);
