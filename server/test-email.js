@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: 'your-email@gmail.com',  // Replace with the email you want to test
+    to: 'ronyghosh7864@gmail.com',  // Replace with the email you want to test
     subject: 'Test Email from Resume-Builder',
     html: `<p>Hello, this is a test email from <strong>Resume-Builder</strong>!</p>`
 };
