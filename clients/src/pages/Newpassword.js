@@ -17,7 +17,7 @@ export default function Newpassword() {
           return toast.error('Passwords do not match');
         }
         try {
-          const res=await fetch(`${API_BASE}/api/update-password`,{
+          const res=await fetch(`${API_BASE}/api/auth/update-password`,{
             method: "PUT",
             headers: {"Content-Type":"application/json"},
             body:JSON.stringify({ email , newPassword})

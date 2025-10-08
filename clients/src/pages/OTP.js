@@ -24,7 +24,7 @@ export default function OTP() {
         return toast.error('OTP  are required');
       }
       try {
-        const res=await fetch(`${API_BASE}/api/verify-otp`,{
+        const res=await fetch(`${API_BASE}/api/auth/verify-otp`,{
           method: "POST",
           headers: {"Content-Type":"application/json"},
           body:JSON.stringify({ email, otp })
@@ -46,7 +46,7 @@ export default function OTP() {
 
     const handleResendOtp = async () => {
       try {
-        const res = await fetch(`${API_BASE}/forget/send`, {
+        const res = await fetch(`${API_BASE}/api/forget/send`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),  // Ensure the email is passed

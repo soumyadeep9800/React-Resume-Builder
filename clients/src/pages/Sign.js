@@ -26,7 +26,7 @@ export default function Sign() {
     setOtpClicked(true);
     setOtpDisabled(true);
     try {
-      const res = await fetch(`${API_BASE}/api/send-otp`, {
+      const res = await fetch(`${API_BASE}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -59,7 +59,7 @@ export default function Sign() {
     if (!gmailRegex.test(email))
       return toast.error("Email must be a valid Gmail address");
     try {
-      const res = await fetch(`${API_BASE}/api/verify-otp`, {
+      const res = await fetch(`${API_BASE}/api/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
@@ -110,7 +110,7 @@ export default function Sign() {
       return;
     }
     try {
-      const res = await fetch(`${API_BASE}/api/signup`, {
+      const res = await fetch(`${API_BASE}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
@@ -221,7 +221,7 @@ export default function Sign() {
               // console.log(decoded); // {name, email, picture, etc.}
               try {
                 const res = await fetch(
-                  `${API_BASE}/api/google-signup`,
+                  `${API_BASE}/api/google/google-signup`,
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

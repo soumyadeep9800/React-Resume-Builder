@@ -39,7 +39,7 @@ export default function Contact() {
     if (!message) return toast.error("Fill your query!");
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE}/api/send-message`, {
+      const res = await fetch(`${API_BASE}/api/contact/send-message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name, message }),

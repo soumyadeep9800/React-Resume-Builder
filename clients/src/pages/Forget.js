@@ -19,7 +19,7 @@ export default function Forget() {
     setOtpDisabled(true);
 
     try {
-      const res = await fetch(`${API_BASE}/forget/send`, {
+      const res = await fetch(`${API_BASE}/api/forget/send`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

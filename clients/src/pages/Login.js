@@ -14,7 +14,7 @@ export default function Login() {
     e.preventDefault();
     if (!email || !password) return toast.error("All fields are required");
     try {
-      const res = await fetch(`${API_BASE}/api/login`, {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -87,7 +87,7 @@ export default function Login() {
               const decoded = jwtDecode(idToken);
               // console.log(decoded); // { name, email, picture, ... }
               try {
-                const response = await fetch(`${API_BASE}/api/google-signin`,{
+                const response = await fetch(`${API_BASE}/api/google/google-signin`,{
                     method: "POST",
                     headers: {"Content-Type": "application/json",},
                     body: JSON.stringify({ idToken }),
