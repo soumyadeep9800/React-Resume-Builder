@@ -23,7 +23,7 @@ export default function Navbar() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/logout`, {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
