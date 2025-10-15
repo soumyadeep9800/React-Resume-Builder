@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-client
+  namespace: resume-builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: your-dockerhub-username/resume-builder-client:latest
+          env:
+            - name: REACT_APP_BACKEND_URL
+              value: "http://server:3001"
+          ports:
+            - containerPort: 3000

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resume-server
+  namespace: resume-builder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+        - name: server
+          image: your-dockerhub-username/resume-builder-server:latest
+          env:
+            - name: DB_ATLAS_URL
+              value: "mongodb://admin:qwerty@mongo:27017/resume-builder?authSource=admin"
+          ports:
+            - containerPort: 3001
