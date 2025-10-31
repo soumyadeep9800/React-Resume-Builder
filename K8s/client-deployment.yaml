@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resume-client
+  name: client
   namespace: resume-builder
 spec:
   replicas: 1
@@ -15,9 +15,24 @@ spec:
     spec:
       containers:
         - name: client
-          image: your-dockerhub-username/resume-builder-client:latest
-          env:
-            - name: REACT_APP_BACKEND_URL
-              value: "http://server:3001"
+          image: soumya118/resume-builder-client:1.2
           ports:
             - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: client-config
+            - secretRef:
+                name: resume-client-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client
+  namespace: resume-builder
+spec:
+  type: LoadBalancer
+  selector:
+    app: client
+  ports:
+    - port: 3000
+      targetPort: 3000

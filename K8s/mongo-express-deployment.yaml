@@ -1,27 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-express
+  name: mongo
   namespace: resume-builder
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongo-express
+      app: mongo
   template:
     metadata:
       labels:
-        app: mongo-express
+        app: mongo
     spec:
       containers:
-        - name: mongo-express
-          image: mongo-express:latest
-          env:
-            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-              value: "admin"
-            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-              value: "qwerty"
-            - name: ME_CONFIG_MONGODB_URL
-              value: "mongodb://admin:qwerty@mongo:27017"
+        - name: mongo
+          image: mongo
           ports:
-            - containerPort: 8081
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: mongo-config
+            - secretRef:
+                name: mongo-secret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: resume-builder
+spec:
+  type: ClusterIP
+  selector:
+    app: mongo
+  ports:
+    - port: 27017
+      targetPort: 27017
