@@ -1,40 +1,62 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
+  name: mongo-express
   namespace: resume-builder
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongo
+      app: mongo-express
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongo-express
     spec:
       containers:
-        - name: mongo
-          image: mongo
+        - name: mongo-express
+          image: mongo-express:latest
           ports:
-            - containerPort: 27017
-          envFrom:
-            - configMapRef:
-                name: mongo-config
-            - secretRef:
-                name: mongo-secret
+            - containerPort: 8081
+          env:
+            - name: ME_CONFIG_MONGODB_SERVER
+              value: mongo
+            - name: ME_CONFIG_MONGODB_PORT
+              value: "27017"
+            - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
+              value: "true"
+            - name: ME_CONFIG_BASICAUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: ME_CONFIG_BASICAUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
 
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: mongo-express
   namespace: resume-builder
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   selector:
-    app: mongo
+    app: mongo-express
   ports:
-    - port: 27017
-      targetPort: 27017
+    - port: 8081
+      targetPort: 8081
