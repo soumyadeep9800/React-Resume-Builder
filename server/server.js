@@ -20,9 +20,17 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+//for K8s
+//app.use(cors({ origin: "*" }));
+
 // Body parsers
 app.use(express.json());
 app.use(bodyParser.json());
+
+// ---------------------- HEALTH CHECK ----------------------
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Server is healthy' });
+});
 
 // Test root endpoint
 app.get('/', (req, res) => {
