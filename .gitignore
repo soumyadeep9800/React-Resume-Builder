@@ -2,3 +2,8 @@ clients/node_modules/
 clients/.env
 server/node_modules/
 server/.env
+K8s/client-config.yaml
+K8s/mongo-config.yaml
+K8s/mongo-secret.yaml
+K8s/server-config.yaml
+K8s/server-secret.yaml
