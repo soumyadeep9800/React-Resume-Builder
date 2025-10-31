@@ -19,6 +19,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+
+
 //for K8s
 //app.use(cors({ origin: "*" }));
 
