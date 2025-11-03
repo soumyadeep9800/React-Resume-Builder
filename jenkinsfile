@@ -1,0 +1,97 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_USER = 'soumya118'
+        IMAGE_CLIENT = "${DOCKER_HUB_USER}/resume-builder-client"
+        IMAGE_SERVER = "${DOCKER_HUB_USER}/resume-builder-server"
+        K8S_PATH = "./K8s"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Set commit tag') {
+            steps {
+                script {
+                    COMMIT = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    env.IMAGE_CLIENT_TAG = "${IMAGE_CLIENT}:${COMMIT}"
+                    env.IMAGE_SERVER_TAG = "${IMAGE_SERVER}:${COMMIT}"
+                    echo "Using tags: ${env.IMAGE_CLIENT_TAG} , ${env.IMAGE_SERVER_TAG}"
+                }
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                script {
+                    sh "docker build -t ${env.IMAGE_CLIENT_TAG} ./client"
+                    sh "docker build -t ${env.IMAGE_SERVER_TAG} ./server"
+
+                    // also tag as latest optionally
+                    sh "docker tag ${env.IMAGE_CLIENT_TAG} ${IMAGE_CLIENT}:latest || true"
+                    sh "docker tag ${env.IMAGE_SERVER_TAG} ${IMAGE_SERVER}:latest || true"
+                }
+            }
+        }
+
+        stage('Push Images to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh "docker push ${env.IMAGE_CLIENT_TAG}"
+                    sh "docker push ${env.IMAGE_SERVER_TAG}"
+                    sh "docker push ${IMAGE_CLIENT}:latest || true"
+                    sh "docker push ${IMAGE_SERVER}:latest || true"
+                }
+            }
+        }
+
+        stage('Update K8s manifests with new image tags') {
+            steps {
+                script {
+                    // make a temporary copy of K8s manifests and replace images
+                    sh '''
+                      mkdir -p k8s_tmp
+                      cp -r ${K8S_PATH}/* k8s_tmp/
+                      # replace placeholders or any :latest occurrences (be careful with pattern)
+                      sed -i "s#IMAGE_CLIENT_PLACEHOLDER#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
+                      sed -i "s#IMAGE_SERVER_PLACEHOLDER#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
+
+                      # if manifests used explicit image names with :latest, replace latest with commit
+                      sed -i "s#${IMAGE_CLIENT}:latest#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
+                      sed -i "s#${IMAGE_SERVER}:latest#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
+                    '''
+                    sh 'kubectl apply -f k8s_tmp/'
+                }
+            }
+        }
+
+        stage('Wait for rollout') {
+            steps {
+                script {
+                    sh 'kubectl rollout status deployment/client-deployment --timeout=120s'
+                    sh 'kubectl rollout status deployment/server-deployment --timeout=120s'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment successful! Deployed images: ${env.IMAGE_CLIENT_TAG}, ${env.IMAGE_SERVER_TAG}"
+        }
+        failure {
+            echo "❌ Deployment failed — attempting rollback."
+            // Attempt rollback
+            script {
+                sh 'kubectl rollout undo deployment/client-deployment || true'
+                sh 'kubectl rollout undo deployment/server-deployment || true'
+            }
+        }
+    }
+}
