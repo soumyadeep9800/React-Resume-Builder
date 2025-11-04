@@ -49,35 +49,45 @@ pipeline {
             }
         }
 
-        stage('Push Images to Docker Hub (skip if exists)') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-
-                        echo "🔍 Checking if ${IMAGE_CLIENT_TAG} already exists..."
-                        if ! docker manifest inspect ${IMAGE_CLIENT_TAG} > /dev/null 2>&1; then
-                          echo "📤 Pushing ${IMAGE_CLIENT_TAG}"
-                          docker push ${IMAGE_CLIENT_TAG}
-                        else
-                          echo "✅ ${IMAGE_CLIENT_TAG} already exists, skipping push."
-                        fi
-
-                        echo "🔍 Checking if ${IMAGE_SERVER_TAG} already exists..."
-                        if ! docker manifest inspect ${IMAGE_SERVER_TAG} > /dev/null 2>&1; then
-                          echo "📤 Pushing ${IMAGE_SERVER_TAG}"
-                          docker push ${IMAGE_SERVER_TAG}
-                        else
-                          echo "✅ ${IMAGE_SERVER_TAG} already exists, skipping push."
-                        fi
-
-                        echo "📤 Updating latest tags..."
-                        docker push ${IMAGE_CLIENT}:latest || true
-                        docker push ${IMAGE_SERVER}:latest || true
-                    '''
+        stage('Push Images') {
+            parallel {
+                stage('Push Client Image') {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                            sh '''
+                                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                                echo "🔍 Checking if ${IMAGE_CLIENT_TAG} exists..."
+                                if ! docker manifest inspect ${IMAGE_CLIENT_TAG} > /dev/null 2>&1; then
+                                  echo "📤 Pushing ${IMAGE_CLIENT_TAG}"
+                                  docker push ${IMAGE_CLIENT_TAG}
+                                else
+                                  echo "✅ ${IMAGE_CLIENT_TAG} already exists, skipping push."
+                                fi
+                                docker push ${IMAGE_CLIENT}:latest || true
+                            '''
+                        }
+                    }
+                }
+                stage('Push Server Image') {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                            sh '''
+                                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                                echo "🔍 Checking if ${IMAGE_SERVER_TAG} exists..."
+                                if ! docker manifest inspect ${IMAGE_SERVER_TAG} > /dev/null 2>&1; then
+                                  echo "📤 Pushing ${IMAGE_SERVER_TAG}"
+                                  docker push ${IMAGE_SERVER_TAG}
+                                else
+                                  echo "✅ ${IMAGE_SERVER_TAG} already exists, skipping push."
+                                fi
+                                docker push ${IMAGE_SERVER}:latest || true
+                            '''
+                        }
+                    }
                 }
             }
         }
+
 
         stage('Deploy to Kubernetes') {
             steps {
