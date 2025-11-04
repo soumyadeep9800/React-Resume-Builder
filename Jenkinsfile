@@ -6,6 +6,7 @@ pipeline {
         IMAGE_CLIENT = "${DOCKER_HUB_USER}/resume-builder-client"
         IMAGE_SERVER = "${DOCKER_HUB_USER}/resume-builder-server"
         K8S_PATH = "./K8s"
+        CACHE_VOLUME = "/var/lib/docker"  // docker cache path inside Jenkins host
     }
 
     stages {
@@ -26,15 +27,20 @@ pipeline {
             }
         }
 
-        stage('Build Docker Images') {
+        stage('Build Docker Images (with cache)') {
             steps {
                 script {
-                    sh "docker build -t ${env.IMAGE_CLIENT_TAG} ./clients"
-                    sh "docker build -t ${env.IMAGE_SERVER_TAG} ./server"
+                    echo "🐳 Building Docker images with layer caching..."
+                    sh '''
+                        docker pull ${IMAGE_CLIENT}:latest || true
+                        docker pull ${IMAGE_SERVER}:latest || true
 
-                    // also tag as latest optionally
-                    sh "docker tag ${env.IMAGE_CLIENT_TAG} ${IMAGE_CLIENT}:latest || true"
-                    sh "docker tag ${env.IMAGE_SERVER_TAG} ${IMAGE_SERVER}:latest || true"
+                        docker build --cache-from ${IMAGE_CLIENT}:latest -t ${IMAGE_CLIENT_TAG} ./clients
+                        docker build --cache-from ${IMAGE_SERVER}:latest -t ${IMAGE_SERVER_TAG} ./server
+
+                        docker tag ${IMAGE_CLIENT_TAG} ${IMAGE_CLIENT}:latest || true
+                        docker tag ${IMAGE_SERVER_TAG} ${IMAGE_SERVER}:latest || true
+                    '''
                 }
             }
         }
@@ -42,31 +48,29 @@ pipeline {
         stage('Push Images to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    sh "docker push ${env.IMAGE_CLIENT_TAG}"
-                    sh "docker push ${env.IMAGE_SERVER_TAG}"
-                    sh "docker push ${IMAGE_CLIENT}:latest || true"
-                    sh "docker push ${IMAGE_SERVER}:latest || true"
+                    sh '''
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push ${IMAGE_CLIENT_TAG}
+                        docker push ${IMAGE_SERVER_TAG}
+                        docker push ${IMAGE_CLIENT}:latest || true
+                        docker push ${IMAGE_SERVER}:latest || true
+                    '''
                 }
             }
         }
 
-        stage('Update K8s manifests with new image tags') {
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // make a temporary copy of K8s manifests and replace images
                     sh '''
-                      mkdir -p k8s_tmp
-                      cp -r ${K8S_PATH}/* k8s_tmp/
-                      # replace placeholders or any :latest occurrences (be careful with pattern)
-                      sed -i "s#IMAGE_CLIENT_PLACEHOLDER#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
-                      sed -i "s#IMAGE_SERVER_PLACEHOLDER#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
-
-                      # if manifests used explicit image names with :latest, replace latest with commit
-                      sed -i "s#${IMAGE_CLIENT}:latest#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
-                      sed -i "s#${IMAGE_SERVER}:latest#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
+                        mkdir -p k8s_tmp
+                        cp -r ${K8S_PATH}/* k8s_tmp/
+                        sed -i "s#IMAGE_CLIENT_PLACEHOLDER#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
+                        sed -i "s#IMAGE_SERVER_PLACEHOLDER#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
+                        sed -i "s#${IMAGE_CLIENT}:latest#${IMAGE_CLIENT_TAG}#g" k8s_tmp/*.yaml || true
+                        sed -i "s#${IMAGE_SERVER}:latest#${IMAGE_SERVER_TAG}#g" k8s_tmp/*.yaml || true
+                        kubectl apply -f k8s_tmp/
                     '''
-                    sh 'kubectl apply -f k8s_tmp/'
                 }
             }
         }
@@ -87,7 +91,6 @@ pipeline {
         }
         failure {
             echo "❌ Deployment failed — attempting rollback."
-            // Attempt rollback
             script {
                 sh 'kubectl rollout undo deployment/client-deployment || true'
                 sh 'kubectl rollout undo deployment/server-deployment || true'
