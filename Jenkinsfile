@@ -88,6 +88,16 @@ pipeline {
             }
         }
 
+        stage('Setup KubeConfig') {
+            steps {
+                sh '''
+                    mkdir -p ~/.kube
+                    cp /var/jenkins_home/.kube/config ~/.kube/config
+                    chmod 600 ~/.kube/config
+                    echo "✅ Kubeconfig set up successfully."
+                '''
+            }
+        }
 
         stage('Deploy to Kubernetes') {
             steps {
