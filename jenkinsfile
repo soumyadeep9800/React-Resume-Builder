@@ -29,7 +29,7 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    sh "docker build -t ${env.IMAGE_CLIENT_TAG} ./client"
+                    sh "docker build -t ${env.IMAGE_CLIENT_TAG} ./clients"
                     sh "docker build -t ${env.IMAGE_SERVER_TAG} ./server"
 
                     // also tag as latest optionally
