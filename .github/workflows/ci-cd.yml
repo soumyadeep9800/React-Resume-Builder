@@ -25,12 +25,12 @@ jobs:
         run: |
           $commit = git rev-parse --short HEAD
           echo "commit=$commit" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-          Write-Host "✅ Using commit tag: $commit"
+          Write-Host 'Using commit tag:' $commit
 
       - name: Build and Tag Docker Images
         shell: powershell
         run: |
-          $env:DOCKER_BUILDKIT = "1"
+          $env:DOCKER_BUILDKIT = '1'
 
           $clientLatest = "$env:IMAGE_CLIENT" + ":latest"
           $serverLatest = "$env:IMAGE_SERVER" + ":latest"
@@ -40,16 +40,16 @@ jobs:
           try {
             docker pull $clientLatest
           } catch {
-            Write-Host "⚠️ No cache found for client"
+            Write-Host 'No cache found for client'
           }
 
           try {
             docker pull $serverLatest
           } catch {
-            Write-Host "⚠️ No cache found for server"
+            Write-Host 'No cache found for server'
           }
 
-          Write-Host "🐳 Building Docker images..."
+          Write-Host 'Building Docker images...'
           docker build --cache-from=$clientLatest -t $clientTag ./clients
           docker build --cache-from=$serverLatest -t $serverTag ./server
 
@@ -61,16 +61,19 @@ jobs:
         run: |
           $clientLatest = "$env:IMAGE_CLIENT" + ":latest"
           $clientTag = "$env:IMAGE_CLIENT" + ":${{ steps.vars.outputs.commit }}"
+
           docker logout
-          Write-Host "🔐 Logging in to Docker Hub..."
+          Write-Host 'Logging in to Docker Hub...'
           $loginResult = echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin 2>&1
-          if ($loginResult -match "Login Succeeded") {
-              Write-Host "✅ Docker login succeeded"
+
+          if ($loginResult -match 'Login Succeeded') {
+              Write-Host 'Docker login succeeded'
           } else {
-              Write-Host "⚠️ Docker login may have failed"
+              Write-Host 'Docker login may have failed'
               Write-Host $loginResult
           }
-          Write-Host "Pushing Client Images..."
+
+          Write-Host 'Pushing Client Images...'
           docker push $clientTag
           docker push $clientLatest
 
@@ -79,16 +82,19 @@ jobs:
         run: |
           $serverLatest = "$env:IMAGE_SERVER" + ":latest"
           $serverTag = "$env:IMAGE_SERVER" + ":${{ steps.vars.outputs.commit }}"
+
           docker logout
-          Write-Host "🔐 Logging in to Docker Hub..."
+          Write-Host 'Logging in to Docker Hub...'
           $loginResult = echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin 2>&1
-          if ($loginResult -match "Login Succeeded") {
-              Write-Host "✅ Docker login succeeded"
+
+          if ($loginResult -match 'Login Succeeded') {
+              Write-Host 'Docker login succeeded'
           } else {
-              Write-Host "⚠️ Docker login may have failed"
+              Write-Host 'Docker login may have failed'
               Write-Host $loginResult
           }
-          Write-Host "Pushing Server Images..."
+
+          Write-Host 'Pushing Server Images...'
           docker push $serverTag
           docker push $serverLatest
 
@@ -101,7 +107,7 @@ jobs:
           $clientTag = "$env:IMAGE_CLIENT" + ":$commit"
           $serverTag = "$env:IMAGE_SERVER" + ":$commit"
 
-          Write-Host "Preparing Kubernetes manifests..."
+          Write-Host 'Preparing Kubernetes manifests...'
           Get-ChildItem k8s_tmp\*.yaml | ForEach-Object {
             (Get-Content $_.FullName) `
               -replace 'IMAGE_CLIENT_PLACEHOLDER', $clientTag `
@@ -109,14 +115,14 @@ jobs:
               Set-Content $_.FullName
           }
 
-          Write-Host "📦 Applying Kubernetes resources..."
+          Write-Host 'Applying Kubernetes resources...'
           kubectl apply -f k8s_tmp/namespace.yaml
           kubectl apply -f k8s_tmp/ --namespace $env:NAMESPACE
 
       - name: Wait for Rollout
         shell: powershell
         run: |
-          Write-Host "⏳ Waiting for rollout in namespace $env:NAMESPACE..."
+          Write-Host 'Waiting for rollout in namespace' $env:NAMESPACE '...'
           kubectl rollout status deployment/client -n $env:NAMESPACE --timeout=180s
           kubectl rollout status deployment/server -n $env:NAMESPACE --timeout=180s
 
@@ -124,6 +130,6 @@ jobs:
         if: success()
         shell: powershell
         run: |
-          Write-Host "✅ Deployment successful in namespace $env:NAMESPACE!"
-          Write-Host "Client Image: $env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
-          Write-Host "Server Image: $env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
+          Write-Host 'Deployment successful in namespace:' $env:NAMESPACE
+          Write-Host 'Client Image:' "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
+          Write-Host 'Server Image:' "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
