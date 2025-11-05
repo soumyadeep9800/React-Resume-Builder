@@ -31,37 +31,50 @@ jobs:
         run: |
           $env:DOCKER_BUILDKIT = "1"
 
+          # Build image tag variables safely
+          $clientLatest = "$env:IMAGE_CLIENT" + ":latest"
+          $serverLatest = "$env:IMAGE_SERVER" + ":latest"
+          $clientTag = "$env:IMAGE_CLIENT" + ":${{ steps.vars.outputs.commit }}"
+          $serverTag = "$env:IMAGE_SERVER" + ":${{ steps.vars.outputs.commit }}"
+
           try {
-            docker pull "$env:IMAGE_CLIENT:latest"
+            docker pull $clientLatest
           } catch {
-            Write-Host "No cache for client"
-          }
-        
-          try {
-            docker pull "$env:IMAGE_SERVER:latest"
-          } catch {
-            Write-Host "No cache for server"
+            Write-Host "⚠️ No cache found for client"
           }
 
-          docker build --cache-from="$env:IMAGE_CLIENT:latest" -t "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" ./clients
-          docker build --cache-from="$env:IMAGE_SERVER:latest" -t "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" ./server
+          try {
+            docker pull $serverLatest
+          } catch {
+            Write-Host "⚠️ No cache found for server"
+          }
 
-          docker tag "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" "$env:IMAGE_CLIENT:latest"
-          docker tag "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" "$env:IMAGE_SERVER:latest"
+          Write-Host "🐳 Building Docker images..."
+          docker build --cache-from=$clientLatest -t $clientTag ./clients
+          docker build --cache-from=$serverLatest -t $serverTag ./server
+
+          docker tag $clientTag $clientLatest
+          docker tag $serverTag $serverLatest
 
       - name: Push Client Image
         shell: powershell
         run: |
+          $clientLatest = "$env:IMAGE_CLIENT" + ":latest"
+          $clientTag = "$env:IMAGE_CLIENT" + ":${{ steps.vars.outputs.commit }}"
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
-          docker push "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
-          docker push "$env:IMAGE_CLIENT:latest"
+          Write-Host "📤 Pushing Client Images..."
+          docker push $clientTag
+          docker push $clientLatest
 
       - name: Push Server Image
         shell: powershell
         run: |
+          $serverLatest = "$env:IMAGE_SERVER" + ":latest"
+          $serverTag = "$env:IMAGE_SERVER" + ":${{ steps.vars.outputs.commit }}"
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
-          docker push "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
-          docker push "$env:IMAGE_SERVER:latest"
+          Write-Host "📤 Pushing Server Images..."
+          docker push $serverTag
+          docker push $serverLatest
 
       - name: Deploy to Kubernetes
         shell: powershell
@@ -69,16 +82,31 @@ jobs:
           mkdir k8s_tmp -Force
           Copy-Item -Recurse $env:K8S_PATH\* k8s_tmp\
           $commit = "${{ steps.vars.outputs.commit }}"
+          $clientTag = "$env:IMAGE_CLIENT" + ":$commit"
+          $serverTag = "$env:IMAGE_SERVER" + ":$commit"
+
+          Write-Host "📦 Preparing Kubernetes manifests..."
           Get-ChildItem k8s_tmp\*.yaml | ForEach-Object {
             (Get-Content $_.FullName) `
-              -replace 'IMAGE_CLIENT_PLACEHOLDER', "$env:IMAGE_CLIENT:$commit" `
-              -replace 'IMAGE_SERVER_PLACEHOLDER', "$env:IMAGE_SERVER:$commit" |
+              -replace 'IMAGE_CLIENT_PLACEHOLDER', $clientTag `
+              -replace 'IMAGE_SERVER_PLACEHOLDER', $serverTag |
               Set-Content $_.FullName
           }
+
+          Write-Host "🚀 Deploying to Kubernetes..."
           kubectl apply -f k8s_tmp/
 
       - name: Wait for Rollout
         shell: powershell
         run: |
+          Write-Host "⏳ Waiting for rollout..."
           kubectl rollout status deployment/client-deployment --timeout=120s
           kubectl rollout status deployment/server-deployment --timeout=120s
+
+      - name: Deployment Success
+        if: success()
+        shell: powershell
+        run: |
+          Write-Host "✅ Deployment successful!"
+          Write-Host "Client Image: $env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
+          Write-Host "Server Image: $env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
