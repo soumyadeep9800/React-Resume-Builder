@@ -1,0 +1,66 @@
+name: CI/CD to Minikube
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted
+
+    env:
+      DOCKER_HUB_USER: soumya118
+      IMAGE_CLIENT: soumya118/resume-builder-client
+      IMAGE_SERVER: soumya118/resume-builder-server
+      K8S_PATH: ./K8s
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Commit Tag
+        id: vars
+        run: |
+          COMMIT=$(git rev-parse --short HEAD)
+          echo "commit=$COMMIT" >> $GITHUB_OUTPUT
+          echo "Using commit: $COMMIT"
+
+      - name: Build and Tag Docker Images
+        run: |
+          $env:DOCKER_BUILDKIT=1
+          docker pull $env:IMAGE_CLIENT:latest || echo "No cache for client"
+          docker pull $env:IMAGE_SERVER:latest || echo "No cache for server"
+          docker build --cache-from=$env:IMAGE_CLIENT:latest -t "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" ./clients
+          docker build --cache-from=$env:IMAGE_SERVER:latest -t "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" ./server
+          docker tag "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" "$env:IMAGE_CLIENT:latest"
+          docker tag "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" "$env:IMAGE_SERVER:latest"
+
+      - name: Push Client Image
+        run: |
+          echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+          docker push "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
+          docker push "$env:IMAGE_CLIENT:latest"
+
+      - name: Push Server Image
+        run: |
+          echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+          docker push "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
+          docker push "$env:IMAGE_SERVER:latest"
+
+      - name: Deploy to Kubernetes
+        run: |
+          mkdir -p k8s_tmp
+          cp -r $env:K8S_PATH/* k8s_tmp/
+          COMMIT=${{ steps.vars.outputs.commit }}
+          (Get-ChildItem k8s_tmp/*.yaml) | ForEach-Object {
+            (Get-Content $_.FullName) `
+              -replace 'IMAGE_CLIENT_PLACEHOLDER', "$env:IMAGE_CLIENT:$COMMIT" `
+              -replace 'IMAGE_SERVER_PLACEHOLDER', "$env:IMAGE_SERVER:$COMMIT" |
+              Set-Content $_.FullName
+          }
+          kubectl apply -f k8s_tmp/
+
+      - name: Wait for Rollout
+        run: |
+          kubectl rollout status deployment/client-deployment --timeout=120s
+          kubectl rollout status deployment/server-deployment --timeout=120s
