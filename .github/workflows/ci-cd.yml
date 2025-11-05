@@ -62,7 +62,7 @@ jobs:
           $clientLatest = "$env:IMAGE_CLIENT" + ":latest"
           $clientTag = "$env:IMAGE_CLIENT" + ":${{ steps.vars.outputs.commit }}"
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
-          Write-Host "📤 Pushing Client Images..."
+          Write-Host "Pushing Client Images..."
           docker push $clientTag
           docker push $clientLatest
 
@@ -72,7 +72,7 @@ jobs:
           $serverLatest = "$env:IMAGE_SERVER" + ":latest"
           $serverTag = "$env:IMAGE_SERVER" + ":${{ steps.vars.outputs.commit }}"
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
-          Write-Host "📤 Pushing Server Images..."
+          Write-Host "Pushing Server Images..."
           docker push $serverTag
           docker push $serverLatest
 
@@ -85,7 +85,7 @@ jobs:
           $clientTag = "$env:IMAGE_CLIENT" + ":$commit"
           $serverTag = "$env:IMAGE_SERVER" + ":$commit"
 
-          Write-Host "📦 Preparing Kubernetes manifests..."
+          Write-Host "Preparing Kubernetes manifests..."
           Get-ChildItem k8s_tmp\*.yaml | ForEach-Object {
             (Get-Content $_.FullName) `
               -replace 'IMAGE_CLIENT_PLACEHOLDER', $clientTag `
@@ -93,13 +93,13 @@ jobs:
               Set-Content $_.FullName
           }
 
-          Write-Host "🚀 Deploying to Kubernetes..."
+          Write-Host "Deploying to Kubernetes..."
           kubectl apply -f k8s_tmp/
 
       - name: Wait for Rollout
         shell: powershell
         run: |
-          Write-Host "⏳ Waiting for rollout..."
+          Write-Host "Waiting for rollout..."
           kubectl rollout status deployment/client-deployment --timeout=120s
           kubectl rollout status deployment/server-deployment --timeout=120s
 
@@ -107,6 +107,6 @@ jobs:
         if: success()
         shell: powershell
         run: |
-          Write-Host "✅ Deployment successful!"
+          Write-Host "Deployment successful!"
           Write-Host "Client Image: $env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
           Write-Host "Server Image: $env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
