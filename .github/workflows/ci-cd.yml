@@ -36,10 +36,10 @@ jobs:
           $commit = "${{ steps.vars.outputs.commit }}"
           $clientRepo = "$env:IMAGE_CLIENT"
           $serverRepo = "$env:IMAGE_SERVER"
-          $clientTag = "$clientRepo:$commit"
-          $serverTag = "$serverRepo:$commit"
-          $clientLatest = "$clientRepo:latest"
-          $serverLatest = "$serverRepo:latest"
+          $clientTag = "${clientRepo}:$commit"
+          $serverTag = "${serverRepo}:$commit"
+          $clientLatest = "${clientRepo}:latest"
+          $serverLatest = "${serverRepo}:latest"
 
           Write-Host "Building Docker images..."
           Write-Host "Client Tag: $clientTag"
@@ -55,11 +55,9 @@ jobs:
           }
 
           try {
-            # Build and tag client
             docker build -t $clientTag ./clients
             docker tag $clientTag $clientLatest
 
-            # Build and tag server
             docker build -t $serverTag ./server
             docker tag $serverTag $serverLatest
 
