@@ -31,39 +31,43 @@ jobs:
         shell: powershell
         run: |
           $env:DOCKER_BUILDKIT = '1'
-          docker buildx use default
-          $clientLatest = "$env:IMAGE_CLIENT:latest"
-          $serverLatest = "$env:IMAGE_SERVER:latest"
+          docker context use default
+
           $commit = "${{ steps.vars.outputs.commit }}"
-          $clientTag = "$env:IMAGE_CLIENT:$commit"
-          $serverTag = "$env:IMAGE_SERVER:$commit"
+          $clientRepo = "$env:IMAGE_CLIENT"
+          $serverRepo = "$env:IMAGE_SERVER"
+          $clientTag = "$clientRepo:$commit"
+          $serverTag = "$serverRepo:$commit"
+          $clientLatest = "$clientRepo:latest"
+          $serverLatest = "$serverRepo:latest"
 
           Write-Host "Building Docker images..."
           Write-Host "Client Tag: $clientTag"
           Write-Host "Server Tag: $serverTag"
 
           if (-not (Test-Path "./clients/Dockerfile")) {
-            Write-Error "Client Dockerfile not found at ./clients"
-            exit 1
+              Write-Error "Client Dockerfile not found at ./clients"
+              exit 1
           }
           if (-not (Test-Path "./server/Dockerfile")) {
-            Write-Error "Server Dockerfile not found at ./server"
-            exit 1
+              Write-Error "Server Dockerfile not found at ./server"
+              exit 1
           }
 
           try {
+            # Build and tag client
             docker build -t $clientTag ./clients
             docker tag $clientTag $clientLatest
 
+            # Build and tag server
             docker build -t $serverTag ./server
             docker tag $serverTag $serverLatest
 
             Write-Host "Docker images built successfully."
           } catch {
-          Write-Error "Docker build failed: $_"
-          exit 1
+            Write-Error "Docker build failed: $_"
+            exit 1
           }
-
 
       - name: Push Client Image
         shell: powershell
