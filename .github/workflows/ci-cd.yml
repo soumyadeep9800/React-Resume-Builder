@@ -133,3 +133,4 @@ jobs:
           Write-Host 'Deployment successful in namespace:' $env:NAMESPACE
           Write-Host 'Client Image:' "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
           Write-Host 'Server Image:' "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
+          
