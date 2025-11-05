@@ -30,10 +30,22 @@ jobs:
         shell: powershell
         run: |
           $env:DOCKER_BUILDKIT = "1"
-          docker pull "$env:IMAGE_CLIENT:latest" 2>$null || echo "No cache for client"
-          docker pull "$env:IMAGE_SERVER:latest" 2>$null || echo "No cache for server"
+
+          try {
+            docker pull "$env:IMAGE_CLIENT:latest"
+          } catch {
+            Write-Host "No cache for client"
+          }
+        
+          try {
+            docker pull "$env:IMAGE_SERVER:latest"
+          } catch {
+            Write-Host "No cache for server"
+          }
+
           docker build --cache-from="$env:IMAGE_CLIENT:latest" -t "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" ./clients
           docker build --cache-from="$env:IMAGE_SERVER:latest" -t "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" ./server
+
           docker tag "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" "$env:IMAGE_CLIENT:latest"
           docker tag "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" "$env:IMAGE_SERVER:latest"
 
