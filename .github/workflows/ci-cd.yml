@@ -20,47 +20,53 @@ jobs:
 
       - name: Set Commit Tag
         id: vars
+        shell: pwsh
         run: |
-          COMMIT=$(git rev-parse --short HEAD)
-          echo "commit=$COMMIT" >> $GITHUB_OUTPUT
-          echo "Using commit: $COMMIT"
+          $commit = git rev-parse --short HEAD
+          echo "commit=$commit" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "✅ Using commit tag: $commit"
 
       - name: Build and Tag Docker Images
+        shell: pwsh
         run: |
-          $env:DOCKER_BUILDKIT=1
-          docker pull $env:IMAGE_CLIENT:latest || echo "No cache for client"
-          docker pull $env:IMAGE_SERVER:latest || echo "No cache for server"
-          docker build --cache-from=$env:IMAGE_CLIENT:latest -t "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" ./clients
-          docker build --cache-from=$env:IMAGE_SERVER:latest -t "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" ./server
+          $env:DOCKER_BUILDKIT = "1"
+          docker pull "$env:IMAGE_CLIENT:latest" 2>$null || echo "No cache for client"
+          docker pull "$env:IMAGE_SERVER:latest" 2>$null || echo "No cache for server"
+          docker build --cache-from="$env:IMAGE_CLIENT:latest" -t "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" ./clients
+          docker build --cache-from="$env:IMAGE_SERVER:latest" -t "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" ./server
           docker tag "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}" "$env:IMAGE_CLIENT:latest"
           docker tag "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}" "$env:IMAGE_SERVER:latest"
 
       - name: Push Client Image
+        shell: pwsh
         run: |
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
           docker push "$env:IMAGE_CLIENT:${{ steps.vars.outputs.commit }}"
           docker push "$env:IMAGE_CLIENT:latest"
 
       - name: Push Server Image
+        shell: pwsh
         run: |
           echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
           docker push "$env:IMAGE_SERVER:${{ steps.vars.outputs.commit }}"
           docker push "$env:IMAGE_SERVER:latest"
 
       - name: Deploy to Kubernetes
+        shell: pwsh
         run: |
-          mkdir -p k8s_tmp
-          cp -r $env:K8S_PATH/* k8s_tmp/
-          COMMIT=${{ steps.vars.outputs.commit }}
-          (Get-ChildItem k8s_tmp/*.yaml) | ForEach-Object {
+          mkdir k8s_tmp -Force
+          Copy-Item -Recurse $env:K8S_PATH\* k8s_tmp\
+          $commit = "${{ steps.vars.outputs.commit }}"
+          Get-ChildItem k8s_tmp\*.yaml | ForEach-Object {
             (Get-Content $_.FullName) `
-              -replace 'IMAGE_CLIENT_PLACEHOLDER', "$env:IMAGE_CLIENT:$COMMIT" `
-              -replace 'IMAGE_SERVER_PLACEHOLDER', "$env:IMAGE_SERVER:$COMMIT" |
+              -replace 'IMAGE_CLIENT_PLACEHOLDER', "$env:IMAGE_CLIENT:$commit" `
+              -replace 'IMAGE_SERVER_PLACEHOLDER', "$env:IMAGE_SERVER:$commit" |
               Set-Content $_.FullName
           }
           kubectl apply -f k8s_tmp/
 
       - name: Wait for Rollout
+        shell: pwsh
         run: |
           kubectl rollout status deployment/client-deployment --timeout=120s
           kubectl rollout status deployment/server-deployment --timeout=120s
