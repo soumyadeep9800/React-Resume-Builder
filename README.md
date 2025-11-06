@@ -1,4 +1,4 @@
-                                                                                                                 React Resume Builder
+React Resume Builder
 
 A modern, full-stack web application that empowers users to create, customise and export professional resumes in real-time — built with the MERN stack and styled for flexibility & responsiveness.
 
