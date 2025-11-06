@@ -67,20 +67,19 @@ jobs:
         shell: powershell
         run: |
           $username = "${{ secrets.DOCKER_USER }}"
-          $password = "${{ secrets.DOCKER_PASS }}".Trim()
+          $password = ("${{ secrets.DOCKER_PASS }}").Trim()
 
           if (-not $username -or -not $password) {
-            Write-Error "DockerHub credentials missing. Please check your GitHub Secrets."
+            Write-Error "DockerHub credentials missing."
             exit 1
           }
 
           Write-Host "Logging in as $username ..."
           docker logout docker.io 2>$null
-
           echo $password | docker login docker.io -u $username --password-stdin
           if ($LASTEXITCODE -ne 0) {
-            Write-Error "Docker login failed. Please verify your token and username."
-                  exit 1
+            Write-Error "Docker login failed. Check username/token."
+          exit 1
           }
 
       - name: Push Client Image
