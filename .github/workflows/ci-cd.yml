@@ -74,12 +74,14 @@ jobs:
             exit 1
           }
 
-          Write-Host "Username length: $($username.Length)"
-          Write-Host "Password length: $($password.Length)"
-          Write-Host "Attempting login as $username ..."
+          Write-Host "Logging in as $username ..."
+          docker logout docker.io 2>$null
 
-          echo $password | docker logout docker.io 2>$null
-          echo $password | docker login https://index.docker.io/v1/ -u $username --password-stdin
+          echo $password | docker login docker.io -u $username --password-stdin
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Docker login failed. Please verify your token and username."
+                  exit 1
+          }
 
       - name: Push Client Image
         shell: powershell
