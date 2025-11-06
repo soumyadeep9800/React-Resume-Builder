@@ -68,7 +68,7 @@ jobs:
         run: |
           $username = "${{ secrets.DOCKER_USER }}"
           $password = "${{ secrets.DOCKER_PASS }}".Trim()
-          
+
           if (-not $username -or -not $password) {
             Write-Error "DockerHub credentials missing. Please check your GitHub Secrets."
             exit 1
@@ -76,9 +76,10 @@ jobs:
 
           Write-Host "Username length: $($username.Length)"
           Write-Host "Password length: $($password.Length)"
+          Write-Host "Attempting login as $username ..."
 
-          Write-Host "Logging in as $username ..."
-          echo $password | docker login -u $username --password-stdin
+          echo $password | docker logout docker.io 2>$null
+          echo $password | docker login https://index.docker.io/v1/ -u $username --password-stdin
 
       - name: Push Server Image
         shell: powershell
