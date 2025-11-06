@@ -46,16 +46,20 @@ jobs:
           $clientRepo = "${{ env.IMAGE_CLIENT }}"
           $serverRepo = "${{ env.IMAGE_SERVER }}"
 
-          $clientTag = "$clientRepo:$commit"
-          $serverTag = "$serverRepo:$commit"
+          $clientTag = "${clientRepo}:$commit"
+          $serverTag = "${serverRepo}:$commit"
 
+          Write-Host "Commit: $commit"
+          Write-Host "Client Repo: $clientRepo"
+          Write-Host "Server Repo: $serverRepo"
           Write-Host "Building Client Image: $clientTag"
-          docker build -t $clientTag ./clients
-          docker tag $clientTag "$clientRepo:latest"
-
           Write-Host "Building Server Image: $serverTag"
+
+          docker build -t $clientTag ./clients
+          docker tag $clientTag "${clientRepo}:latest"
+
           docker build -t $serverTag ./server
-          docker tag $serverTag "$serverRepo:latest"
+          docker tag $serverTag "${serverRepo}:latest"
 
           Write-Host "Docker build completed successfully."
 
