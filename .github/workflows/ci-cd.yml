@@ -111,8 +111,15 @@ jobs:
         shell: powershell
         run: |
           $env:KUBECONFIG = "C:\Users\Soumyadeep Ghosh\.kube\config"
-          kubectl rollout status deployment/client -n $env:NAMESPACE --timeout=180s
-          kubectl rollout status deployment/server -n $env:NAMESPACE --timeout=180s
+          try {
+            kubectl rollout status deployment/client -n $env:NAMESPACE --timeout=180s
+            kubectl rollout status deployment/server -n $env:NAMESPACE --timeout=180s
+          } catch {
+            Write-Host "❌ Rollout failed, showing pods..."
+            kubectl get pods -n $env:NAMESPACE
+            kubectl describe pods -n $env:NAMESPACE
+            exit 1
+          }
 
       - name: Deployment Successful
         if: success()
