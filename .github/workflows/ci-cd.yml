@@ -64,28 +64,10 @@ jobs:
           Write-Host "Docker build completed successfully."
 
       - name: Login to DockerHub
-        shell: powershell
-        run: |
-          $user = "${{ secrets.DOCKER_USER }}"
-          $pass = "${{ secrets.DOCKER_PASS }}"
-          if (-not $user -or -not $pass) {
-            Write-Error "DockerHub credentials missing. Please check GitHub Secrets."
-            exit 1
-          }
-
-          Write-Host "Logging in as $user ..."
-          docker logout docker.io 2>$null
-
-          # Write secret directly to stdin file to avoid encoding issues
-          $tempFile = [System.IO.Path]::GetTempFileName()
-          Set-Content -Path $tempFile -Value $pass -NoNewline
-          docker login docker.io -u $user --password-stdin < $tempFile
-          Remove-Item $tempFile
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Docker login failed. Check username/token."
-            exit 1
-          }
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
 
       - name: Push Client Image
         shell: powershell
