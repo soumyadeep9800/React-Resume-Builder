@@ -66,20 +66,25 @@ jobs:
       - name: Login to DockerHub
         shell: powershell
         run: |
-          $username = "${{ secrets.DOCKER_USER }}"
-          $password = ("${{ secrets.DOCKER_PASS }}").Trim()
-
-          if (-not $username -or -not $password) {
-            Write-Error "DockerHub credentials missing."
+          $user = "${{ secrets.DOCKER_USER }}"
+          $pass = "${{ secrets.DOCKER_PASS }}"
+          if (-not $user -or -not $pass) {
+            Write-Error "DockerHub credentials missing. Please check GitHub Secrets."
             exit 1
           }
 
-          Write-Host "Logging in as $username ..."
+          Write-Host "Logging in as $user ..."
           docker logout docker.io 2>$null
-          echo $password | docker login docker.io -u $username --password-stdin
+
+          # Write secret directly to stdin file to avoid encoding issues
+          $tempFile = [System.IO.Path]::GetTempFileName()
+          Set-Content -Path $tempFile -Value $pass -NoNewline
+          docker login docker.io -u $user --password-stdin < $tempFile
+          Remove-Item $tempFile
+
           if ($LASTEXITCODE -ne 0) {
             Write-Error "Docker login failed. Check username/token."
-          exit 1
+            exit 1
           }
 
       - name: Push Client Image
