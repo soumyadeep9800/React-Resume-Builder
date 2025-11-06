@@ -81,12 +81,25 @@ jobs:
           echo $password | docker logout docker.io 2>$null
           echo $password | docker login https://index.docker.io/v1/ -u $username --password-stdin
 
+      - name: Push Client Image
+        shell: powershell
+        run: |
+          $commit = "${{ steps.vars.outputs.commit }}"
+          $clientRepo = "${{ env.IMAGE_CLIENT }}"
+          $clientTag = "${clientRepo}:$commit"
+          Write-Host "Pushing Client Image: $clientTag"
+          docker push $clientTag
+          docker push "${clientRepo}:latest"
+
       - name: Push Server Image
         shell: powershell
         run: |
           $commit = "${{ steps.vars.outputs.commit }}"
-          docker push "$env:IMAGE_SERVER:$commit"
-          docker push "$env:IMAGE_SERVER:latest"
+          $serverRepo = "${{ env.IMAGE_SERVER }}"
+          $serverTag = "${serverRepo}:$commit"
+          Write-Host "Pushing Server Image: $serverTag"
+          docker push $serverTag
+          docker push "${serverRepo}:latest"
 
       - name: Deploy to Kubernetes
         shell: powershell
