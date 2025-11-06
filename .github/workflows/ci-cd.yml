@@ -66,14 +66,19 @@ jobs:
       - name: Login to DockerHub
         shell: powershell
         run: |
-          echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+          $username = "${{ secrets.DOCKER_USER }}"
+          $password = "${{ secrets.DOCKER_PASS }}".Trim()
+          
+          if (-not $username -or -not $password) {
+            Write-Error "DockerHub credentials missing. Please check your GitHub Secrets."
+            exit 1
+          }
 
-      - name: Push Client Image
-        shell: powershell
-        run: |
-          $commit = "${{ steps.vars.outputs.commit }}"
-          docker push "$env:IMAGE_CLIENT:$commit"
-          docker push "$env:IMAGE_CLIENT:latest"
+          Write-Host "Username length: $($username.Length)"
+          Write-Host "Password length: $($password.Length)"
+
+          Write-Host "Logging in as $username ..."
+          echo $password | docker login -u $username --password-stdin
 
       - name: Push Server Image
         shell: powershell
