@@ -43,15 +43,19 @@ jobs:
           docker context use default
 
           $commit = "${{ steps.vars.outputs.commit }}"
-          $clientTag = "$env:IMAGE_CLIENT:$commit"
-          $serverTag = "$env:IMAGE_SERVER:$commit"
+          $clientRepo = "${{ env.IMAGE_CLIENT }}"
+          $serverRepo = "${{ env.IMAGE_SERVER }}"
 
-          Write-Host "Building Client and Server Images..."
+          $clientTag = "$clientRepo:$commit"
+          $serverTag = "$serverRepo:$commit"
+
+          Write-Host "Building Client Image: $clientTag"
           docker build -t $clientTag ./clients
-          docker tag $clientTag "$env:IMAGE_CLIENT:latest"
+          docker tag $clientTag "$clientRepo:latest"
 
+          Write-Host "Building Server Image: $serverTag"
           docker build -t $serverTag ./server
-          docker tag $serverTag "$env:IMAGE_SERVER:latest"
+          docker tag $serverTag "$serverRepo:latest"
 
           Write-Host "Docker build completed successfully."
 
